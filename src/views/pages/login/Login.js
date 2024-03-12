@@ -1,18 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer, 
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
+import {CButton,CCard,CCardBody,CCardGroup,CCol,CContainer,CForm,CFormInput,CInputGroup,CInputGroupText,CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons' 
 import axios from 'axios'
@@ -46,12 +34,24 @@ const Login = () => {
     axios.post('/login',payload,headers).then((r) => {
         if(r.data.authorisation.token)
         {
-            localStorage.setItem('_token', r.data.authorisation.token)
-            console.log(r.data,"in Login");
+          localStorage.setItem('_token', r.data.authorisation.token)
+          if(r.data.user.role_id)
+          {
+            if(r.data.user.role_id == 1)
+            {
+              navigate('/employee-dashboard')
+            }
+            else
+            {
+              navigate('/employer-dashboard')
+            }
+          }
+          else
+          {
             navigate('/create-profile')
-         }
-       
-        })
+          }
+        }
+      })
   };
 const onFailure = (response) => {
     console.log('Login Failed Current User',response);
