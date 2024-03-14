@@ -19,7 +19,7 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
-import { getStyle, hexToRgba } from '@coreui/utils'
+import { getStyle, hexToRgba } from '@coreui/utils'  
 import CIcon from '@coreui/icons-react'
 import {
   cibCcAmex,
@@ -45,16 +45,32 @@ import {
 } from '@coreui/icons' 
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import LoadingSpinner from 'src/LoadingSpinner';
 
 
 
 const Employerdashboard = () => { 
   const { isAuthenticated } = useAuth();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate a delay and set loading to false
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timeout); // Clear the timeout on component unmount
+  }, []);
   return (
     <>
-      <div>
-        <h1>Employer dashboard</h1>
-      </div>
+       <div>
+      {loading ? (
+        <LoadingSpinner /> 
+      ) : (
+        // Your component content when not loading
+        <div>Employer Dashboard</div>
+      )}
+    </div>
     
     </>
   )

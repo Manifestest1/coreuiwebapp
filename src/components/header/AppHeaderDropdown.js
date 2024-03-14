@@ -1,5 +1,6 @@
 import { GoogleLogout } from 'react-google-login';
 import React,{ useEffect, useState } from 'react';
+
 import {
   CAvatar,
   CBadge,
@@ -9,10 +10,12 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
+  CLink
 } from '@coreui/react'
 import {
   cilUser,
   cilObjectGroup,
+  cilAccountLogout
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { useNavigate } from 'react-router-dom'
@@ -41,42 +44,58 @@ const AppHeaderDropdown = () => {
   }
 
   useEffect(() => {
-    getUserProfile()
-    .then((r) => {
-        setUserImage(r.data);
-    })
-    .catch((e) => {
-        console.log(e)
-    });
-
-    function start() 
-    {
-      // Initialize Google API client
-      gapi.client.init({
-        clientId: client_id,
-        scope: "",
-      }).then(() => {
-        // Client is initialized, you can now make API calls
+    const initGoogleAuth = async () => {
+      try {
+        await gapi.auth2.init({
+          client_id: client_id,
+          scope: 'openid profile email',
+        });
         console.log('Google API client initialized');
-      }).catch((error) => {
+      } 
+      catch (error) 
+      {
         console.error('Error initializing Google API client:', error);
-      });
+      }
+    };
+
+    if (typeof gapi !== 'undefined' && typeof gapi.auth2 === 'object' && !gapi.auth2.getAuthInstance()) 
+    {
+      initGoogleAuth();
     }
 
-    // Load the Google API client library
-    gapi.load('client', start);
-  }, []); // Empty dependency array to ensure the effect runs only once
-const onSuccess = () => {
+    getUserProfile()
+        .then((r) => {
+            setUserImage(r.data);
+        })
+        .catch((e) => {
+            console.log(e)
+        });
 
-        logoutUserProfile()
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const authInstance = gapi.auth2.getAuthInstance();
+      await authInstance.signOut();
+
+      // Clear authentication-related information
+      logoutUserProfile()
         .then((r) => {
           localStorage.removeItem('_token');
-          navigate("/");
+          navigate("/login");
         })
         .catch((e) => {
           console.error(e);
         });
+
+      // Redirect to the logout page or perform other necessary actions
+      navigate("/login");
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
+
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -107,29 +126,11 @@ const onSuccess = () => {
           Job
         </CDropdownItem>
          )}
-
-
-         <CDropdownItem clientId={client_id} onLogoutSuccess={onSuccess} style={{ cursor: 'pointer' }}>
-          <CIcon icon={cilUser} className="me-2" />
-          Logout
+         <CDropdownItem href="#">
+          <CLink to="/logout" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+          <CIcon icon={cilAccountLogout} className="me-2" />Logout
+          </CLink>
         </CDropdownItem>
-
-        <CDropdownItem>
-          {/* Custom styling for the GoogleLogout component */}
-          <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-            {/* Use the Logout component */}
-            <GoogleLogout
-              clientId={client_id}
-              onLogoutSuccess={onSuccess}
-             
-            />
-          </div>
-        </CDropdownItem>
-        <GoogleLogout
-              clientId={client_id}
-              onLogoutSuccess={onSuccess}
-             
-            />
       </CDropdownMenu>
     </CDropdown>
   )

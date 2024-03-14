@@ -25,7 +25,8 @@ import {
   CTableRow,
   CFormTextarea,
   CTooltip,
-  CFormFeedback
+  CFormFeedback,
+  CCardTitle
 } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
@@ -105,7 +106,7 @@ const handleChange = (e) => {
         <CCol md="12" lg="12" xl="12">
           <CCard className="mx-4">
             <CCardHeader className="text-center">
-              <h1>Job Post</h1>
+              <CCardTitle style={{fontWeight: '200'}}>Job Post</CCardTitle>
             </CCardHeader>
             <CCardBody>
               <CForm onSubmit={handleJobSubmit}>
@@ -131,7 +132,7 @@ const handleChange = (e) => {
                   <CFormFeedback invalid={!isValid}>Please enter a valid value.</CFormFeedback>
                     <CCol xs={10}></CCol>
                     <CCol xs={2} className="text-right">
-                      <CButton type="submit" color="primary" className="px-4">Post Job</CButton>
+                      <CButton type="submit" color="info" className="px-4">Post Job</CButton>
                     </CCol>
               </CRow>
               </CForm>

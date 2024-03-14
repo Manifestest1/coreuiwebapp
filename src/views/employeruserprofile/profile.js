@@ -73,7 +73,7 @@ const Userprofile = () => {
 
   // End PDF Download code
 
-  useEffect(() => {
+  useEffect(() => { 
     getUserProfile()
     .then((r) => {
       setUser(r.data);
@@ -95,7 +95,7 @@ const Userprofile = () => {
           <CCol md="12" lg="12" xl="12">
             <CCard className="mx-4">
               <CCardHeader className="text-center">
-              <CCardTitle style={{fontWeight: '200'}} className="fw-bold">Employer Profile</CCardTitle>
+                <CCardTitle style={{fontWeight: '200'}} className="fw-bold">Employer Profile</CCardTitle>
               </CCardHeader>
               <CCardBody ref={pdfRef}>
                 <CRow>

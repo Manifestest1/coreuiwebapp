@@ -1,10 +1,10 @@
-import api from './api';
+import api from './api'; 
 
   export const getClientId = () => {
     return "620552090072-ucb04bnq9lt3i3rsdhtnrfvkv9pne2c4.apps.googleusercontent.com";
   };
   
-  export const getUserProfile = () => {
+  export const getUserProfile = () => { 
     return api.get('/user-profile');
   };
  

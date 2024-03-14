@@ -102,12 +102,12 @@ return (
                 </CInputGroup>
              </CCol>
             <CCol lg={2} className="text-right">
-              <CButton style={{float:'right'}} type="submit" color="primary" className="px-4">
+              <CButton style={{float:'right'}} type="submit" color="info" className="px-4">
                 Find Jobs
               </CButton>
             </CCol>
             <CCol lg={2} className="text-right">
-              <CButton onClick={handleCreateJobPost} style={{float:'right'}} type="submit" color="primary" className="px-4">
+              <CButton onClick={handleCreateJobPost} style={{float:'right'}} type="submit" color="info" className="px-4">
                 Job Create
               </CButton>
             </CCol>
