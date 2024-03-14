@@ -72,7 +72,7 @@ const Userprofile = () => {
 
   // End PDF Download code
 
-  useEffect(() => {
+  useEffect(() => { 
     getUserProfile()
     .then((r) => {
       setUser(r.data);

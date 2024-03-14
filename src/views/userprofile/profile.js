@@ -12,7 +12,7 @@ import {
   CRow,
   CCardTitle
 } from '@coreui/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom' 
 import {getUserProfile} from '../../apiService';
 
 const Userprofile = () => { 

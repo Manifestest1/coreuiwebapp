@@ -5,11 +5,11 @@ const useAuth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('_token');
+    const token = localStorage.getItem('_token'); 
 
     if (!token || token === '') 
     {
-      navigate('/');
+      navigate('/login');
     }
   }, [navigate]);
 

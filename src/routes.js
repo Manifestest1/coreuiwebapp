@@ -1,5 +1,5 @@
 import React from 'react'
-import useAuth from './useAuth';
+import useAuth from './useAuth'; 
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Employerdashboard = React.lazy(() => import('./views/dashboard/Employerdashboard'))
