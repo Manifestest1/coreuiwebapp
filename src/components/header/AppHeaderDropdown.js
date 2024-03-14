@@ -107,15 +107,29 @@ const onSuccess = () => {
           Job
         </CDropdownItem>
          )}
-        <CDropdownDivider />
-        <CDropdownItem href="#">
-          {/* Use the Logout component */}
-          <GoogleLogout
-            clientId={client_id}
-            buttonText="Logout"
-            onLogoutSuccess={onSuccess}
-            />
+
+
+         <CDropdownItem clientId={client_id} onLogoutSuccess={onSuccess} style={{ cursor: 'pointer' }}>
+          <CIcon icon={cilUser} className="me-2" />
+          Logout
         </CDropdownItem>
+
+        <CDropdownItem>
+          {/* Custom styling for the GoogleLogout component */}
+          <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            {/* Use the Logout component */}
+            <GoogleLogout
+              clientId={client_id}
+              onLogoutSuccess={onSuccess}
+             
+            />
+          </div>
+        </CDropdownItem>
+        <GoogleLogout
+              clientId={client_id}
+              onLogoutSuccess={onSuccess}
+             
+            />
       </CDropdownMenu>
     </CDropdown>
   )

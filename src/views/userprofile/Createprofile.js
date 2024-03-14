@@ -82,23 +82,14 @@ const Createprofile = () => {
             <CCard className="p-4">
                 <CCardBody>
                 <CForm onSubmit={handleSubmit}>
-                    <label className="px-4" htmlFor="role">Select Role:</label>
-                    <CDropdown>
-                        <CDropdownToggle color="primary">Select Role</CDropdownToggle>
-                        <CDropdownMenu>
-                        <CDropdownItem onClick={() => handleRoleChange('employee')}>Employee</CDropdownItem>
-                        <CDropdownItem onClick={() => handleRoleChange('employer')}>Employer</CDropdownItem>
-                        </CDropdownMenu>
-                    </CDropdown>
-                    {selectedRole && (
-                        <div>
-                        You selected: {selectedRole === 'employee' ? 'Employee' : 'Employer'}
-                        </div>
-                    )}
+                    <h1>Select Role</h1>
                     <CRow>
                         <CCol md={12} className="mt-4">
-                        <CButton type="submit" color="primary" className="px-8 text-center">
-                            Submit
+                        <CButton color="info" style={{marginRight:20}} onClick={() => handleRoleChange('employee')} type="submit" className="px-8 text-center">
+                        Employee
+                        </CButton>
+                        <CButton color="info" onClick={() => handleRoleChange('employer')} type="submit"  className="px-8 text-center">
+                        Employer
                         </CButton>
                         </CCol>
                     </CRow>

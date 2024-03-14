@@ -145,7 +145,7 @@ const Userprofile = () => {
                     <CRow>
                           <CCol xs={10}></CCol>
                           <CCol xs={2} className="text-right">
-                            <CButton type="submit" color="primary" className="px-4">Update</CButton>
+                            <CButton type="submit" color="info" className="px-4">Update</CButton>
                           </CCol>
                     </CRow>
                 </CForm>

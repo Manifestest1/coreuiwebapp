@@ -82,7 +82,7 @@ const onFailure = (response) => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton color="info" className="px-4">
                           Login
                         </CButton>
                       </CCol>
@@ -116,7 +116,7 @@ const onFailure = (response) => {
                       tempor incididunt ut labore et dolore magna aliqua.
                     </p>
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
+                      <CButton color="info" className="mt-3" active tabIndex={-1}>
                         Register Now!
                       </CButton>
                     </Link>

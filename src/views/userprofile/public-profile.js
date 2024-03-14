@@ -43,8 +43,8 @@ const Userprofile = () => {
               </CCardHeader>
               <CCardBody>
                 <CRow>
-                  <CCol xs={4}>
-                    <img className="text-center" src={user.imageurl}  style={{ borderRadius: 96,height:'100%' }}/>
+                  <CCol xs={8}>
+                    <img className="text-center" src={user.imageurl}  style={{ borderRadius: 96,height:'100%'}}/>
                   </CCol>
                   <CCol xs={8}>
                     <h5  style={{ marginTop: 20 }}>Name: {user.name}</h5>

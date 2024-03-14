@@ -11,6 +11,7 @@ import {
   CContainer, 
   CCardFooter,
   CCardHeader,
+  CCardTitle,
   CProgress,
   CRow,
   CTable,
@@ -94,32 +95,31 @@ const Userprofile = () => {
           <CCol md="12" lg="12" xl="12">
             <CCard className="mx-4">
               <CCardHeader className="text-center">
-                <h1>Employer Profile</h1>
+              <CCardTitle style={{fontWeight: '200'}} className="fw-bold">Employer Profile</CCardTitle>
               </CCardHeader>
               <CCardBody ref={pdfRef}>
                 <CRow>
                   <CCol xs={4}>
-                    <img className="text-center" src={user.imageurl}  style={{ borderRadius: 50 }}/>
+                    <img className="text-center" src={user.imageurl}  style={{ borderRadius: 96,height:'100%' ,marginLeft:'65px'}}/>
                   </CCol>
-                  <CCol xs={8}>
-                    <h5  style={{ marginTop: 20 }}>Name: {user.name}</h5>
-                    <h5 style={{ marginTop: 20 }}>Email: {user.email}</h5>
-                    <h5 style={{ marginTop: 20 }}>Role: Employer</h5>
-                    <h5 style={{ marginTop: 20 }}>Phone: {user.phone}</h5>
+                  <CCol xs={8} >
+                    <h5  style={{ marginTop: 20,fontWeight: '400',fontSize:'18' }}>Name: {user.name}</h5>
+                    <h5 style={{ marginTop: 20,fontWeight: '400',fontSize:'18' }}>Email: {user.email}</h5>
+                    <h5 style={{ marginTop: 20,fontWeight: '400',fontSize:'18' }}>Role: Employer</h5>
+                    <h5 style={{ marginTop: 20,fontWeight: '400',fontSize:'18' }}>Phone: {user.phone}</h5>
                   </CCol>
                 </CRow>
               </CCardBody>
               <CCardFooter>
                 <CRow>
-                  <CCol xs={10}>
-                    <CButton color="primary" className="px-4" onClick={downloadPDF}>Download PDF</CButton>
+                  <CCol xs={4}>
                   </CCol>
-                  <CCol xs={2} className="text-right">
-                    <CButton style={{ float: 'right' }} color="primary" className="px-4" onClick={handleEditClick}>Edit</CButton>
+                  <CCol xs={8} className="text-left">
+                    <CButton style={{marginRight:20}} color="info" className="px-4" onClick={downloadPDF}>Download PDF</CButton>
+                    <CButton color="info" className="px-4" onClick={handleEditClick}>Edit</CButton>
                   </CCol>
                 </CRow>
-              </CCardFooter>
-             
+              </CCardFooter> 
             </CCard>
           </CCol>
         </CRow>
