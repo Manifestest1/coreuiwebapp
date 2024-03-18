@@ -1,18 +1,38 @@
-import logo from './logo.svg';
+
 import './App.css';
-import { useEffect,useState } from 'react';
 import AppHeader from './views/layout/AppHeader';
 import AppFooter from './views/layout/AppFooter';
 import Home from './views/components/Home';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import FindJobs from './views/components/FindJobs';
+import About from './views/components/About';
+import Contact from './views/components/Contact';
+import Blog from './views/components/Blog';
+import BlogDetails from './views/components/BlogDetails';
+import Elements from './views/components/Elements';
+import JobDetails from './views/components/JobDetails';
 
 function App() 
 {
  
   return (
   <>
-     <AppHeader/>
-       <Home/>
+    <Router>
+      <AppHeader/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="job_listing" element={<FindJobs/>} />
+        <Route path="about" element={<About/>} />
+        <Route path="contact" element={<Contact/>} />
+        <Route path="blog" element={<Blog/>} />
+        <Route path="blog-details" element={<BlogDetails/>} />
+        <Route path="elements" element={<Elements/>} />
+        <Route path="job_details" element={<JobDetails/>} />
+        {/* Add more routes here */}
+      </Routes>
       <AppFooter/>
+    </Router>
+    
   </>
   );
 }

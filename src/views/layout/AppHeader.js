@@ -1,21 +1,9 @@
 import React from 'react'
+import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom';
 
 const AppHeader = ()=>{
 
 return(
-<>
-    {/* <!-- Preloader Start --> */}
-    {/* <div id="preloader-active"> 
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt=""/>
-                </div>
-            </div>
-        </div>
-    </div> */}
-    {/* <!-- Preloader Start --> */}
 
     <header>
     {/* <!-- Header Start --> */}
@@ -26,9 +14,9 @@ return(
                     <div class="col-lg-3 col-md-2">
                         {/* <!-- Logo --> */}
                         <div class="logo">
-                            <a href="index.html">
+                            <Link to="/">
                                 <img src="assets/img/logo/logo.png" alt=""/>
-                            </a>
+                            </Link>
                         </div>  
                     </div>
                     <div class="col-lg-9 col-md-9">
@@ -37,18 +25,18 @@ return(
                             <div class="main-menu">
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="job_listing.html">Find a Jobs </a></li>
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a href="#">Page</a>
+                                        <li><NavLink to="/">Home</NavLink></li>
+                                        <li><NavLink to="job_listing">Find a Jobs </NavLink></li>
+                                        <li><NavLink to="about">About</NavLink></li>
+                                        <li><NavLink to="/">Page</NavLink>
                                             <ul class="submenu">
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li><a href="single-blog.html">Blog Details</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                                <li><a href="job_details.html">job Details</a></li>
+                                                <li><NavLink to="blog">Blog</NavLink></li>
+                                                <li><NavLink to="blog-details">Blog Details</NavLink></li>
+                                                <li><NavLink to="elements">Elements</NavLink></li>
+                                                <li><NavLink to="job_details">job Details</NavLink></li>
                                             </ul>
                                         </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><NavLink to="contact">Contact</NavLink></li>
                                     </ul>
                                 </nav>
                             </div>          
@@ -67,9 +55,10 @@ return(
             </div>
        </div>
    </div>
+   
     {/* <!-- Header End --> */} 
 </header>
-</>  
+     
 )
 
 }
