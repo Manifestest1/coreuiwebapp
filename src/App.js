@@ -11,19 +11,12 @@ import Blog from './views/components/Blog';
 import BlogDetails from './views/components/BlogDetails';
 import Elements from './views/components/Elements';
 import JobDetails from './views/components/JobDetails';
-
-import DialogCompnent from './views/layout/DialogComponent';
-
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Button from "@material-ui/core/Button";
+import DialogCompnent from './views/layout/DialogComponent';
 
 function App() 
 {
+  const _token = localStorage.getItem('_token');
   const [isPopupOpen, setOpen] = React.useState(false);
  
     const handleClickToOpen = () => {
@@ -38,7 +31,7 @@ function App()
   <>
      
     <Router>
-      <AppHeader onLoginClick={handleClickToOpen}/>
+      <AppHeader onLoginClick={handleClickToOpen} _token={_token}/>
       {isPopupOpen && (
        <DialogCompnent  open={isPopupOpen} onClose={handleToClose}/>
       )}

@@ -1,7 +1,54 @@
-import React from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom';
+import React,{ useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
+import { gapi } from 'gapi-script';
+import useAuth from '../../useAuth';
+import {logoutUserProfile} from '../../apiService';
 
-const AppHeader = ({ onLoginClick })=>{
+const client_id = '620552090072-ucb04bnq9lt3i3rsdhtnrfvkv9pne2c4.apps.googleusercontent.com'
+
+const AppHeader = ({ onLoginClick,_token })=>{
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate()
+  
+    useEffect(() => {
+        const start = () => {
+          gapi.load('auth2', () => {
+            gapi.auth2.init({
+              client_id: client_id,
+              scope: 'openid profile email',
+            }).then(() => {
+              console.log('Google API client initialized');
+            }).catch((error) => {
+              console.error('Error initializing Google API client:', error);
+            });
+          });
+        };
+    
+        gapi.load('client', start);
+      }, []);
+
+      const handleLogout = async () => {
+        try {
+          const authInstance = gapi.auth2.getAuthInstance();
+          await authInstance.signOut();
+    
+          // Clear authentication-related information
+        //   logoutUserProfile()
+        //     .then((r) => {
+              localStorage.removeItem('_token');
+              navigate("/");
+              
+            // })
+            // .catch((e) => {
+            //   console.error(e);
+            // });
+    
+          // Redirect to the logout page or perform other necessary actions
+    
+        } catch (error) {
+          console.error('Error during logout:', error);
+        }
+      };
 
 return(
 
@@ -42,9 +89,12 @@ return(
                             </div>          
                             {/* <!-- Header-btn --> */}
                             <div class="header-btn d-none f-right d-lg-block">
-                                <a href="#" class="btn head-btn1">Register</a>
-                                {/* <a onClick={onLoginClick} href="#" class="btn head-btn2">Login</a> */}
-                                <button class="btn head-btn2" onClick={onLoginClick}>Login</button>
+
+                                {isAuthenticated ? (
+                                        <button className="btn head-btn2" onClick={handleLogout}>Logout</button>
+                                    ) : (
+                                        <button className="btn head-btn2" onClick={onLoginClick}>Login</button>
+                                    )}
                             </div>
                         </div>
                     </div>
