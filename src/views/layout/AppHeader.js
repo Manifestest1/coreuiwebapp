@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom';
 
-const AppHeader = ()=>{
+const AppHeader = ({ onLoginClick })=>{
 
 return(
 
@@ -43,7 +43,8 @@ return(
                             {/* <!-- Header-btn --> */}
                             <div class="header-btn d-none f-right d-lg-block">
                                 <a href="#" class="btn head-btn1">Register</a>
-                                <a href="#" class="btn head-btn2">Login</a>
+                                {/* <a onClick={onLoginClick} href="#" class="btn head-btn2">Login</a> */}
+                                <button class="btn head-btn2" onClick={onLoginClick}>Login</button>
                             </div>
                         </div>
                     </div>
