@@ -11,12 +11,12 @@ import axiosInstance from '../../api';
 
 
 const DialogCompnent = ({ open, onClose })=>{
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     // Login With Google Code
 
     const handleLogin = () => {
-      onClose();
+       onClose();
         gapi.auth2.getAuthInstance().signIn({
           scope: 'openid profile email',
           prompt: 'select_account', // Forces account chooser
@@ -30,21 +30,22 @@ const DialogCompnent = ({ open, onClose })=>{
               if(r.data.authorisation.token)
               {
                 localStorage.setItem('_token', r.data.authorisation.token)
-                if(r.data.user)
-                {
-                  if(r.data.user.role_id == 1)
-                  {
-                    navigate('/dashboard')
-                  }
-                  else
-                  {
-                    navigate('/employer-dashboard')
-                  }
-                }
-                else
-                {
-                  navigate('/create-profile')
-                }
+                navigate('/job_listing')
+                // if(r.data.user)
+                // {
+                //   if(r.data.user.role_id == 1)
+                //   {
+                //     navigate('/dashboard')
+                //   }
+                //   else
+                //   {
+                //     navigate('/employer-dashboard')
+                //   }
+                // }
+                // else
+                // {
+                //   navigate('/create-profile')
+                // }
               }
             })
           
@@ -60,7 +61,7 @@ const DialogCompnent = ({ open, onClose })=>{
         <>
     <div stlye={{}}>
     <Dialog open={open} onClose={onClose}>
-    <DialogTitle class="section-tittle text-center" style={{ textAlign: 'center' }}>{"User Signin & Signup by Google Account."}</DialogTitle>
+    <DialogTitle class="section-tittle text-center" style={{ textAlign: 'center',fontSize: '25px',padding:'50px',fontWeight:'800'}}>{"User Signin & Signup By Google Account."}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           {/* I am Good, Hope the same for you! */}
