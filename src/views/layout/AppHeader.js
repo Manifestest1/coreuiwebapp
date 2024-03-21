@@ -1,18 +1,13 @@
 import React,{ useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import { gapi } from 'gapi-script';
-import useAuth from '../../useAuth';
 import {getUserProfile,logoutUserProfile,getClientId} from '../../apiService';
-import { useAuthProfile } from '../../AuthContext/AuthContext';
-import axiosInstance from '../../api';
 
 const client_id = getClientId();
 
-const AppHeader = ({ onLoginClick,_token })=>{
-    const { isAuthenticated } = useAuth();
+const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
     const navigate = useNavigate()
-    // const [userProfile, setUserProfile] = useState('');
-    const { setUserProfile } = useAuthProfile();
+    const [userProfile, setUserProfile] = useState('');
   
     useEffect(() => {
 
@@ -58,63 +53,29 @@ const AppHeader = ({ onLoginClick,_token })=>{
 
         // End For LogOut Google Code
 
-        // Get User Profile Info
+      }, []);
 
-        const fetchUserProfile = async () => {
-          try {
-            // Retrieve the authentication token from local storage
-            const token = localStorage.getItem('_token');
-      
-            // Check if the token exists
-            if (token) {
-              // Include the token in the request headers
-              const headers = {
-                Authorization: `Bearer ${token}`
-              };
-      
-              // Make the API request with the token included in the headers
-              const response = await getUserProfile({ headers });
-      
-              // Set user profile data in state/context
-              setUserProfile(response.data);
-            } else {
-              // Handle case where token is missing
-              console.error('Authentication token is missing');
-            }
-          } catch (error) {
-            // Handle errors
-            console.error('Error fetching user profile:', error);
-          }
-        };
-      
-        // Call fetchUserProfile function
-        fetchUserProfile();
+      // const handleLogout = async () => {
+      //   try {
+      //     const authInstance = gapi.auth2.getAuthInstance();
+      //     await authInstance.signOut();
     
-        // Get User Profile Info
-
-      });
-
-      const handleLogout = async () => {
-        try {
-          const authInstance = gapi.auth2.getAuthInstance();
-          await authInstance.signOut();
+      //     // Clear authentication-related information
+      //     logoutUserProfile()
+      //       .then((r) => {
+      //         localStorage.removeItem('_token');
+      //         navigate("/");
+      //       })
+      //       .catch((e) => {
+      //         console.error(e);
+      //       });
     
-          // Clear authentication-related information
-          logoutUserProfile()
-            .then((r) => {
-              localStorage.removeItem('_token');
-              navigate("/");
-            })
-            .catch((e) => {
-              console.error(e);
-            });
+      //     // Redirect to the logout page or perform other necessary actions
     
-          // Redirect to the logout page or perform other necessary actions
-    
-        } catch (error) {
-          console.error('Error during logout:', error); 
-        }
-      };
+      //   } catch (error) {
+      //     console.error('Error during logout:', error); 
+      //   }
+      // };
 
 return(
 
@@ -156,8 +117,28 @@ return(
                             {/* <!-- Header-btn --> */}
                             <div class="header-btn d-none f-right d-lg-block">
 
-                                {isAuthenticated ? (
-                                        <button className="btn head-btn2" onClick={handleLogout}>Logout</button>
+                                {loggedIn ? (
+                                     <div class="main-menu">
+                                        <nav class="d-none d-lg-block">
+                                            <ul id="navigation">
+                                                <li>
+                                                {user ? ( <img style={{height:'60px',width:'60px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+                                                ):('')}
+
+                                                    <ul class="submenu">
+                                                        {/* <li><NavLink to="blog">Blog</NavLink></li>
+                                                        <li><NavLink to="blog-details">Blog Details</NavLink></li>
+                                                        <li><NavLink to="elements">Elements</NavLink></li> */}
+                                                        <li><button className="btn head-btn2" onClick={logout}>Logout</button></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div> 
+                                    // <div>
+                                    //       <img style={{height:'60px',width:'60px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+                                    //     <button className="btn head-btn2" onClick={logout}>Logout</button>
+                                    //   </div>
                                     ) : (
                                         <button className="btn head-btn2" onClick={onLoginClick}>Login</button>
                                     )}

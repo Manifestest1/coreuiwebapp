@@ -1,15 +1,10 @@
 import React from "react";
-import { useAuthProfile } from "../../AuthContext/AuthContext";
 
 
 const Home = ()=>{
-    const { userProfile } = useAuthProfile();
 
     return(
         <>
-        {userProfile ? (
-        <div>User Profile: {JSON.stringify(userProfile)}</div>
-      ) : (
 
              <main>
 
@@ -486,7 +481,6 @@ const Home = ()=>{
 {/* <!-- Blog Area End --> */}
 
 </main>
- )}
         </>
     )
 

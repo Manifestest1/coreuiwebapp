@@ -1,43 +1,6 @@
-
-import React, { createContext, useContext, useState,useEffect } from 'react';
-import { useAuthProfile } from '../../AuthContext/AuthContext';
-import {getUserProfile,logoutUserProfile,getClientId} from '../../apiService';
+import React from "react";
 
 const FindJobs = ()=>{
-    const { setUserProfile } = useAuthProfile();
-
-    useEffect(() => {
-        const fetchUserProfile = async () => {
-          try {
-            // Retrieve the authentication token from local storage
-            const token = localStorage.getItem('_token');
-      
-            // Check if the token exists
-            if (token) {
-              // Include the token in the request headers
-              const headers = {
-                Authorization: `Bearer ${token}`
-              };
-      
-              // Make the API request with the token included in the headers
-              const response = await getUserProfile({ headers });
-      
-              // Set user profile data in state/context
-              setUserProfile(response.data);
-            } else {
-              // Handle case where token is missing
-              console.error('Authentication token is missing');
-            }
-          } catch (error) {
-            // Handle errors
-            console.error('Error fetching user profile:', error);
-          }
-        };
-      
-        // Call fetchUserProfile function
-        fetchUserProfile();
-      
-      }, [setUserProfile]);
     return(
         <>
 
