@@ -3,8 +3,8 @@ import { gapi } from 'gapi-script';
 import {logoutUserProfile} from '../../apiService';
 import axiosInstance from '../../api';
 
-export const loginFun = (setUser) => {
-
+export const loginFun = (setUser,navigate) => {
+ 
     gapi.auth2.getAuthInstance().signIn({
         scope: 'openid profile email',
         prompt: 'select_account', // Forces account chooser
@@ -19,7 +19,29 @@ export const loginFun = (setUser) => {
             {
               setUser(r.data.user);
               localStorage.setItem('_token', r.data.authorisation.token)
-              // navigate('/job_listing')
+
+              if (r.data.user) 
+              {
+                  if (r.data.user.role_id === 1) 
+                  {
+                    console.log('Employee')
+                    navigate('/employee-dashboard');
+                  } 
+                  else if(r.data.user.role_id === 2) 
+                  {
+                    console.log('Employer')
+                    navigate('/employer-dashboard');
+                  }
+                  else
+                  {
+                    navigate('/create-profile');
+                    console.log('Create Profile')
+                  }
+             }
+             else
+             {
+              navigate('/');
+             }
             }
           })
         
@@ -29,7 +51,7 @@ export const loginFun = (setUser) => {
       });
   };
   
-  export const logoutFun = () => {
+  export const logoutFun = (navigate) => {
 
     try 
     {
@@ -42,11 +64,12 @@ export const loginFun = (setUser) => {
         logoutUserProfile()
           .then((r) => {
             localStorage.removeItem('_token');
+           
            })
           .catch((e) => {
             console.error(e);
           });
-  
+          navigate('/');
     } 
     catch (error) 
     {

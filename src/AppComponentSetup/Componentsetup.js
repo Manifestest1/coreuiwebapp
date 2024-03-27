@@ -13,8 +13,17 @@ import JobDetails from '../views/components/JobDetails';
 import DialogCompnent from '../views/layout/DialogComponent';
 import { loginFun, logoutFun } from '../views/layout/authFunctions';
 
-const Componentsetup = ()=>{
+import CreateProfile from "../views/components/profile-create/CreateProfile";
+import EmployeeDashboard from "../views/components/employee/EmployeeDashboard"; 
+import EmployeeEditProfile from "../views/components/employee/profile/EmployeeEditProfile";
+import EmployeeProfile from "../views/components/employee/profile/EmployeeProfile";
 
+import EmployerDashboard from "../views/components/employer/EmployerDashboard";
+import EmployerProfile from "../views/components/employer/profile/EmployerProfile";
+import EmployerEditProfile from "../views/components/employer/profile/EmployerEditProfile";
+
+const Componentsetup = ()=>{
+    const navigate = useNavigate();
     const [isPopupOpen, setOpen] = useState(false);
 
     const [loggedIn, setLoggedIn] = useState(() => {
@@ -29,6 +38,7 @@ const Componentsetup = ()=>{
     // Save login state and user to localStorage whenever they change
     useEffect(() => {
       localStorage.setItem('loggedIn', loggedIn);
+      
     }, [loggedIn]);
   
     useEffect(() => {
@@ -45,22 +55,23 @@ const Componentsetup = ()=>{
   
       const login = () => {
         setOpen(false);
-        loginFun(setUser);
+        loginFun(setUser,navigate);
         setLoggedIn(true);
       };
     
       const logout = () => {
         setUser(null);
         setLoggedIn(false);
-        logoutFun();
+        logoutFun(navigate);
       };
    return(
     <>
-    <Router>
+    
         <AppHeader onLoginClick={handleClickToOpen} loggedIn={loggedIn} user={user} logout={logout}/>
         {isPopupOpen && (
         <DialogCompnent  open={isPopupOpen} onClose={handleToClose} login={login}/>
         )}
+       
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="job_listing" element={<FindJobs/>} />
@@ -71,9 +82,28 @@ const Componentsetup = ()=>{
           <Route path="elements" element={<Elements/>} />
           <Route path="job_details" element={<JobDetails/>} />
           {/* Add more routes here */}
+
+          {/* Route not included in header menu */}
+          <Route path="/create-profile" element={<CreateProfile/>} />
+
+          {/* Start Employee Routes */}
+
+          <Route path="/employee-dashboard" element={<EmployeeDashboard/>} />
+          <Route path="/employee-edit-profile" element={<EmployeeEditProfile/>} />
+          <Route path="/employee-profile" element={<EmployeeProfile/>}/>
+
+           {/* End Employee Routes */}
+           {/* Start Employer Routes */}
+
+          <Route path="/employer-dashboard" element={<EmployerDashboard/>} />
+          <Route path="/employer-edit-profile" element={<EmployerEditProfile/>} />
+          <Route path="/employer-profile" element={<EmployerProfile/>}/>
+          
+          {/* End Employer Routes */}
         </Routes>
+        
         <AppFooter/>
-    </Router>
+    
     </>
    )
 }

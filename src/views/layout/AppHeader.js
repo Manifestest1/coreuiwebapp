@@ -1,13 +1,12 @@
 import React,{ useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import { gapi } from 'gapi-script';
-import {getUserProfile,logoutUserProfile,getClientId} from '../../apiService';
+import {getClientId} from '../../apiService';
 
-const client_id = getClientId();
+const client_id = getClientId(); 
 
 const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
     const navigate = useNavigate()
-    const [userProfile, setUserProfile] = useState('');
   
     useEffect(() => {
 
@@ -32,7 +31,7 @@ const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
 
         // Start For LogOut Google Code
 
-        const initGoogleAuth = async () => {
+        const initGoogleAuth = async () => { 
             try {
               await gapi.auth2.init({
                 client_id: client_id,
@@ -55,27 +54,7 @@ const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
 
       }, []);
 
-      // const handleLogout = async () => {
-      //   try {
-      //     const authInstance = gapi.auth2.getAuthInstance();
-      //     await authInstance.signOut();
-    
-      //     // Clear authentication-related information
-      //     logoutUserProfile()
-      //       .then((r) => {
-      //         localStorage.removeItem('_token');
-      //         navigate("/");
-      //       })
-      //       .catch((e) => {
-      //         console.error(e);
-      //       });
-    
-      //     // Redirect to the logout page or perform other necessary actions
-    
-      //   } catch (error) {
-      //     console.error('Error during logout:', error); 
-      //   }
-      // };
+      
 
 return(
 
@@ -119,16 +98,28 @@ return(
 
                                 {loggedIn ? (
                                      <div class="main-menu">
-                                        <nav class="d-none d-lg-block">
+                                        <nav class="d-none d-lg-block"> 
                                             <ul id="navigation">
                                                 <li>
                                                 {user ? ( <img style={{height:'60px',width:'60px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
                                                 ):('')}
 
                                                     <ul class="submenu">
-                                                        {/* <li><NavLink to="blog">Blog</NavLink></li>
-                                                        <li><NavLink to="blog-details">Blog Details</NavLink></li>
-                                                        <li><NavLink to="elements">Elements</NavLink></li> */}
+                                                    {/* {user && user.role_id === '1' && (
+                                                        <li><NavLink to="/employee-dashboard">Dashboard</NavLink></li>
+                                                    )}
+                                                    {user && user.role_id == '2' && (
+                                                        <li><NavLink to="/employer-dashboard">Dashboard</NavLink></li>
+                                                    )}
+                                                    {user && user.role_id === '1' && (
+                                                        <li><NavLink to="/employee-profile">Profile</NavLink></li>
+                                                    )}
+                                                    {user && user.role_id === '2' && (
+                                                        <li><NavLink to="/employer-profile">Profile</NavLink></li>
+                                                    )} */}
+                                                        <li><NavLink to="/employee-dashboard">Dashboard</NavLink></li>
+                                                        <li><NavLink to="/employee-profile">Profile</NavLink></li>
+                                                        {/* <li><NavLink to="elements">Elements</NavLink></li> */}
                                                         <li><button className="btn head-btn2" onClick={logout}>Logout</button></li>
                                                     </ul>
                                                 </li>
