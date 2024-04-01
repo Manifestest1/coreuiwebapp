@@ -1,17 +1,11 @@
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
-import {getUserProfile,updateUserProfile} from '../../../../apiService';
+import {updateUserProfile} from '../../../../apiService';
 
-const EmployeeEditProfile = ()=>{
+const EmployeeEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
-    const [user, setUser] = useState({name: '',phone: '',current_address: '',permanent_address: '',imageurl: null,adhar_card_no: '',qualification: '',certifications: '',skills: '',working_from: '',work_experience: '',current_working_skill: '',languages: '',hobbies:'',city: '',state:'',country:'',pincode:''});
     const [selectedImage, setSelectedImage] = useState(null);
-
-    useEffect(() => {
-        const userEditFromLocalStorage = JSON.parse(localStorage.getItem('user'));
-        setUser(userEditFromLocalStorage);
-      }, []);
 
       const handleChange = (e) => {
         const { name, value, type } = e.target;
@@ -56,10 +50,7 @@ const EmployeeEditProfile = ()=>{
         updateUserProfile(formData)
               .then((response) => {
                 setUser(response.data);
-
-      // Update localStorage with updated user data
-      localStorage.setItem('user', JSON.stringify(response.data));
-                // navigate('/user-profile');
+                navigate('/employee-profile');
                 console.warn('Edit result', response);
               })
               .catch((error) => {
@@ -69,10 +60,12 @@ const EmployeeEditProfile = ()=>{
        };
     return(
         <>
-
+{user ? (
 <main>
 
 {/* <!-- Hero Area Start--> */}
+
+
 <div class="slider-area ">
     <div class="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
         <div class="container">
@@ -275,7 +268,10 @@ const EmployeeEditProfile = ()=>{
 </div>
 </div>
 </div>
-</main>
+
+</main>) : (
+    <p className="btn head-btn2">Login</p> 
+)}
         </>
     )
 }

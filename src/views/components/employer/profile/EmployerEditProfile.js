@@ -1,17 +1,11 @@
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
-import React,{ useEffect, useState } from 'react';
-import {getUserProfile,updateUserProfile} from '../../../../apiService';
+import React,{ useState } from 'react';
+import {updateUserProfile} from '../../../../apiService';
 
-const EmployerEditProfile = ()=>{
+const EmployerEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
-    const [user, setUser] = useState({name: '',phone: '',current_address: '',permanent_address: '',imageurl: null,adhar_card_no: '',qualification: '',certifications: '',skills: '',working_from: '',work_experience: '',current_working_skill: '',languages: '',hobbies:'',city: '',state:'',country:'',pincode:''});
     const [selectedImage, setSelectedImage] = useState(null);
-
-    useEffect(() => {
-        const userEditFromLocalStorage = JSON.parse(localStorage.getItem('user'));
-        setUser(userEditFromLocalStorage);
-      }, []);
 
       const handleChange = (e) => {
         const { name, value, type } = e.target;
@@ -50,16 +44,15 @@ const EmployerEditProfile = ()=>{
         formData.append('pincode', user.pincode);
     
         // Append the selected image file
-        if (selectedImage) {
+        if (selectedImage) 
+        {
           formData.append('imageurl', selectedImage, selectedImage.name);
         }
         updateUserProfile(formData)
               .then((response) => {
                 setUser(response.data);
 
-      // Update localStorage with updated user data
-      localStorage.setItem('user', JSON.stringify(response.data));
-                // navigate('/user-profile');
+                navigate('/employer-profile');
                 console.warn('Edit result', response);
               })
               .catch((error) => {
@@ -69,7 +62,7 @@ const EmployerEditProfile = ()=>{
        };
     return(
         <>
-
+{user ? ( 
 <main>
 
 {/* <!-- Hero Area Start--> */}
@@ -275,7 +268,9 @@ const EmployerEditProfile = ()=>{
 </div>
 </div>
 </div>
-</main>
+</main>) : (
+    <p className="btn head-btn2">Login</p> 
+)}
         </>
     )
 }

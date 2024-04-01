@@ -1,9 +1,7 @@
-
 import { gapi } from 'gapi-script';
-import {logoutUserProfile} from '../../apiService';
-import axiosInstance from '../../api';
+import {UserLoginApi,logoutUserProfile} from '../../apiService'
 
-export const loginFun = (setUser,navigate) => {
+export const loginFun = (setUser,navigate,setToken) => {   
  
     gapi.auth2.getAuthInstance().signIn({
         scope: 'openid profile email',
@@ -11,14 +9,13 @@ export const loginFun = (setUser,navigate) => {
       }).then((googleUser) => {
         // Handle successful login
         const payload = { email: googleUser.wt.cu, name: googleUser.wt.Ad, google_id: googleUser.wt.NT,imageurl: googleUser.wt.hK,password: "12345678"}
-     
-        let headers = { 'Content-Type': 'application/json' }
-        axiosInstance.post('/login',payload,headers).then((r) => { 
-          console.log(r.data,"Api Response In Login Side")
+        UserLoginApi(payload)
+        .then((r) => { 
+          console.log(r.data.authorisation.token,"Api Response In Login Side")
             if(r.data.authorisation.token)
             {
-              setUser(r.data.user);
-              localStorage.setItem('_token', r.data.authorisation.token)
+              setUser(r.data.user); 
+              setToken(r.data.authorisation.token);
 
               if (r.data.user) 
               {
@@ -50,29 +47,26 @@ export const loginFun = (setUser,navigate) => {
         console.error('Error signing in with Google:', error);
       });
   };
-  
-  export const logoutFun = (navigate) => {
 
-    try 
-    {
-        const authInstance = gapi.auth2.getAuthInstance();
-        authInstance.signOut();
+  export const logoutFun = (navigate) => {
+    try {
+      // Send a request to the logout endpoint with the authentication token
+      logoutUserProfile()
+      .then((response) => {
+        console.log("logout User Succesfully Test");
+        // Clear local storage and navigate to the homepage
         localStorage.removeItem('_token');
         localStorage.removeItem('user');
         localStorage.removeItem('loggedIn');
-        // Clear authentication-related information
-        logoutUserProfile()
-          .then((r) => {
-            localStorage.removeItem('_token');
-           
-           })
-          .catch((e) => {
-            console.error(e);
-          });
-          navigate('/');
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('Error during logout:', error);
+        // Handle error, e.g., display a message to the user
+      });
     } 
     catch (error) 
     {
-      console.error('Error during logout:', error); 
+      console.error('Error during logout:', error);
     }
   };

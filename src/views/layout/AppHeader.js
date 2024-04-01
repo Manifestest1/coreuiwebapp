@@ -6,7 +6,6 @@ import {getClientId} from '../../apiService';
 const client_id = getClientId(); 
 
 const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
-    const navigate = useNavigate()
   
     useEffect(() => {
 
@@ -52,7 +51,7 @@ const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
 
         // End For LogOut Google Code
 
-      }, []);
+      },[]);
 
       
 
@@ -72,7 +71,7 @@ return(
                             </Link>
                         </div>  
                     </div>
-                    <div class="col-lg-9 col-md-9">
+                    <div class="col-lg-9 col-md-9"> 
                         <div class="menu-wrapper">
                             {/* <!-- Main-menu --> */}
                             <div class="main-menu">
@@ -105,31 +104,30 @@ return(
                                                 ):('')}
 
                                                     <ul class="submenu">
-                                                    {/* {user && user.role_id === '1' && (
+                                                    {user && user.role_id === 1 && (
                                                         <li><NavLink to="/employee-dashboard">Dashboard</NavLink></li>
                                                     )}
-                                                    {user && user.role_id == '2' && (
+                                                    {user && user.role_id === 2 && (
                                                         <li><NavLink to="/employer-dashboard">Dashboard</NavLink></li>
                                                     )}
-                                                    {user && user.role_id === '1' && (
+                                                    {user && user.role_id === 1 && (
                                                         <li><NavLink to="/employee-profile">Profile</NavLink></li>
                                                     )}
-                                                    {user && user.role_id === '2' && (
+                                                    {user && user.role_id === 2 && (
                                                         <li><NavLink to="/employer-profile">Profile</NavLink></li>
-                                                    )} */}
-                                                        <li><NavLink to="/employee-dashboard">Dashboard</NavLink></li>
-                                                        <li><NavLink to="/employee-profile">Profile</NavLink></li>
-                                                        {/* <li><NavLink to="elements">Elements</NavLink></li> */}
+                                                    )}
+                                                    {user && user.role_id === 1 && (
+                                                        <li><NavLink to="/employee-jobs">Job</NavLink></li>
+                                                    )}
+                                                    {user && user.role_id === 2 && (
+                                                        <li><NavLink to="/employer-jobs">Job</NavLink></li>
+                                                    )}
                                                         <li><button className="btn head-btn2" onClick={logout}>Logout</button></li>
                                                     </ul>
                                                 </li>
                                             </ul>
                                         </nav>
                                     </div> 
-                                    // <div>
-                                    //       <img style={{height:'60px',width:'60px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
-                                    //     <button className="btn head-btn2" onClick={logout}>Logout</button>
-                                    //   </div>
                                     ) : (
                                         <button className="btn head-btn2" onClick={onLoginClick}>Login</button>
                                     )}

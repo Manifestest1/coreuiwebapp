@@ -1,54 +1,59 @@
-import api from './api'; 
+
+import instance from './axios';
 
   export const getClientId = () => {
     return "620552090072-ucb04bnq9lt3i3rsdhtnrfvkv9pne2c4.apps.googleusercontent.com";
   };
+
+  export const UserLoginApi = (user) => {
+    return instance.post('/login', user );
+  };
   
   export const getUserProfile = () => { 
-    return api.get('/user-profile');
+    return instance.get('/user-profile');
   };
  
   export const createUserProfile = async (selectedRole) => {
-    return await api.post('/create-profile', { role: selectedRole });
+    return await instance.post('/create-profile', { role: selectedRole });
   };
 
   export const updateUserProfile = (user) => {
-    return api.post('/update-profile', user );
+    return instance.post('/update-profile', user );
   };
 
   export const createJobPost = (job) => {
-    return api.post('/create-jobpost', job );
+    return instance.post('/create-jobpost', job );
   };
 
   export const getJobonEmployee = () => {
-    return api.get('/job-get-employee');
+    return instance.get('/job-get-employee');
   };
 
   export const searchJobGet = (jobsearch) => {
-    return api.post('/job-search-employer', jobsearch);
+    return instance.post('/job-search-employer', jobsearch);
   };
 
-  export const getJobView = (jobId) => {
-    return api.get(`/job-view/${jobId}`);
+  export const getJobViewEmployee = (jobId) => {
+    return instance.get(`/job-view/${jobId}`);
   };
 
   export const jobApplyEmployee = (jobId) => {
-    return api.get(`/job-apply/${jobId}`);
+    return instance.get(`/job-apply/${jobId}`);
   };
 
   
   export const getJobonEmployer = () => { 
-    return api.get('/job-get-employer');
+    return instance.get('/job-get-employer');
   };
 
   export const getJobViewEmployer = (jobId) => {
-    return api.get(`/job-view-employer/${jobId}`);
+    return instance.get(`/job-view-employer/${jobId}`); 
   };
 
   export const getPublicEmployeeProfile = (userId) => {
-    return api.get(`/public-profile-employee/${userId}`);
+    return instance.get(`/public-profile-employee/${userId}`);
   };
 
   export const logoutUserProfile = () => {
-    return api.post('/logout', {}, {});
+    return instance.post('/logout');
   };

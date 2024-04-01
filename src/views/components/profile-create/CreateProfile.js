@@ -2,21 +2,21 @@ import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } fro
 import React,{ useEffect, useState } from 'react';
 import {createUserProfile} from '../../../apiService';
 
-const CreateProfile = ()=>{
-    const [selectedProfile, setSelectedProfile] = useState('');
+const CreateProfile = ({ setUser })=>{
+    const [selectedProfile, setSelectedProfile] = useState('');  
     const navigate = useNavigate()
 
     const handleProfileChange = (value) => {
         setSelectedProfile(value);
-        console.log(value,'User Profile');
+        console.log(value,'User Profile'); 
       };
 
     const handleSubmit = async (e) => {
-        console.log("cliec on fun")
         e.preventDefault();
     
         try {
           const response = await createUserProfile(selectedProfile);
+          setUser(response.data)
           if(response.data.role_id == 1)
           {
             console.log(response.data,'For Employee');

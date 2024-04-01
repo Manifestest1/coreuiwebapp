@@ -14,20 +14,31 @@ import DialogCompnent from '../views/layout/DialogComponent';
 import { loginFun, logoutFun } from '../views/layout/authFunctions';
 
 import CreateProfile from "../views/components/profile-create/CreateProfile";
+
 import EmployeeDashboard from "../views/components/employee/EmployeeDashboard"; 
 import EmployeeEditProfile from "../views/components/employee/profile/EmployeeEditProfile";
 import EmployeeProfile from "../views/components/employee/profile/EmployeeProfile";
+import EmployeeJobs from "../views/components/employee/job/EmployeeJobs";
+import EmployeeJobView from "../views/components/employee/job/EmployeeJobView";
+import EmployeePublicProfile from "../views/components/employee/profile/EmployeePublicProfile";
 
 import EmployerDashboard from "../views/components/employer/EmployerDashboard";
 import EmployerProfile from "../views/components/employer/profile/EmployerProfile";
 import EmployerEditProfile from "../views/components/employer/profile/EmployerEditProfile";
+import EmployerJobs from "../views/components/employer/job/EmployerJobs";
+import EmployerJobCreate from "../views/components/employer/job/EmployerJobCreate";
+import EmployerJobView from "../views/components/employer/job/EmployerJobView";
 
 const Componentsetup = ()=>{
     const navigate = useNavigate();
-    const [isPopupOpen, setOpen] = useState(false);
+    const [isPopupOpen, setOpen] = useState(false); 
 
     const [loggedIn, setLoggedIn] = useState(() => {
-      return localStorage.getItem('loggedIn') === 'true';
+      return localStorage.getItem('loggedIn') === 'true'; 
+    });
+
+    const [_token, setToken] = useState(() => {
+      return localStorage.getItem('_token') || null;
     });
   
     // Initialize user state from localStorage, defaulting to null if not set
@@ -44,6 +55,10 @@ const Componentsetup = ()=>{
     useEffect(() => {
       localStorage.setItem('user', JSON.stringify(user));
     }, [user]);
+
+    useEffect(() => {
+      localStorage.setItem('_token', _token);
+    }, [_token]);
    
       const handleClickToOpen = () => {
           setOpen(true);
@@ -55,7 +70,7 @@ const Componentsetup = ()=>{
   
       const login = () => {
         setOpen(false);
-        loginFun(setUser,navigate);
+        loginFun(setUser,navigate,setToken);
         setLoggedIn(true);
       };
     
@@ -74,31 +89,37 @@ const Componentsetup = ()=>{
        
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="job_listing" element={<FindJobs/>} />
+          <Route path="job_listing" element={<FindJobs/>} /> 
           <Route path="about" element={<About/>} />
           <Route path="contact" element={<Contact/>} />
           <Route path="blog" element={<Blog/>} />
           <Route path="blog-details" element={<BlogDetails/>} />
           <Route path="elements" element={<Elements/>} />
-          <Route path="job_details" element={<JobDetails/>} />
+          <Route path="job_details" element={<JobDetails/>} /> 
           {/* Add more routes here */}
 
           {/* Route not included in header menu */}
-          <Route path="/create-profile" element={<CreateProfile/>} />
+          <Route path="/create-profile" element={<CreateProfile setUser={setUser} />} />
 
           {/* Start Employee Routes */}
 
-          <Route path="/employee-dashboard" element={<EmployeeDashboard/>} />
-          <Route path="/employee-edit-profile" element={<EmployeeEditProfile/>} />
-          <Route path="/employee-profile" element={<EmployeeProfile/>}/>
+          <Route path="/employee-dashboard" element={<EmployeeDashboard/>} /> 
+          <Route path="/employee-edit-profile" element={<EmployeeEditProfile user={user} setUser={setUser}/>} />
+          <Route path="/employee-profile" element={<EmployeeProfile user={user} />}/>
+          <Route path="/employee-jobs" element={<EmployeeJobs/>}/>
+          <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>
+          <Route path="/employee-public-profile/:userId" element={<EmployeePublicProfile/>}/>
 
            {/* End Employee Routes */}
            {/* Start Employer Routes */}
 
           <Route path="/employer-dashboard" element={<EmployerDashboard/>} />
-          <Route path="/employer-edit-profile" element={<EmployerEditProfile/>} />
-          <Route path="/employer-profile" element={<EmployerProfile/>}/>
-          
+          <Route path="/employer-edit-profile" element={<EmployerEditProfile user={user} setUser={setUser}/>} />
+          <Route path="/employer-profile" element={<EmployerProfile user={user} />}/>
+          <Route path="/employer-jobs" element={<EmployerJobs/>}/>
+          <Route path="/employer-job-create" element={<EmployerJobCreate/>}/>
+          <Route path="/employer-job-view/:jobId" element={<EmployerJobView/>}/>
+
           {/* End Employer Routes */}
         </Routes>
         

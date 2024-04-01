@@ -1,18 +1,11 @@
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
-import {getUserProfile,updateUserProfile} from '../../../../apiService';
 
-const EmployeeProfile = ()=>{
-    const navigate = useNavigate()
-    const [user, setUser] = useState({name: '',phone: null,imageurl: null});
-
-    useEffect(() => {
-        const userEditFromLocalStorage = JSON.parse(localStorage.getItem('user'));
-        setUser(userEditFromLocalStorage);
-      }, []);
+const EmployeeProfile = ({user})=>{
+   
     return(
         <>
-
+{user ? (
         <main>
 
         {/* <!-- Hero Area Start--> */}
@@ -46,144 +39,143 @@ const EmployeeProfile = ()=>{
     <div class="job-category-listing mb-50">
         {/* <!-- single one --> */}
         <div class="single-listing">
-           <div class="small-section-tittle2"> 
-                 <h4>Profile</h4>
-           </div>
             {/* <!-- Select job items start --> */}
             <div class="select-job-items2">
             <form>
            
             <div className='row'>
-            <div className='col-lg-2'>
-                    <label className='mt-30'>Profile</label>
-                </div>
-                <div className='col-lg-10'>
-                <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+               
+                <div className='col-lg-10' style={{textAlign:'center'}}>
+                   <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
                 </div>
                 <div className='col-lg-2'>
-                    <label className='mt-30'>Name</label>
+                   <NavLink to="/employee-edit-profile" className="btn head-btn2">Edit Profile</NavLink>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text" value={user.name} />
+                
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Name</label>
+                </div>
+                <div className='col-lg-3'>
+                   <label className='mt-30'>{user.name}</label>
                 </div>
 
-                <div className='col-lg-2'>
-                    <label className='mt-30'>Email</label>
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Email</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text" value={user.email} />
-                </div>
-
-                <div className='col-lg-2'>
-                    <label className='mt-30'>Mobile Number</label>
-                </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="number"value={user.phone} />
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.email}</label>
                 </div>
 
-                <div className='col-lg-2'>
-                    <label className='mt-30'>Current Address</label>
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Mobile Number</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.current_address} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.phone}</label> 
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Current Address</label>
+                </div>
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.current_address}</label> 
+                </div>
+
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Permanent Address</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.permanent_address}/>  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.permanent_address}</label>   
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Aadhar Number</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.adhar_card_no} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.adhar_card_no}</label>  
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Qualification</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.qualification} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.qualification}</label>  
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Certifications</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.certifications} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.certifications}</label> 
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Skills</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.skills} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.skills}</label> 
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Working From</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.working_from} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.working_from}</label>  
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Work Experience</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.work_experience} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.work_experience}</label> 
                 </div>
 
-                <div className='col-lg-2'>
+                <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Current working skill</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.current_working_skill} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.current_working_skill}</label> 
                 </div>
 
-                <div className='col-lg-2'>
-                    <label className='mt-30'>Languages</label>
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Languages</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.languages} />  
-                </div>
-
-                <div className='col-lg-2'>
-                    <label className='mt-30'>Hobbies</label>
-                </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.hobbies} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.languages}</label> 
                 </div>
 
-                <div className='col-lg-2'>
-                    <label className='mt-30'>Country</label>
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Hobbies</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.country} />  
-                </div>
-
-                <div className='col-lg-2'>
-                    <label className='mt-30'>State</label>
-                </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.state} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.hobbies}</label> 
                 </div>
 
-                <div className='col-lg-2'>
-                    <label className='mt-30'>City</label>
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Country</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.city} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.country}</label> 
                 </div>
 
-                <div className='col-lg-2'>
-                    <label className='mt-30'>Pincode</label>
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>State</label>
                 </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.pincode} />  
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.state}</label> 
+                </div>
+
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>City</label>
+                </div>
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.city}</label>   
+                </div>
+
+                <div className='col-lg-3'>
+                    <label className='mt-30 label-customcss'>Pincode</label>
+                </div>
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.pincode}</label>  
                 </div>
 
 
@@ -196,13 +188,6 @@ const EmployeeProfile = ()=>{
                     <option value="1">Employee</option>
                     <option value="2">Employer</option>
                 </select> */}
-                <div class="row">
-                    <div className='col-lg-5'></div>
-                    <div className='col-lg-5'>
-                    {/* <button to="/employee-profile" className="btn head-btn2 mt-50">Edit Profile</button> */}
-                    <NavLink to="/employee-edit-profile" className="btn head-btn2 mt-50">Edit Profile</NavLink>
-                    </div>
-                </div>
             </form> 
             </div>
            
@@ -217,6 +202,9 @@ const EmployeeProfile = ()=>{
 </div>
 </div>
         </main>
+       ) : (
+        <p className="btn head-btn2">Login</p> 
+    )}
         </>
     )
 }
