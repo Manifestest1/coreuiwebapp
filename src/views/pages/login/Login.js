@@ -16,6 +16,7 @@ const Login = () => {
 
   // New Code Added
   useEffect(() => {
+    
     const start = () => {
       gapi.load('auth2', () => {
         gapi.auth2.init({
@@ -44,7 +45,7 @@ const Login = () => {
         email: googleUser.getBasicProfile().getEmail(),
         name: googleUser.getBasicProfile().getName(),
         google_id: googleUser.getId(),
-        imageurl: googleUser.getBasicProfile().getImageUrl(),
+        imageurl: googleUser.getBasicProfile().getImageUrl(), 
         password: "12345678"
       };
 

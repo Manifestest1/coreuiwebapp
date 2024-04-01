@@ -5,7 +5,7 @@ import {
   CAvatar,
   CBadge,
   CDropdown,
-  CDropdownDivider,
+  CDropdownDivider, 
   CDropdownHeader,
   CDropdownItem,
   CDropdownMenu,
@@ -75,12 +75,13 @@ const AppHeaderDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      const authInstance = gapi.auth2.getAuthInstance();
+      const authInstance = gapi.auth2.getAuthInstance(); 
       await authInstance.signOut();
 
       // Clear authentication-related information
       logoutUserProfile()
         .then((r) => {
+          console.log('User Logout Successfully');
           localStorage.removeItem('_token');
           navigate("/login");
         })
@@ -166,7 +167,7 @@ const AppHeaderDropdown = () => {
          )}
         <CDropdownDivider />
         <CDropdownItem href="#">
-          {/* Use the Logout component */}
+          {/* Use the Logout component */} 
           {/* <GoogleLogout
             clientId={client_id}
             buttonText="Logout"
