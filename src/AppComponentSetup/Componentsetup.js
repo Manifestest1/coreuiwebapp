@@ -43,7 +43,7 @@ const Componentsetup = ()=>{
   
     // Initialize user state from localStorage, defaulting to null if not set
     const [user, setUser] = useState(() => {
-      return JSON.parse(localStorage.getItem('user')) || null;
+      return JSON.parse(localStorage.getItem('user')) || '';
     });
   
     // Save login state and user to localStorage whenever they change
@@ -105,7 +105,7 @@ const Componentsetup = ()=>{
 
           <Route path="/employee-dashboard" element={<EmployeeDashboard/>} /> 
           <Route path="/employee-edit-profile" element={<EmployeeEditProfile user={user} setUser={setUser}/>} />
-          <Route path="/employee-profile" element={<EmployeeProfile user={user} />}/>
+          <Route path="/employee-profile" element={<EmployeeProfile user={user} setUser={setUser} />}/>
           <Route path="/employee-jobs" element={<EmployeeJobs/>}/>
           <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>
           <Route path="/employee-public-profile/:userId" element={<EmployeePublicProfile/>}/>
@@ -115,7 +115,7 @@ const Componentsetup = ()=>{
 
           <Route path="/employer-dashboard" element={<EmployerDashboard/>} />
           <Route path="/employer-edit-profile" element={<EmployerEditProfile user={user} setUser={setUser}/>} />
-          <Route path="/employer-profile" element={<EmployerProfile user={user} />}/>
+          <Route path="/employer-profile" element={<EmployerProfile user={user} setUser={setUser} />}/>
           <Route path="/employer-jobs" element={<EmployerJobs/>}/>
           <Route path="/employer-job-create" element={<EmployerJobCreate/>}/>
           <Route path="/employer-job-view/:jobId" element={<EmployerJobView/>}/>

@@ -1,17 +1,17 @@
 import { gapi } from 'gapi-script';
 import {UserLoginApi,logoutUserProfile} from '../../apiService'
 
-export const loginFun = (setUser,navigate,setToken) => {   
+export const loginFun = (setUser,navigate,setToken) => {    
  
     gapi.auth2.getAuthInstance().signIn({
         scope: 'openid profile email',
-        prompt: 'select_account', // Forces account chooser
+        prompt: 'select_account', // Forces account chooser 
       }).then((googleUser) => {
         // Handle successful login
         const payload = { email: googleUser.wt.cu, name: googleUser.wt.Ad, google_id: googleUser.wt.NT,imageurl: googleUser.wt.hK,password: "12345678"}
         UserLoginApi(payload)
         .then((r) => { 
-          console.log(r.data.authorisation.token,"Api Response In Login Side")
+          console.log(r.data,"Api Response In Login Side")
             if(r.data.authorisation.token)
             {
               setUser(r.data.user); 
@@ -37,7 +37,7 @@ export const loginFun = (setUser,navigate,setToken) => {
              }
              else
              {
-              navigate('/');
+              navigate('/create-profile');
              }
             }
           })

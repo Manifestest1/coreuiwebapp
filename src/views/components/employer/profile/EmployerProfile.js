@@ -1,7 +1,47 @@
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
+import {updateUserProfile} from '../../../../apiService';
 
-const EmployerProfile = ({user})=>{
+const EmployerProfile = ({user,setUser})=>{
+
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+
+     // Function to handle image update
+     const handleImageUpdate = () => {
+        // Trigger file selection dialog
+        document.getElementById('imageInput').click();
+      };
+  
+    // Function to handle image selection
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) 
+      {
+        setImageFile(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+
+        // Update the image in the API
+        updateUserImage(file);
+      }
+    };
+
+    const updateUserImage = async (file) => {
+        try {
+          const formData = new FormData();
+          formData.append('imageurl', file);
+          // Send the updated image to the API
+          const response = await updateUserProfile(formData);
+          setUser(response.data);
+          console.warn('Image updated successfully', response.data);
+        } catch (error) {
+          console.error('Error updating image', error);
+        }
+      };
 
     return(
         <>
@@ -47,8 +87,28 @@ const EmployerProfile = ({user})=>{
            
             <div className='row'>
                
-                <div className='col-lg-10' style={{textAlign:'center'}}>
-                   <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+                <div className='col-lg-10' style={{textAlign:'center',display:'block'}}>
+                    <div className='row' style={{textAlign:'center',display:'block'}}>
+                        <div className='col-lg-12'>
+                            <input id="imageInput" type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} name="imageurl" />
+                            {/* Image preview */}
+                            {imagePreview ? (
+                                <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={imagePreview} alt="Preview"/>
+                            ) : (
+                                <img style={{ height: '145px', width: '150px', borderRadius: '50%' }}
+                                src={user?.imageurl || 'default-profile-image-url'} alt="User Profile Image" size="md"/>
+                            )}
+                            {/* Button to replace input field */}
+                        </div>
+                        
+                          <button style={{cursor:'pointer',background: '#fb246a',borderRadius: '20%',border: 'none',position: 'absolute',bottom: '3px',left: '47%',width:'56px'}} onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>
+                        
+                    </div>
+                   {/* <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" /> */}
+
+                   
+                   
+
                 </div>
                 <div className='col-lg-2'>
                    <NavLink to="/employer-edit-profile" className="btn head-btn2">Edit Profile</NavLink>
@@ -205,7 +265,7 @@ const EmployerProfile = ({user})=>{
 </div>
         </main>
         ) : (
-            <p className="btn head-btn2">Login</p> 
+            <p></p> 
         )}
         </>
     )

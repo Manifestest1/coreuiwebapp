@@ -1,8 +1,98 @@
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
-import React,{ useEffect, useState } from 'react';
+import React,{ useEffect, useState,useRef } from 'react';
+import {updateUserProfile} from '../../../../apiService';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-const EmployeeProfile = ({user})=>{
-   
+const EmployeeProfile = ({user,setUser})=>{
+
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+
+     // Function to handle image update
+     const handleImageUpdate = () => {
+        // Trigger file selection dialog
+        document.getElementById('imageInput').click();
+      };
+  
+    // Function to handle image selection
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) 
+      {
+        setImageFile(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+
+        // Update the image in the API
+        updateUserImage(file);
+      }
+    };
+
+    const updateUserImage = async (file) => {
+        try {
+          const formData = new FormData();
+          formData.append('imageurl', file);
+          // Send the updated image to the API
+          const response = await updateUserProfile(formData);
+          setUser(response.data);
+          console.warn('Image updated successfully', response.data);
+        } catch (error) {
+          console.error('Error updating image', error);
+        }
+      };
+
+      // Start PDF Download code
+      const pdfRef = useRef();
+
+      const downloadPDF = () => {
+     
+        if (pdfRef.current) 
+        {
+            html2canvas(pdfRef.current).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 15, 15, 180, 120); // A4 size: 210 x 297 mm
+                pdf.save('employer_profile.pdf');
+            });
+        }
+    };
+
+      // const downloadPDF = () => {
+    //     // Create a new HTML element to hold the user-selected image
+    //     const image = new Image();
+    //     image.src = user.imageurl; // Use the user-selected image
+    
+    //     // When the image is loaded, generate the PDF
+    //     image.onload = () => {
+    //         const pdf = new jsPDF('p', 'mm', 'a4');
+    //         pdf.addImage(image, 'JPEG', 15, 15, 180, 120); // Add user-selected image to PDF
+    //         pdf.save('employer_profile.pdf');
+    //     };
+    // };
+
+// const downloadPDF = () => {
+//     const pdf = new jsPDF();
+//     const img = new Image();
+//     // img.src = user?.imageurl || 'default-profile-image-url'; // Assuming user.imageurl contains the URL of the JPEG image
+//     img.src = imagePreview; // Assuming user.imageurl contains the URL of the JPEG image
+//     console.log(img,"get Image");
+//     img.onload = () => {
+//       const imgWidth = 150;
+//       const imgHeight = 145;
+//       const aspectRatio = img.width / img.height;
+//       const pdfWidth = 180;
+//       const pdfHeight = pdfWidth / aspectRatio;
+//       pdf.addImage(img, 'JPEG', 15, 15, imgWidth, imgHeight);
+//       pdf.save('employer_profile.pdf');
+//     };
+//   };
+ 
+   // End PDF Download code
+
     return(
         <>
 {user ? (
@@ -39,42 +129,61 @@ const EmployeeProfile = ({user})=>{
     <div class="job-category-listing mb-50">
         {/* <!-- single one --> */}
         <div class="single-listing">
+           {/* <div class="small-section-tittle2"> 
+                 <h4>Profile</h4>
+           </div> */}
             {/* <!-- Select job items start --> */}
             <div class="select-job-items2">
-            <form>
-           
+
             <div className='row'>
-               
-                <div className='col-lg-10' style={{textAlign:'center'}}>
-                   <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+                <div className='col-lg-7'></div>
+                <div className='col-lg-2'>
+                   <button onClick={downloadPDF} className='btn'>Download PDF</button>
                 </div>
                 <div className='col-lg-2'>
-                   <NavLink to="/employee-edit-profile" className="btn head-btn2">Edit Profile</NavLink>
+                   <NavLink style={{marginLeft: '10px'}} to="/employee-edit-profile" className="btn head-btn2">Edit Profile</NavLink>
                 </div>
+            </div>
+           
+            <div className='row' ref={pdfRef}>
+               
+                <div className='col-lg-12' style={{textAlign:'center',display:'block'}}>
+                   
+                    <input id="imageInput" type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} name="imageurl" />
+                    {/* Image preview */}
+                    {imagePreview ? (
+                    <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={imagePreview} alt="Preview"/>
+                    ) : (
+                    <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={user?.imageurl || 'default-profile-image-url'} alt="User Profile Image" size="md"/>
+                    )}
+                    {/* Button to replace input field */}
+                    <button style={{cursor:'pointer',background: '#fb246a',borderRadius: '20%',border: 'none',position: 'absolute',bottom: '3px',left: '48%',width:'56px'}} onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>
+                </div>
+               
                 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Name</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Name</label>
                 </div>
                 <div className='col-lg-3'>
                    <label className='mt-30'>{user.name}</label>
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Email</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Email</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.email}</label>
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Mobile Number</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Mobile Number</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.phone}</label> 
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Current Address</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Current Address</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.current_address}</label> 
@@ -97,7 +206,7 @@ const EmployeeProfile = ({user})=>{
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Qualification</label>
                 </div>
-                <div className='col-lg-3'>
+                <div className='col-lg-3 '>
                     <label className='mt-30'>{user.qualification}</label>  
                 </div>
 
@@ -136,43 +245,43 @@ const EmployeeProfile = ({user})=>{
                     <label className='mt-30'>{user.current_working_skill}</label> 
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Languages</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Languages</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.languages}</label> 
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Hobbies</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Hobbies</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.hobbies}</label> 
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Country</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Country</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.country}</label> 
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>State</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>State</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.state}</label> 
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>City</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>City</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.city}</label>   
                 </div>
 
-                <div className='col-lg-3'>
-                    <label className='mt-30 label-customcss'>Pincode</label>
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Pincode</label>
                 </div>
                 <div className='col-lg-3'>
                     <label className='mt-30'>{user.pincode}</label>  
@@ -188,7 +297,7 @@ const EmployeeProfile = ({user})=>{
                     <option value="1">Employee</option>
                     <option value="2">Employer</option>
                 </select> */}
-            </form> 
+               
             </div>
            
             {/* <!-- select-Categories End --> */}
@@ -202,9 +311,9 @@ const EmployeeProfile = ({user})=>{
 </div>
 </div>
         </main>
-       ) : (
-        <p className="btn head-btn2">Login</p> 
-    )}
+        ) : (
+            <p></p> 
+        )}
         </>
     )
 }

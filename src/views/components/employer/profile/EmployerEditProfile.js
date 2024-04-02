@@ -5,18 +5,12 @@ import {updateUserProfile} from '../../../../apiService';
 
 const EmployerEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
-    const [selectedImage, setSelectedImage] = useState(null);
 
       const handleChange = (e) => {
         const { name, value, type } = e.target;
-        if (type === 'file') 
-        {
-            setSelectedImage(e.target.files[0]);
-        } 
-        else 
-        {
+       
             setUser((prevUser) => ({ ...prevUser, [name]: value }));
-        }
+        
        
       };
 
@@ -25,29 +19,24 @@ const EmployerEditProfile = ({user,setUser})=>{
         const formData = new FormData();
     
         // Append user data
-        formData.append('name', user.name);
-        formData.append('phone', user.phone);
-        formData.append('current_address', user.current_address);
-        formData.append('permanent_address', user.permanent_address);
-        formData.append('adhar_card_no', user.adhar_card_no);
-        formData.append('qualification', user.qualification);
-        formData.append('certifications', user.certifications);
-        formData.append('skills', user.skills);
-        formData.append('working_from', user.working_from);
-        formData.append('work_experience', user.work_experience);
-        formData.append('current_working_skill', user.current_working_skill);
-        formData.append('languages', user.languages);
-        formData.append('hobbies', user.hobbies);
-        formData.append('city', user.city);
-        formData.append('state', user.state);
-        formData.append('country', user.country);
-        formData.append('pincode', user.pincode);
+        if (user.name) formData.append('name', user.name);
+        if (user.phone) formData.append('phone', user.phone);
+        if (user.current_address) formData.append('current_address', user.current_address);
+        if (user.permanent_address) formData.append('permanent_address', user.permanent_address);
+        if (user.adhar_card_no) formData.append('adhar_card_no', user.adhar_card_no);
+        if (user.qualification) formData.append('qualification', user.qualification);
+        if (user.certifications) formData.append('certifications', user.certifications);
+        if (user.skills) formData.append('skills', user.skills);
+        if (user.working_from) formData.append('working_from', user.working_from);
+        if (user.work_experience) formData.append('work_experience', user.work_experience);
+        if (user.current_working_skill) formData.append('current_working_skill', user.current_working_skill);
+        if (user.languages) formData.append('languages', user.languages);
+        if (user.hobbies) formData.append('hobbies', user.hobbies);
+        if (user.city) formData.append('city', user.city);
+        if (user.state) formData.append('state', user.state);
+        if (user.country) formData.append('country', user.country);
+        if (user.pincode) formData.append('pincode', user.pincode);
     
-        // Append the selected image file
-        if (selectedImage) 
-        {
-          formData.append('imageurl', selectedImage, selectedImage.name);
-        }
         updateUserProfile(formData)
               .then((response) => {
                 setUser(response.data);
@@ -136,13 +125,6 @@ const EmployerEditProfile = ({user,setUser})=>{
                 </div>
                 <div className='col-lg-10'>
                     <input className="form-control mt-30" type="text"value={user.permanent_address} onChange={handleChange} name="permanent_address"/>  
-                </div>
-
-                <div className='col-lg-2'>
-                    <label className='mt-30'>User Profile</label>
-                </div>
-                <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="file" onChange={handleChange} name="imageurl" />  
                 </div>
 
                 <div className='col-lg-2'>

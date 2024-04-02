@@ -96,7 +96,7 @@ return(
                             <div class="header-btn d-none f-right d-lg-block">
 
                                 {loggedIn ? (
-                                     <div class="main-menu">
+                                     <div class="main-menu"> 
                                         <nav class="d-none d-lg-block"> 
                                             <ul id="navigation">
                                                 <li>
@@ -121,6 +121,9 @@ return(
                                                     )}
                                                     {user && user.role_id === 2 && (
                                                         <li><NavLink to="/employer-jobs">Job</NavLink></li>
+                                                    )}
+                                                    {user && user.role_id === null && (
+                                                        <li><NavLink to="/create-profile">Create Profile</NavLink></li>
                                                     )}
                                                         <li><button className="btn head-btn2" onClick={logout}>Logout</button></li>
                                                     </ul>

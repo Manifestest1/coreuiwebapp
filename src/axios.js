@@ -48,6 +48,11 @@ instance.interceptors.response.use(
       {
         // Handle token refresh failure
         console.error('Token refresh failed:', error);
+
+        // Remove All items
+        localStorage.removeItem('_token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('loggedIn');
         // Redirect to login page or handle authentication error
         return Promise.reject(error);
       }
