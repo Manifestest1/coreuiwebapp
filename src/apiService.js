@@ -14,7 +14,7 @@ import instance from './axios';
   };
  
   export const createUserProfile = async (selectedRole) => {
-    return await instance.post('/create-profile', { role: selectedRole });
+    return await instance.post('/create-profile', { role: selectedRole }); 
   };
 
   export const updateUserProfile = (user) => {
@@ -23,6 +23,10 @@ import instance from './axios';
 
   export const updateEmployeeProfile = (user) => {
     return instance.post('/update-employee-profile', user );
+  };
+
+  export const updateEmployerProfile = (user) => {
+    return instance.post('/update-employer-profile', user );
   };
 
   export const createJobPost = (job) => {

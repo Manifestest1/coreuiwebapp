@@ -4,6 +4,7 @@ import { gapi } from 'gapi-script';
 import {getClientId} from '../../apiService';
 
 const client_id = getClientId(); 
+const path = "http://localhost:8000/uploads/";
 
 const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
   
