@@ -31,8 +31,7 @@ const EmployerProfile = ({user,setUser})=>{
     };
 
     const updateUserImage = async (file) => {
-        try 
-        {
+        try {
           const formData = new FormData();
           formData.append('imageurl', file);
           // Send the updated image to the API
@@ -104,7 +103,7 @@ const EmployerProfile = ({user,setUser})=>{
                         
                           <button style={{cursor:'pointer',background: '#fb246a',borderRadius: '20%',border: 'none',position: 'absolute',bottom: '3px',left: '47%',width:'56px'}} onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>
                         
-                    </div> 
+                    </div>
                    {/* <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" /> */}
 
                    
@@ -133,112 +132,112 @@ const EmployerProfile = ({user,setUser})=>{
                     <label className='mt-30'>Mobile Number</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.phone}</label> 
+                    <label className='mt-30'>{user.phone}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Current Address</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.current_address}</label> 
+                    <label className='mt-30'>{user.current_address}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Permanent Address</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.permanent_address}</label>   
+                    <label className='mt-30'>{user.permanent_address}</label>   
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Aadhar Number</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.adhar_card_no}</label>  
+                    <label className='mt-30'>{user.adhar_card_no}</label>  
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Qualification</label>
                 </div>
                 <div className='col-lg-3 '>
-                    <label className='mt-30'>{user.employer?.qualification}</label>  
+                    <label className='mt-30'>{user.qualification}</label>  
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Certifications</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.certifications}</label> 
+                    <label className='mt-30'>{user.certifications}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Skills</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.skills}</label> 
+                    <label className='mt-30'>{user.skills}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Working From</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.working_from}</label>  
+                    <label className='mt-30'>{user.working_from}</label>  
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Work Experience</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.work_experience}</label> 
+                    <label className='mt-30'>{user.work_experience}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Current working skill</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.current_working_skill}</label> 
+                    <label className='mt-30'>{user.current_working_skill}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Languages</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.languages}</label> 
+                    <label className='mt-30'>{user.languages}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Hobbies</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.hobbies}</label> 
+                    <label className='mt-30'>{user.hobbies}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Country</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.country}</label> 
+                    <label className='mt-30'>{user.country}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>State</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.state}</label> 
+                    <label className='mt-30'>{user.state}</label> 
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>City</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.city}</label>   
+                    <label className='mt-30'>{user.city}</label>   
                 </div>
 
                 <div className='col-lg-3 label-customcss'>
                     <label className='mt-30'>Pincode</label>
                 </div>
                 <div className='col-lg-3'>
-                    <label className='mt-30'>{user.employer?.pincode}</label>  
+                    <label className='mt-30'>{user.pincode}</label>  
                 </div>
 
 

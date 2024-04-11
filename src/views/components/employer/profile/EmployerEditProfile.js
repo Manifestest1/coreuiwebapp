@@ -1,63 +1,43 @@
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useState } from 'react';
-import {updateUserProfile,updateEmployerProfile} from '../../../../apiService';
+import {updateUserProfile} from '../../../../apiService';
 
 const EmployerEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-      
-        // If the field is within the employee object
-        if (name.startsWith('employer.')) 
-        {
-          // Extract the nested field name (after 'employee.')
-          const employerField = name.split('.')[1];
-      
-          // Update the user state with nested field updated
-          setUser((prevUser) => ({
-            ...prevUser,
-            employer: {
-              ...prevUser.employer,
-              [employerField]: value
-            }
-          }));
-        } 
-        else 
-        {
-          // If not a nested field, update directly
-          setUser((prevUser) => ({
-            ...prevUser,
-            [name]: value
-          }));
-        }
+      const handleChange = (e) => {
+        const { name, value, type } = e.target;
+       
+            setUser((prevUser) => ({ ...prevUser, [name]: value }));
+        
+       
       };
 
       const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
     
-        // Append user data 
+        // Append user data
         if (user.name) formData.append('name', user.name);
-        if (user.employer.phone) formData.append('phone', user.employer.phone);
-        if (user.employer.current_address) formData.append('current_address', user.employer.current_address);
-        if (user.employer.permanent_address) formData.append('permanent_address', user.employer.permanent_address);
-        if (user.employer.adhar_card_no) formData.append('adhar_card_no', user.employer.adhar_card_no);
-        if (user.employer.qualification) formData.append('qualification', user.employer.qualification);
-        if (user.employer.certifications) formData.append('certifications', user.employer.certifications);
-        if (user.employer.skills) formData.append('skills', user.employer.skills);
-        if (user.employer.working_from) formData.append('working_from', user.employer.working_from);
-        if (user.employer.work_experience) formData.append('work_experience', user.employer.work_experience);
-        if (user.employer.current_working_skill) formData.append('current_working_skill', user.employer.current_working_skill);
-        if (user.employer.languages) formData.append('languages', user.employer.languages);
-        if (user.employer.hobbies) formData.append('hobbies', user.employer.hobbies);
-        if (user.employer.city) formData.append('city', user.employer.city);
-        if (user.employer.state) formData.append('state', user.employer.state);
-        if (user.employer.country) formData.append('country', user.employer.country);
-        if (user.employer.pincode) formData.append('pincode', user.employer.pincode); 
+        if (user.phone) formData.append('phone', user.phone);
+        if (user.current_address) formData.append('current_address', user.current_address);
+        if (user.permanent_address) formData.append('permanent_address', user.permanent_address);
+        if (user.adhar_card_no) formData.append('adhar_card_no', user.adhar_card_no);
+        if (user.qualification) formData.append('qualification', user.qualification);
+        if (user.certifications) formData.append('certifications', user.certifications);
+        if (user.skills) formData.append('skills', user.skills);
+        if (user.working_from) formData.append('working_from', user.working_from);
+        if (user.work_experience) formData.append('work_experience', user.work_experience);
+        if (user.current_working_skill) formData.append('current_working_skill', user.current_working_skill);
+        if (user.languages) formData.append('languages', user.languages);
+        if (user.hobbies) formData.append('hobbies', user.hobbies);
+        if (user.city) formData.append('city', user.city);
+        if (user.state) formData.append('state', user.state);
+        if (user.country) formData.append('country', user.country);
+        if (user.pincode) formData.append('pincode', user.pincode);
     
-        updateEmployerProfile(formData)
+        updateUserProfile(formData)
               .then((response) => {
                 setUser(response.data);
 
@@ -130,112 +110,112 @@ const EmployerEditProfile = ({user,setUser})=>{
                     <label className='mt-30'>Mobile Number</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="number"value={user.employer?.phone} onChange={handleChange} name="employer.phone"/>
+                    <input className="form-control mt-30" type="number"value={user.phone} onChange={handleChange} name="phone"/>
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Current Address</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.current_address} onChange={handleChange} name="employer.current_address"/>  
+                    <input className="form-control mt-30" type="text"value={user.current_address} onChange={handleChange} name="current_address"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Permanent Address</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.permanent_address} onChange={handleChange} name="employer.permanent_address"/>  
+                    <input className="form-control mt-30" type="text"value={user.permanent_address} onChange={handleChange} name="permanent_address"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Aadhar Number</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.adhar_card_no} onChange={handleChange} name="employer.adhar_card_no"/>  
+                    <input className="form-control mt-30" type="text"value={user.adhar_card_no} onChange={handleChange} name="adhar_card_no"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Qualification</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.qualification} onChange={handleChange} name="employer.qualification"/>  
+                    <input className="form-control mt-30" type="text"value={user.qualification} onChange={handleChange} name="qualification"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Certifications</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.certifications} onChange={handleChange} name="employer.certifications"/>  
+                    <input className="form-control mt-30" type="text"value={user.certifications} onChange={handleChange} name="certifications"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Skills</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.skills} onChange={handleChange} name="employer.skills"/>  
+                    <input className="form-control mt-30" type="text"value={user.skills} onChange={handleChange} name="skills"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Working From</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.working_from} onChange={handleChange} name="employer.working_from"/>  
+                    <input className="form-control mt-30" type="text"value={user.working_from} onChange={handleChange} name="working_from"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Work Experience</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.work_experience} onChange={handleChange} name="employer.work_experience"/>  
+                    <input className="form-control mt-30" type="text"value={user.work_experience} onChange={handleChange} name="work_experience"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Current working skill</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.current_working_skill} onChange={handleChange} name="employer.current_working_skill"/>  
+                    <input className="form-control mt-30" type="text"value={user.current_working_skill} onChange={handleChange} name="current_working_skill"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Languages</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.languages} onChange={handleChange} name="employer.languages"/>  
+                    <input className="form-control mt-30" type="text"value={user.languages} onChange={handleChange} name="languages"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Hobbies</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.hobbies} onChange={handleChange} name="employer.hobbies"/>  
+                    <input className="form-control mt-30" type="text"value={user.hobbies} onChange={handleChange} name="hobbies"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Country</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.country} onChange={handleChange} name="employer.country"/>  
+                    <input className="form-control mt-30" type="text"value={user.country} onChange={handleChange} name="country"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>State</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.state} onChange={handleChange} name="employer.state"/>  
+                    <input className="form-control mt-30" type="text"value={user.state} onChange={handleChange} name="state"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>City</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.city} onChange={handleChange} name="employer.city"/>  
+                    <input className="form-control mt-30" type="text"value={user.city} onChange={handleChange} name="city"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Pincode</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.pincode} onChange={handleChange} name="employer.pincode"/>  
+                    <input className="form-control mt-30" type="text"value={user.pincode} onChange={handleChange} name="pincode"/>  
                 </div>
 
 
@@ -271,7 +251,7 @@ const EmployerEditProfile = ({user,setUser})=>{
 </div>
 </div>
 </main>) : (
-    <p></p> 
+    <p className="btn head-btn2">Login</p> 
 )}
         </>
     )
