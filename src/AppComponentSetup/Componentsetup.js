@@ -89,13 +89,13 @@ const Componentsetup = ()=>{
        
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="job_listing" element={<FindJobs/>} /> 
+          <Route path="job-listing" element={<FindJobs/>} /> 
           <Route path="about" element={<About/>} />
           <Route path="contact" element={<Contact/>} />
           <Route path="blog" element={<Blog/>} />
           <Route path="blog-details" element={<BlogDetails/>} />
           <Route path="elements" element={<Elements/>} />
-          <Route path="job_details" element={<JobDetails/>} /> 
+          <Route path="job-details" element={<JobDetails/>} /> 
           {/* Add more routes here */}
 
           {/* Route not included in header menu */}

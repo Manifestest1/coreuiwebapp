@@ -58,6 +58,10 @@ import instance from './axios';
     return instance.get(`/public-profile-employee/${userId}`);
   };
 
+  export const createContactDetail = (data) => {
+    return instance.post('/create-contact', data );
+  };
+
   export const logoutUserProfile = () => {
     return instance.post('/logout');
   };
