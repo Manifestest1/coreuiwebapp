@@ -15,8 +15,8 @@ const AppHeader = ({ onLoginClick,loggedIn,user,logout })=>{
           gapi.load('auth2', () => {
             gapi.auth2.init({
               client_id: client_id,
-              scope: 'openid profile email',
-            }).then(() => {
+             scope: 'openid profile email',
+             }).then(() => {
               console.log('Google API client initialized');
             }).catch((error) => {
               console.error('Error initializing Google API client:', error);
@@ -78,14 +78,14 @@ return(
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
                                         <li><NavLink to="/">Home</NavLink></li>
-                                        <li><NavLink to="job_listing">Find a Jobs </NavLink></li>
+                                        <li><NavLink to="job-listing">Find a Jobs </NavLink></li>
                                         <li><NavLink to="about">About</NavLink></li>
                                         <li><NavLink to="/">Page</NavLink>
                                             <ul class="submenu">
                                                 <li><NavLink to="blog">Blog</NavLink></li>
                                                 <li><NavLink to="blog-details">Blog Details</NavLink></li>
                                                 <li><NavLink to="elements">Elements</NavLink></li>
-                                                <li><NavLink to="job_details">job Details</NavLink></li>
+                                                <li><NavLink to="job-details">job Details</NavLink></li>
                                             </ul>
                                         </li>
                                         <li><NavLink to="contact">Contact</NavLink></li>

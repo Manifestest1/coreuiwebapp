@@ -1,18 +1,32 @@
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
-import React,{ useState } from 'react';
-import {updateUserProfile} from '../../../../apiService';
+import React,{ useEffect, useState } from 'react';
+import {updateEmployerProfile } from '../../../../apiService';
 
 const EmployerEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
+    const [selectedImage, setSelectedImage] = useState(null);
 
       const handleChange = (e) => {
         const { name, value, type } = e.target;
-       
-            setUser((prevUser) => ({ ...prevUser, [name]: value }));
-        
-       
-      };
+        if (name.startsWith('employer.')) {
+            const employerField = name.split('.')[1];
+            setUser((prevUser) => ({
+                ...prevUser,
+                employer: {
+                    ...prevUser.employer,
+                    [employerField]: value
+                }
+            }));
+        } else {
+            // If not a nested field, update directly
+            setUser((prevUser) => ({
+                ...prevUser,
+                [name]: value
+            }));
+        }
+    };
+
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,24 +34,24 @@ const EmployerEditProfile = ({user,setUser})=>{
     
         // Append user data
         if (user.name) formData.append('name', user.name);
-        if (user.phone) formData.append('phone', user.phone);
-        if (user.current_address) formData.append('current_address', user.current_address);
-        if (user.permanent_address) formData.append('permanent_address', user.permanent_address);
-        if (user.adhar_card_no) formData.append('adhar_card_no', user.adhar_card_no);
-        if (user.qualification) formData.append('qualification', user.qualification);
-        if (user.certifications) formData.append('certifications', user.certifications);
-        if (user.skills) formData.append('skills', user.skills);
-        if (user.working_from) formData.append('working_from', user.working_from);
-        if (user.work_experience) formData.append('work_experience', user.work_experience);
-        if (user.current_working_skill) formData.append('current_working_skill', user.current_working_skill);
-        if (user.languages) formData.append('languages', user.languages);
-        if (user.hobbies) formData.append('hobbies', user.hobbies);
-        if (user.city) formData.append('city', user.city);
-        if (user.state) formData.append('state', user.state);
-        if (user.country) formData.append('country', user.country);
-        if (user.pincode) formData.append('pincode', user.pincode);
+        if (user.employer?.phone) formData.append('phone', user.employer.phone);
+        if (user.employer?.current_address) formData.append('current_address', user.employer?.current_address);
+        if (user.employer?.permanent_address) formData.append('permanent_address', user.employer?.permanent_address);
+        if (user.employer?.adhar_card_no) formData.append('adhar_card_no', user.employer?.adhar_card_no);
+        if (user.employer?.qualification) formData.append('qualification', user.employer?.qualification);
+        if (user.employer?.certifications) formData.append('certifications', user.employer?.certifications);
+        if (user.employer?.skills) formData.append('skills', user.employer?.skills);
+        if (user.employer?.working_from) formData.append('working_from', user.employer?.working_from);
+        if (user.employer?.work_experience) formData.append('work_experience', user.employer?.work_experience);
+        if (user.employer?.current_working_skill) formData.append('current_working_skill', user.employer?.current_working_skill);
+        if (user.employer?.languages) formData.append('languages', user.employer?.languages);
+        if (user.employer?.hobbies) formData.append('hobbies', user.employer?.hobbies);
+        if (user.employer?.city) formData.append('city', user.employer?.city);
+        if (user.employer?.state) formData.append('state', user.employer?.state);
+        if (user.employer?.country) formData.append('country', user.employer?.country);
+        if (user.employer?.pincode) formData.append('pincode', user.employer?.pincode);
     
-        updateUserProfile(formData)
+        updateEmployerProfile (formData)
               .then((response) => {
                 setUser(response.data);
 
