@@ -45,22 +45,21 @@ const EmployeeProfile = ({user,setUser})=>{
         }
       };
 
-       // Start PDF Download code
-       const pdfRef = useRef();
+      // Start PDF Download code
+      const pdfRef = useRef();
 
-       const downloadPDF = () => {
-      
-         if (pdfRef.current) 
-         {
-             html2canvas(pdfRef.current).then((canvas) => {
-                 const imgData = canvas.toDataURL('image/png');
-                 const pdf = new jsPDF('p', 'mm', 'a4');
-                 pdf.addImage(imgData, 'PNG', 15, 15, 180, 120); // A4 size: 210 x 297 mm
-                 pdf.save('employer_profile.pdf');
-             });
-         }
-     };
-    
+      const downloadPDF = () => {
+     
+        if (pdfRef.current) 
+        {
+            html2canvas(pdfRef.current).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 15, 15, 180, 120); // A4 size: 210 x 297 mm
+                pdf.save('employer_profile.pdf');
+            });
+        }
+    };
 
       // const downloadPDF = () => {
     //     // Create a new HTML element to hold the user-selected image
