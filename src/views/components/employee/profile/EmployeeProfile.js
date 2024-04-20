@@ -287,6 +287,13 @@ const EmployeeProfile = ({user,setUser})=>{
                     <label className='mt-30'>{user.employee?.pincode}</label>  
                 </div>
 
+                <div className='col-lg-3 label-customcss'>
+                    <label className='mt-30'>Gender</label>
+                </div>
+                <div className='col-lg-3'>
+                    <label className='mt-30'>{user.employee?.gender}</label>  
+                </div>
+
 
 
             </div>

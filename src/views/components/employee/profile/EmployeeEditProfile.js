@@ -1,19 +1,66 @@
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
-import {updateUserProfile,updateEmployeeProfile} from '../../../../apiService';
+import {getCountry,updateEmployeeProfile ,getState,getCity} from '../../../../apiService';
 
 const EmployeeEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
     const [selectedImage, setSelectedImage] = useState(null);
+    const [countryName, setcountryName] = useState(['']);
+    //  const [countryid, setcountryId] = useState();
+    // const [stateid, setstateid] = useState();
+    const [stateName, setstateName] = useState([]);
+    const [cityName, setcityName] = useState([]);
 
-    //   const handleChange = (e) => {
-    //     const { name, value, type } = e.target;
-    //         setUser((prevUser) => ({ ...prevUser, [name]: value }));
-        
-       
-    //   };
-
+    useEffect(() => {
+        fetchCountries();
+        fetchStates();
+        fetchCities();
+    }, []);
+    
+    const fetchCountries = () => {
+        getCountry()
+            .then((response) => {
+                console.log(response, 'Country Name');
+                setcountryName(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching countries:', error);
+            });
+    };
+    
+    const fetchStates = (countryId) => {
+        getState(countryId)
+            .then((response) => {
+                console.log(response, 'State Name');
+                setstateName(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching states:', error);
+            });
+    };
+    
+    const fetchCities = (stateId) => {
+        getCity(stateId)
+            .then((response) => {
+                console.log(response, 'City Name');
+                setcityName(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching cities:', error);
+            });
+    };
+    
+    const hendleContry = (e) => {
+        const countryId = e.target.value;
+        fetchStates(countryId);
+    };
+    
+    // const handleState = (e) => {
+    //     // const stateId = e.target.value;
+    //     // fetchCities(stateId);
+    // };
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
     
@@ -38,6 +85,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
             }));
         }
     };
+ 
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -61,6 +109,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
         if (user.employee?.state) formData.append('state', user.employee?.state);
         if (user.employee?.country) formData.append('country', user.employee?.country);
         if (user.employee?.pincode) formData.append('pincode', user.employee?.pincode);
+        if (user.employee?.gender) formData.append('gender', user.employee?.gender);
     
         
         updateEmployeeProfile(formData)
@@ -217,24 +266,38 @@ const EmployeeEditProfile = ({user,setUser})=>{
                 </div>
 
                 <div className='col-lg-2'>
-                    <label className='mt-30'>Country</label>
+                    <label className='mt-30'>country</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.country} onChange={handleChange} name="employee.country"/>  
+                    <select className='form-control mt-30' name="employee.country" onChange={handleChange} value={user.employee?.country}>
+                        <option value="">Select country</option>
+                        {countryName && countryName.map((country, index) => (
+                            <option key={index} value={country.id} onChange={hendleContry}>{country.name}</option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>State</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.state} onChange={handleChange} name="employee.state"/>  
+                    <select className='form-control mt-30'  name="employee.state"onChange={handleChange} value={user.employee?.state}>
+                        <option value="">Select state</option>
+                        {stateName && stateName.map((state, index) => (
+                        <option key={index} value={state.state_id}>{state.state_name}</option>
+                        ))}
+                    </select>
                 </div>
-
                 <div className='col-lg-2'>
                     <label className='mt-30'>City</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.city} onChange={handleChange} name="employee.city"/>  
+                    <select className='form-control mt-30' onChange={handleChange} name="employee.city" value={user?.employee?.city || ''}>
+                        <option value="">Select City</option>
+                        {cityName && cityName.map((city, index) => (
+                        <option key={index} value={city.city_name}>{city.city_name}</option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className='col-lg-2'>
@@ -243,20 +306,20 @@ const EmployeeEditProfile = ({user,setUser})=>{
                 <div className='col-lg-10'>
                     <input className="form-control mt-30" type="text"value={user.employee?.pincode} onChange={handleChange} name="employee.pincode"/>  
                 </div>
+                <div className='col-lg-2'>
+                    <label className='mt-30'>Gender</label>
+                </div>
+                <div className='col-lg-10'>
+                    <select className='form-control mt-30'  onChange={handleChange} name="employee.gender" value={user.employee?.gender}>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
 
-
-
-            </div>
-           
-           
             
-           
-            
-                {/* <select className="form-control mt-30" name="select">
-                    <option value="">All Category</option>
-                    <option value="1">Employee</option>
-                    <option value="2">Employer</option>
-                </select> */}
+                </div>
                 <div class="row">
                     <div className='col-lg-5'></div>
                     <div className='col-lg-5'>
@@ -271,14 +334,14 @@ const EmployeeEditProfile = ({user,setUser})=>{
         
     </div>
     {/* <!-- Job Category Listing End --> */} 
-</div>
+    </div>
 
 </div>
 </div>
 </div>
 
 </main>) : (
-    <p className="btn head-btn2">Login</p> 
+    <p></p> 
 )}
         </>
     )

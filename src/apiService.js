@@ -62,6 +62,19 @@ import instance from './axios';
     return instance.post('/create-contact', data );
   };
 
+  // Get Country Api
+  export const getCountry = () => { 
+    return instance.get('/get-country');
+  };
+
+  export const getState = (countryId) => { 
+    return instance.get(`/get-state/${countryId}`);
+  };
+
+  export const getCity = (stateId) => { 
+    return instance.get(`/get-city/${stateId}`);
+  };
+
   export const logoutUserProfile = () => {
     return instance.post('/logout');
   };
