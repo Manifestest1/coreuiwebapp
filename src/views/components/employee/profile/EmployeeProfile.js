@@ -53,7 +53,7 @@ const EmployeeProfile = ({ user, setUser }) => {
             html2canvas(divElement).then((canvas) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('p', 'mm', 'a4');
-                pdf.addImage(imgData, 'PNG', 15, 15, 180, 180); // A4 size: 210 x 297 mm
+                pdf.addImage(imgData, 'PNG', 15, 15, 150, 150); // A4 size: 210 x 297 mm
                 pdf.save('employer_profile.pdf');
             });
         }

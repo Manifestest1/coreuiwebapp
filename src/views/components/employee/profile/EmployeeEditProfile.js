@@ -45,7 +45,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
     
         // Append user data
         if (user.name) formData.append('name', user.name);
-        if (user.employee?.phone) formData.append('phone', user.employee.phone);
+        if (user.employee?.phone) formData.append('phone', user.employee?.phone);
         if (user.employee?.current_address) formData.append('current_address', user.employee?.current_address);
         if (user.employee?.permanent_address) formData.append('permanent_address', user.employee?.permanent_address);
         if (user.employee?.adhar_card_no) formData.append('adhar_card_no', user.employee?.adhar_card_no);
@@ -137,7 +137,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                     <label className='mt-30'>Mobile Number</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="number"value={user.employee.phone} onChange={handleChange} name="employee.phone"/>
+                    <input className="form-control mt-30" type="number"value={user.employee?.phone} onChange={handleChange} name="employee.phone"/>
                 </div>
 
                 <div className='col-lg-2'>

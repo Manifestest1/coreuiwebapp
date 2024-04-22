@@ -1,14 +1,14 @@
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
-import {updateEmployerProfile } from '../../../../apiService';
+import {updateEmployerProfile,updateUserProfile } from '../../../../apiService';
 
 const EmployerEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
     const [selectedImage, setSelectedImage] = useState(null);
 
       const handleChange = (e) => {
-        const { name, value, type } = e.target;
+        const { name, value} = e.target;
         if (name.startsWith('employer.')) {
             const employerField = name.split('.')[1];
             setUser((prevUser) => ({
@@ -18,7 +18,8 @@ const EmployerEditProfile = ({user,setUser})=>{
                     [employerField]: value
                 }
             }));
-        } else {
+        } 
+        else {
             // If not a nested field, update directly
             setUser((prevUser) => ({
                 ...prevUser,
@@ -34,7 +35,7 @@ const EmployerEditProfile = ({user,setUser})=>{
     
         // Append user data
         if (user.name) formData.append('name', user.name);
-        if (user.employer?.phone) formData.append('phone', user.employer.phone);
+        if (user.employer?.phone) formData.append('phone', user.employer?.phone);
         if (user.employer?.current_address) formData.append('current_address', user.employer?.current_address);
         if (user.employer?.permanent_address) formData.append('permanent_address', user.employer?.permanent_address);
         if (user.employer?.adhar_card_no) formData.append('adhar_card_no', user.employer?.adhar_card_no);
@@ -117,119 +118,119 @@ const EmployerEditProfile = ({user,setUser})=>{
                     <label className='mt-30'>Email</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text" value={user.email} onChange={handleChange} name="email"/>
+                    <input className="form-control mt-30" type="email" value={user.email} onChange={handleChange} name="email"/>
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Mobile Number</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="number"value={user.employer?.phone} onChange={handleChange} name="phone"/>
+                    <input className="form-control mt-30" type="number"value={user.employer?.phone} onChange={handleChange} name="employer.phone"/>
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Current Address</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.current_address} onChange={handleChange} name="current_address"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.current_address} onChange={handleChange} name="employer.current_address"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Permanent Address</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.permanent_address} onChange={handleChange} name="permanent_address"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.permanent_address} onChange={handleChange} name="employer.permanent_address"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Aadhar Number</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.adhar_card_no} onChange={handleChange} name="adhar_card_no"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.adhar_card_no} onChange={handleChange} name="employer.adhar_card_no"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Qualification</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.qualification} onChange={handleChange} name="qualification"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.qualification} onChange={handleChange} name="employer.qualification"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Certifications</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.certifications} onChange={handleChange} name="certifications"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.certifications} onChange={handleChange} name="employer.certifications"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Skills</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.skills} onChange={handleChange} name="skills"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.skills} onChange={handleChange} name="employer.skills"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Working From</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.working_from} onChange={handleChange} name="working_from"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.working_from} onChange={handleChange} name="employer.working_from"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Work Experience</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.work_experience} onChange={handleChange} name="work_experience"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.work_experience} onChange={handleChange} name="employer.work_experience"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Current working skill</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.current_working_skill} onChange={handleChange} name="current_working_skill"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.current_working_skill} onChange={handleChange} name="employer.current_working_skill"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Languages</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.languages} onChange={handleChange} name="languages"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.languages} onChange={handleChange} name="employer.languages"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Hobbies</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.hobbies} onChange={handleChange} name="hobbies"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.hobbies} onChange={handleChange} name="employer.hobbies"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Country</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.country} onChange={handleChange} name="country"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.country} onChange={handleChange} name="employer.country"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>State</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.state} onChange={handleChange} name="state"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.state} onChange={handleChange} name="employer.state"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>City</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.city} onChange={handleChange} name="city"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.city} onChange={handleChange} name="employer.city"/>  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Pincode</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employer?.pincode} onChange={handleChange} name="pincode"/>  
+                    <input className="form-control mt-30" type="text"value={user.employer?.pincode} onChange={handleChange} name="employer.pincode"/>  
                 </div>
 
 
@@ -265,7 +266,7 @@ const EmployerEditProfile = ({user,setUser})=>{
 </div>
 </div>
 </main>) : (
-    <p className="btn head-btn2">Login</p> 
+    <p></p> 
 )}
         </>
     )
