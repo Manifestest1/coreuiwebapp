@@ -15,7 +15,7 @@ const Contact = ()=>{
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log("Contact form submitted:", contactData);
         createContactDetail(contactData)
         .then((response) => {
             console.log("Contact form submitted:", response.data);

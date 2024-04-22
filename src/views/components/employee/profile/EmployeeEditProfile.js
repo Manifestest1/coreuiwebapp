@@ -7,18 +7,13 @@ const EmployeeEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
     const [selectedImage, setSelectedImage] = useState(null);
     const [countryName, setcountryName] = useState(['']);
-    //  const [countryid, setcountryId] = useState();
+     const [countryId, setCountryId] = useState();
     // const [stateid, setstateid] = useState();
     const [stateName, setstateName] = useState([]);
     const [cityName, setcityName] = useState([]);
 
-    useEffect(() => {
-        fetchCountries();
-        fetchStates();
-        fetchCities();
-    }, []);
     
-    const fetchCountries = () => {
+    useEffect(() => {
         getCountry()
             .then((response) => {
                 console.log(response, 'Country Name');
@@ -26,35 +21,36 @@ const EmployeeEditProfile = ({user,setUser})=>{
             })
             .catch((error) => {
                 console.error('Error fetching countries:', error);
-            });
-    };
-    
-    const fetchStates = (countryId) => {
+            
+    });
+});
+        // const hendelChange = (event) => {
+        //         const getcontryid = event.target.value;
+        //         setCountryId(getcontryid);
+        // }
+
+
+    useEffect(() => {
         getState(countryId)
             .then((response) => {
                 console.log(response, 'State Name');
                 setstateName(response.data);
             })
-            .catch((error) => {
-                console.error('Error fetching states:', error);
-            });
-    };
-    
-    const fetchCities = (stateId) => {
-        getCity(stateId)
+           
+},[countryId]);
+    useEffect(() => {
+        getCity()
             .then((response) => {
                 console.log(response, 'City Name');
                 setcityName(response.data);
             })
             .catch((error) => {
                 console.error('Error fetching cities:', error);
-            });
-    };
+            
+    });
+    });
     
-    const hendleContry = (e) => {
-        const countryId = e.target.value;
-        fetchStates(countryId);
-    };
+   
     
     // const handleState = (e) => {
     //     // const stateId = e.target.value;
@@ -269,14 +265,13 @@ const EmployeeEditProfile = ({user,setUser})=>{
                     <label className='mt-30'>country</label>
                 </div>
                 <div className='col-lg-10'>
-                    <select className='form-control mt-30' name="employee.country" onChange={handleChange} value={user.employee?.country}>
+                     <select className='form-control mt-30' name="employee.country" onChange={handleChange}  value={user.employee?.country}>
                         <option value="">Select country</option>
                         {countryName && countryName.map((country, index) => (
-                            <option key={index} value={country.id} onChange={hendleContry}>{country.name}</option>
+                            <option key={index} value={country.id} >{country.name}</option>
                         ))}
                     </select>
                 </div>
-
                 <div className='col-lg-2'>
                     <label className='mt-30'>State</label>
                 </div>

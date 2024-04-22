@@ -1,97 +1,63 @@
-import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
-import React,{ useEffect, useState,useRef } from 'react';
-import {updateUserProfile} from '../../../../apiService';
+import { BrowserRouter as Router, Switch, Route, Link, NavLink, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { updateUserProfile } from '../../../../apiService';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-const EmployeeProfile = ({user,setUser})=>{
-
+const EmployeeProfile = ({ user, setUser }) => {
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
 
-     // Function to handle image update
-     const handleImageUpdate = () => {
+    // Function to handle image update
+    const handleImageUpdate = () => {
         // Trigger file selection dialog
         document.getElementById('imageInput').click();
-      };
-  
+    };
+
     // Function to handle image selection
     const handleImageChange = (e) => {
-      const file = e.target.files[0];
-      if (file) 
-      {
-        setImageFile(file);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImagePreview(reader.result);
-        };
-        reader.readAsDataURL(file);
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
 
-        // Update the image in the API
-        updateUserImage(file);
-      }
+            // Update the image in the API
+            updateUserImage(file);
+        }
     };
 
     const updateUserImage = async (file) => {
         try {
-          const formData = new FormData();
-          formData.append('imageurl', file);
-          // Send the updated image to the API
-          const response = await updateUserProfile(formData);
-          setUser(response.data);
-          console.warn('Image updated successfully', response.data);
+            const formData = new FormData();
+            formData.append('imageurl', file);
+            // Send the updated image to the API
+            const response = await updateUserProfile(formData);
+            setUser(response.data);
+            console.warn('Image updated successfully', response.data);
         } catch (error) {
-          console.error('Error updating image', error);
+            console.error('Error updating image', error);
         }
-      };
+    };
 
-      // Start PDF Download code
-      const pdfRef = useRef();
+    const pdfRef = useRef();
 
-      const downloadPDF = () => {
-     
-        if (pdfRef.current) 
-        {
-            html2canvas(pdfRef.current).then((canvas) => {
+    const downloadPDF = () => {
+        if (pdfRef.current) {
+            const divElement = pdfRef.current;
+            divElement.style.fontSize = '25px'; // Adjust font size as needed
+
+            html2canvas(divElement).then((canvas) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('p', 'mm', 'a4');
-                pdf.addImage(imgData, 'PNG', 15, 15, 180, 120); // A4 size: 210 x 297 mm
+                pdf.addImage(imgData, 'PNG', 15, 15, 180, 180); // A4 size: 210 x 297 mm
                 pdf.save('employer_profile.pdf');
             });
         }
     };
-
-      // const downloadPDF = () => {
-    //     // Create a new HTML element to hold the user-selected image
-    //     const image = new Image();
-    //     image.src = user.imageurl; // Use the user-selected image
-    
-    //     // When the image is loaded, generate the PDF
-    //     image.onload = () => {
-    //         const pdf = new jsPDF('p', 'mm', 'a4');
-    //         pdf.addImage(image, 'JPEG', 15, 15, 180, 120); // Add user-selected image to PDF
-    //         pdf.save('employer_profile.pdf');
-    //     };
-    // };
-
-// const downloadPDF = () => {
-//     const pdf = new jsPDF();
-//     const img = new Image();
-//     // img.src = user?.imageurl || 'default-profile-image-url'; // Assuming user.imageurl contains the URL of the JPEG image
-//     img.src = imagePreview; // Assuming user.imageurl contains the URL of the JPEG image
-//     console.log(img,"get Image");
-//     img.onload = () => {
-//       const imgWidth = 150;
-//       const imgHeight = 145;
-//       const aspectRatio = img.width / img.height;
-//       const pdfWidth = 180;
-//       const pdfHeight = pdfWidth / aspectRatio;
-//       pdf.addImage(img, 'JPEG', 15, 15, imgWidth, imgHeight);
-//       pdf.save('employer_profile.pdf');
-//     };
-//   };
- 
-   // End PDF Download code
 
     return(
         <>

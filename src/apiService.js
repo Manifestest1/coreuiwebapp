@@ -25,6 +25,10 @@ import instance from './axios';
     return instance.post('/update-employee-profile', user );
   };
 
+  export const updateEmployerProfile = (user) => {
+    return instance.post('/update-employer-profile', user );
+  };
+
   export const createJobPost = (job) => {
     return instance.post('/create-jobpost', job );
   };
