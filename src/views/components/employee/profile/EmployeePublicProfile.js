@@ -81,63 +81,63 @@ const EmployeePublicProfile = ()=>{
             <label className='mt-30 label-customcss'>Mobile Number</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.phone}</label> 
+            <label className='mt-30'>{user.employee?.phone}</label> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Current Address</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.current_address}</label> 
+            <label className='mt-30'>{user.employee?.current_address}</label> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Permanent Address</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.permanent_address}</label>   
+            <label className='mt-30'>{user.employee?.permanent_address}</label>   
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Aadhar Number</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.adhar_card_no}</label>  
+            <label className='mt-30'>{user.employee?.adhar_card_no}</label>  
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Qualification</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.qualification}</label>  
+            <label className='mt-30'>{user.employee?.qualification}</label>  
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Certifications</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.certifications}</label> 
+            <label className='mt-30'>{user.employee?.certifications}</label> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Skills</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.skills}</label> 
+            <label className='mt-30'>{user.employee?.skills}</label> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Working From</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.working_from}</label>  
+            <label className='mt-30'>{user.employee?.working_from}</label>  
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Work Experience</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.work_experience}</label> 
+            <label className='mt-30'>{user.employee?.work_experience}</label> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
@@ -151,42 +151,42 @@ const EmployeePublicProfile = ()=>{
             <label className='mt-30 label-customcss'>Languages</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.languages}</label> 
+            <label className='mt-30'>{user.employee?.languages}</label> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Hobbies</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.hobbies}</label> 
+            <label className='mt-30'>{user.employee?.hobbies}</label> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Country</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.country}</label> 
+            <label className='mt-30'>{user.employee?.country}</label> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>State</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.state}</label> 
+            <label className='mt-30'>{user.employee?.state}</label> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>City</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.city}</label>   
+            <label className='mt-30'>{user.employee?.city}</label>   
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Pincode</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.pincode}</label>  
+            <label className='mt-30'>{user.employee?.pincode}</label>  
         </div>
 
 
