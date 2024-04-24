@@ -79,7 +79,7 @@ const EmployerJobs = ()=>{
 
                             <div className='col-lg-2'style={{marginTop:'30px',marginLeft:'0px'}}>
                               <p className="fw-bold" style={{color: '#252b60',background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>
-                              Jobs <span style={{padding: '15px 15px 15px 15px',color:'white',margin:'30px',background: '#252b60',borderRadius: '50%'}}>{searchResults.length}</span> </p>
+                              Jobs <span style={{padding: '4px 9px 4px 9px',color:'white',margin:'30px',background: '#252b60',borderRadius: '50%'}}>{searchResults.length}</span> </p>
                             </div>
                             <table style={{textAlign:'center',marginTop:'10px'}} className="table table-striped">
                                 <thead>

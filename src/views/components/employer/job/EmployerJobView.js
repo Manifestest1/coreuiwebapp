@@ -8,6 +8,7 @@ const EmployerJobView = ()=>{
     const [job, setJob] = useState({name: '',phone: null,imageurl: null});
     const [jobPostUsers, setjobPostUsers] = useState();
     const [countjobPostUsers, setCountjobPostUsers] = useState();
+    const [favJobCount, setFavJobCount] = useState();
 
     useEffect(() => {
         getJobViewEmployer(jobId)
@@ -15,11 +16,14 @@ const EmployerJobView = ()=>{
             console.log(r.data,"job view Users");
           setJob(r.data.job);
           setjobPostUsers(r.data.jobpostusers);
-          setCountjobPostUsers(r.data.count)
+          setCountjobPostUsers(r.data.count);
+          setFavJobCount(r.data.favjobcountuser);
         })
         .catch((e) => {
             console.log(e)
         });
+       
+
       }, []); // Empty dependency array to ensure the effect runs only once
 
     return(
@@ -64,8 +68,8 @@ const EmployerJobView = ()=>{
                         <h4>Job</h4>
                     </div>
                     <div className='col-lg-2'>
-                       <p className="fw-bold" style={{background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>
-                       <NavLink to="/favourite-jobs"  style={{padding: '15px 15px 15px 15px',color:'black'}}>Favourite Jobs</NavLink> </p>
+                       <p className="fw-bold" style={{background:'#ededed',color: '#252b60',padding:'7px', fontSize: '16px',fontWeight:700 }}>
+                       Favourite Jobs<NavLink to="/favourite-jobs"  style={{marginLeft:'10px', padding: '4px 9px 4px 9px',background: '#252b60',color:'white',borderRadius: '50%'}}>{favJobCount}</NavLink> </p>
                     </div>
 
                     <div className='col-lg-2'>

@@ -113,7 +113,7 @@ const EmployeeJobs = ()=>{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {searchResults.map(job => (
+                                    {searchResults.map(job => ( 
                                         <tr key={job.id}>
                                             <td>{job.id}</td>
                                             <td>
