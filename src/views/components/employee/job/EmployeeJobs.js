@@ -1,11 +1,12 @@
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
-import {getJobonEmployee,searchJobGet} from '../../../../apiService';
+import {getJobonEmployee,searchJobGet,favrouiteJOb} from '../../../../apiService';
 
 const EmployeeJobs = ()=>{
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [jobResults, setJobResults] = useState([]); 
+  const [favJobResults, setFavJobResults] = useState([]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +33,7 @@ const EmployeeJobs = ()=>{
             console.log(r,"Job Get");
             setSearchResults(r.data.job);
             setJobResults(r.data.userJobPosts);
+            setFavJobResults(r.data.userFavJob);
         })
         .catch((e) => {
             if(e.response.status == 401)
@@ -44,6 +46,26 @@ const EmployeeJobs = ()=>{
       const isJobInUserPosts = (jobId) => {
         return jobResults.some((userJob) => userJob.id === jobId);
       };
+
+      const isFavJobInUser = (jobId,status) => {
+        console.log(favJobResults,"Fav  Job");
+        return favJobResults.some((userJob) => userJob.id === jobId && userJob.pivot.job_like == status);
+      };
+
+      const favJob = (jobId)=> {
+        console.log(jobId,"check fun")
+        favrouiteJOb(jobId)
+        .then((r) => {
+             // Assuming setFavJobResults is a function to update the state with the new favorite job
+             setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
+        })
+        .catch((e) => {
+            if(e.response.status == 401)
+            {
+               
+            }
+        });
+      }
 
     return(
         <>
@@ -94,12 +116,22 @@ const EmployeeJobs = ()=>{
                                     {searchResults.map(job => (
                                         <tr key={job.id}>
                                             <td>{job.id}</td>
-                                            <td>{job.title}</td>
+                                            <td>
+                                              <NavLink style={{color:'black'}}to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
+                                          </td>
                                             <td>{job.location}</td>
                                             <td>{job.description}</td>
                                             {isJobInUserPosts(job.id) ?<td style={{color:'green'}}>APPLIED</td> :  
                                             <td><NavLink to={`/employee-job-view/${job.id}`}><i style={{color:'black'}} class="fa fa-eye fa-lg"></i></NavLink></td>
                                             }
+                                            
+                                            {/* <td onClick={()=>favJob(job.id)}><i style={{color:'black'}}class="fa fa-heart" aria-hidden="true"></i></td> */}
+                                            {isFavJobInUser(job.id,"1") ?<td onClick={() => favJob(job.id)}><i style={{ color: 'red' }} class="fa fa-heart" aria-hidden="true"></i></td> :
+                                              <td onClick={() => favJob(job.id)}>
+                                                <i style={{ color: 'black' }} class="fa fa-heart" aria-hidden="true"></i>
+                                              </td>
+                                            }
+
                                         </tr>
                                     ))}
                                 </tbody>
