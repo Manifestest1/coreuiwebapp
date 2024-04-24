@@ -76,7 +76,12 @@ const EmployerJobs = ()=>{
                             <div className='col-lg-2'>
                                <NavLink to="/employer-job-create" className="btn head-btn2">Job Create</NavLink>
                             </div>
-                            <table style={{textAlign:'center',marginTop:'50px'}} className="table table-striped">
+
+                            <div className='col-lg-2'style={{marginTop:'30px',marginLeft:'0px'}}>
+                              <p className="fw-bold" style={{color: '#252b60',background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>
+                              Jobs <span style={{padding: '15px 15px 15px 15px',color:'white',margin:'30px',background: '#252b60',borderRadius: '50%'}}>{searchResults.length}</span> </p>
+                            </div>
+                            <table style={{textAlign:'center',marginTop:'10px'}} className="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

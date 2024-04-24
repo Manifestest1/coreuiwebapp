@@ -60,12 +60,17 @@ const EmployerJobView = ()=>{
         <div class="single-listing">
            <div class="small-section-tittle2"> 
                 <div className='row'>
-                    <div className='col-lg-10'>
+                    <div className='col-lg-8'>
                         <h4>Job</h4>
                     </div>
                     <div className='col-lg-2'>
-                    {countjobPostUsers > 0 ? (<p className="fw-bold" style={{color: '#252b60',background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>
-              Job Post Users <span style={{padding: '4px 9px 4px 9px',color:'white',background: '#252b60',borderRadius: '50%'}}>{countjobPostUsers}</span> </p>): ('')}
+                       <p className="fw-bold" style={{background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>
+                       <NavLink to="/favourite-jobs"  style={{padding: '15px 15px 15px 15px',color:'black'}}>Favourite Jobs</NavLink> </p>
+                    </div>
+
+                    <div className='col-lg-2'>
+                       {countjobPostUsers > 0 ? (<p className="fw-bold" style={{color: '#252b60',background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>
+                       Job Post Users <span style={{padding: '4px 9px 4px 9px',color:'white',background: '#252b60',borderRadius: '50%'}}>{countjobPostUsers}</span> </p>): ('')}
                     </div>
                 </div>
                

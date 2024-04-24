@@ -28,6 +28,7 @@ import EmployerEditProfile from "../views/components/employer/profile/EmployerEd
 import EmployerJobs from "../views/components/employer/job/EmployerJobs";
 import EmployerJobCreate from "../views/components/employer/job/EmployerJobCreate";
 import EmployerJobView from "../views/components/employer/job/EmployerJobView";
+import FavouriteJobs from "../views/components/employer/job/FavouriteJobs";
 
 const Componentsetup = ()=>{
     const navigate = useNavigate();
@@ -119,6 +120,7 @@ const Componentsetup = ()=>{
           <Route path="/employer-jobs" element={<EmployerJobs/>}/>
           <Route path="/employer-job-create" element={<EmployerJobCreate/>}/>
           <Route path="/employer-job-view/:jobId" element={<EmployerJobView/>}/>
+          <Route path="/favourite-jobs" element={<FavouriteJobs/>}/>
 
           {/* End Employer Routes */}
         </Routes>

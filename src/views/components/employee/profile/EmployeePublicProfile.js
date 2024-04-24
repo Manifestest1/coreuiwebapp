@@ -1,11 +1,14 @@
 import { BrowserRouter as Router, Switch, Route, useParams, NavLink,useNavigate } from 'react-router-dom';
-import React,{ useEffect, useState } from 'react';
+import React,{ useEffect, useState, useRef } from 'react';
 import {getPublicEmployeeProfile} from '../../../../apiService'; 
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const EmployeePublicProfile = ()=>{
     const navigate = useNavigate()
     const { userId } = useParams();
     const [user, setUser] = useState({})
+    const [imageLoaded, setImageLoaded] = useState(false)
 
     useEffect(() => {
         getPublicEmployeeProfile(userId)
@@ -15,10 +18,38 @@ const EmployeePublicProfile = ()=>{
         .catch((e) => {
             console.log(e)
         });
-      }, []); // Empty dependency array to ensure the effect runs only once
+        if (user.imageurl) {
+            const image = new Image();
+            image.onload = () => {
+                setImageLoaded(true);
+            };
+            image.src = user.imageurl;
+        }
+    }, [user.imageurl]);
+    
+    useEffect(() => {
+        downloadPDF();
+    }, [imageLoaded]);
+    // Empty dependency array to ensure the effect runs only once
+      const pdfRef = useRef();
+
+      const downloadPDF = () => {
+        if (pdfRef.current && imageLoaded) {
+            const divElement = pdfRef.current;
+            divElement.style.fontSize = '25px'; // Adjust font size as needed
+    
+            html2canvas(divElement).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 15, 15, 150, 150); // A4 size: 210 x 297 mm
+                pdf.save('employer_profile.pdf');
+            });
+        }
+    };
 
     return(
         <>
+{user ? (
          <main>
 
 {/* <!-- Hero Area Start--> */}
@@ -56,10 +87,14 @@ const EmployeePublicProfile = ()=>{
     <div class="select-job-items2">
     <form>
    
-    <div className='row'>
+    <div className='row' ref={pdfRef}>
        
         <div className='col-lg-12' style={{textAlign:'center'}}>
            <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+        </div>
+
+        <div className='col-lg-11' style={{textAlign:'end'}}>
+           <button onClick={downloadPDF} className='btn'>Download PDF</button>
         </div>
        
         
@@ -67,126 +102,126 @@ const EmployeePublicProfile = ()=>{
             <label className='mt-30 label-customcss'>Name</label>
         </div>
         <div className='col-lg-3'>
-           <label className='mt-30'>{user.name}</label>
+           <div className='mt-30'>{user.name}</div>
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Email</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.email}</label>
+            <div className='mt-30'>{user.email}</div>
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Mobile Number</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.phone}</label> 
+            <div className='mt-30'>{user.employee?.phone}</div> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Current Address</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.current_address}</label> 
+            <div className='mt-30'>{user.employee?.current_address}</div> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Permanent Address</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.permanent_address}</label>   
+            <div className='mt-30'>{user.employee?.permanent_address}</div>   
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Aadhar Number</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.adhar_card_no}</label>  
+            <div className='mt-30'>{user.employee?.adhar_card_no}</div>  
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Qualification</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.qualification}</label>  
+            <div className='mt-30'>{user.employee?.qualification}</div>  
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Certifications</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.certifications}</label> 
+            <div className='mt-30'>{user.employee?.certifications}</div> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Skills</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.skills}</label> 
+            <div className='mt-30'>{user.employee?.skills}</div> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Working From</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.working_from}</label>  
+            <div className='mt-30'>{user.employee?.working_from}</div>  
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Work Experience</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.work_experience}</label> 
+            <div className='mt-30'>{user.employee?.work_experience}</div> 
         </div>
 
         <div className='col-lg-3 label-customcss'>
             <label className='mt-30'>Current working skill</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.current_working_skill}</label> 
+            <div className='mt-30'>{user.employee?.current_working_skill}</div> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Languages</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.languages}</label> 
+            <div className='mt-30'>{user.employee?.languages}</div> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Hobbies</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.hobbies}</label> 
+            <div className='mt-30'>{user.employee?.hobbies}</div> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Country</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.country}</label> 
+            <div className='mt-30'>{user.employee?.country}</div> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>State</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.state}</label> 
+            <div className='mt-30'>{user.employee?.state}</div> 
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>City</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.city}</label>   
+            <div className='mt-30'>{user.employee?.city}</div>   
         </div>
 
         <div className='col-lg-3'>
             <label className='mt-30 label-customcss'>Pincode</label>
         </div>
         <div className='col-lg-3'>
-            <label className='mt-30'>{user.employee?.pincode}</label>  
+            <div className='mt-30'>{user.employee?.pincode}</div>  
         </div>
 
 
@@ -213,6 +248,9 @@ const EmployeePublicProfile = ()=>{
 </div>
 </div>
 </main>
+) : (
+            <p></p> 
+        )}
         </>
     )
 }
