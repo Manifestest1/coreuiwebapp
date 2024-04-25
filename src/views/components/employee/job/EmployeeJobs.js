@@ -96,50 +96,6 @@ const EmployeeJobs = () => {
           <div class="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
             <div class="container">
               <div class="row">
-<<<<<<< Updated upstream
-                <div class="col-lg-12 col-md-12">
-                  <div class="job-category-listing mb-50">
-                    <div class="single-listing">
-                      <div class="select-job-items2">
-                        <form onSubmit={handleSearch}>
-                          <div className='row'>
-                            <div className='col-lg-10'>
-                            <input style={{height:50,marginTop:'4px'}} type="text" className="form-control" placeholder="Search job title or location..." onChange={handleChange} name="keyword"/>
-                            </div>
-                            <div className='col-lg-2'>
-                                <button type='submit' className='btn'>Find Jobs</button>
-                            </div>
-                           
-                            <table style={{textAlign:'center',marginTop:'50px'}} className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Job</th>
-                                        <th>Location</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {searchResults.map(job => ( 
-                                        <tr key={job.id}>
-                                            <td>{job.id}</td>
-                                            <td>
-                                              <NavLink style={{color:'black'}}to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
-                                          </td>
-                                            <td>{job.location}</td>
-                                            <td>{job.description}</td>
-                                            {isJobInUserPosts(job.id) ?<td style={{color:'green'}}>APPLIED</td> :  
-                                            <td><NavLink to={`/employee-job-view/${job.id}`}><i style={{color:'black'}} class="fa fa-eye fa-lg"></i></NavLink></td>
-                                            }
-                                            
-                                            {/* <td onClick={()=>favJob(job.id)}><i style={{color:'black'}}class="fa fa-heart" aria-hidden="true"></i></td> */}
-                                            {isFavJobInUser(job.id,"1") ?<td onClick={() => favJob(job.id)}><i style={{ color: 'red' }} class="fa fa-heart" aria-hidden="true"></i></td> :
-                                              <td onClick={() => favJob(job.id)}>
-                                                <i style={{ color: 'black' }} class="fa fa-heart" aria-hidden="true"></i>
-                                              </td>
-                                            }
-=======
                 <div class="col-xl-12">
                   <div class="hero-cap text-center">
                     <h2>Employee Jobs</h2>
@@ -149,7 +105,6 @@ const EmployeeJobs = () => {
             </div>
           </div>
         </div>
->>>>>>> Stashed changes
 
         <div class="job-listing-area pt-120 pb-120">
           <div class="container">
