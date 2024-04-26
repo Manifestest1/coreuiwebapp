@@ -67,10 +67,6 @@ const EmployerJobView = ()=>{
                     <div className='col-lg-8'>
                         <h4>Job</h4>
                     </div>
-                    <div className='col-lg-2'>
-                       <p className="fw-bold" style={{background:'#ededed',color: '#252b60',padding:'7px', fontSize: '16px',fontWeight:700 }}>
-                       Favourite Jobs<NavLink to="/favourite-jobs"  style={{marginLeft:'10px', padding: '4px 9px 4px 9px',background: '#252b60',color:'white',borderRadius: '50%'}}>{favJobCount}</NavLink> </p>
-                    </div>
 
                     <div className='col-lg-2'>
                        {countjobPostUsers > 0 ? (<p className="fw-bold" style={{color: '#252b60',background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>

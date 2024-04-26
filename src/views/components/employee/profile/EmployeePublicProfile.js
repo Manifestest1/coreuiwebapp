@@ -18,31 +18,20 @@ const EmployeePublicProfile = ()=>{
         .catch((e) => {
             console.log(e)
         });
-        if (user.imageurl) {
-            const image = new Image();
-            image.onload = () => {
-                setImageLoaded(true);
-            };
-            image.src = user.imageurl;
-        }
-    }, [user.imageurl]);
-    
-    useEffect(() => {
-        downloadPDF();
-    }, [imageLoaded]);
-    // Empty dependency array to ensure the effect runs only once
-      const pdfRef = useRef();
+        
+    }, []);
 
-      const downloadPDF = () => {
-        if (pdfRef.current && imageLoaded) {
+    const pdfRef = useRef();  
+    const downloadPDF = () => {
+        if (pdfRef.current) {
             const divElement = pdfRef.current;
             divElement.style.fontSize = '25px'; // Adjust font size as needed
-    
+
             html2canvas(divElement).then((canvas) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 pdf.addImage(imgData, 'PNG', 15, 15, 150, 150); // A4 size: 210 x 297 mm
-                pdf.save('employer_profile.pdf');
+                pdf.save('employee_profile.pdf');
             });
         }
     };

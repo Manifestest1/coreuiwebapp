@@ -45,6 +45,10 @@ import instance from './axios';
     return instance.get(`/job-view/${jobId}`);
   };
 
+  export const getFavJob = (jobId) => {
+    return instance.get(`/fav-job-user/${jobId}`);
+  };
+
   export const jobApplyEmployee = (jobId) => {
     return instance.get(`/job-apply/${jobId}`);
   };

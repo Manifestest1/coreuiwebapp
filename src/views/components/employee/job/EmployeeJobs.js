@@ -66,8 +66,8 @@ const EmployeeJobs = () => {
     return jobResults.some((userJob) => userJob.id === jobId);
   };
 
-  const isFavJobInUser = (jobId, status) => {
-    return favJobResults.some((userJob) => userJob.id === jobId && userJob.pivot.job_like === status);
+  const isFavJobInUser = (jobId) => {
+    return favJobResults.some((userJob) => userJob.id === jobId);
   };
   const favJob = (jobId)=> {
     console.log(jobId,"check fun")
@@ -145,8 +145,15 @@ const EmployeeJobs = () => {
                                     {isJobInUserPosts(job.id) ? <span style={{ color: 'green' }}>APPLIED</span> :
                                       <NavLink to={`/employee-job-view/${job.id}`}><i style={{ color: 'black' }} class="fa fa-eye fa-lg"></i></NavLink>
                                     }
-                                    <i style={{ color: likedJobs.has(job.id) ? 'red' : 'black' }} className="fa fa-heart" onClick={() => handleLike(job.id)}></i>
                                   </td>
+
+                                  <td>
+                                    {isFavJobInUser(job.id) ? <span><i style={{ color: 'red'}} className="fa fa-heart" onClick={() => favJob(job.id)}></i></span> :
+                                     <span><i style={{ color: 'black'}} className="fa fa-heart" onClick={() => favJob(job.id)}></i></span>
+                                    }
+                                    
+                                  </td>
+                                  
                                 </tr>
                               ))}
                             </tbody>
