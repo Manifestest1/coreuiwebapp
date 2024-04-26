@@ -69,25 +69,25 @@ const EmployeeJobs = () => {
   const isFavJobInUser = (jobId) => {
     return favJobResults.some((userJob) => userJob.id === jobId);
   };
-  const favJob = (jobId)=> {
-    console.log(jobId,"check fun")
-   
+  const favJob = (jobId) => {
+    // Check if jobId is valid
+    if (!jobId) {
+      console.log("Invalid jobId");
+      return; // Exit early if jobId is not provided
+    }
+  
     favrouiteJOb(jobId)
-    .then((r) => {
-         // Assuming setFavJobResults is a function to update the state with the new favorite job
-         setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
-
-        //getJobonEmployee();
-        console.log(jobId,"test")
-
-    })
-    .catch((e) => {
-        if(e.response.status == 401)
-        {
-           
+      .then((r) => {
+        // Update state if response data is not empty
+        setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
+        console.log(r, "test");
+      })
+      .catch((e) => {
+        if (e.response && e.response.status === 401) {
+          // Handle unauthorized error
         }
-    });
-  }
+      });
+  };
 
   return (
     <>
@@ -142,16 +142,16 @@ const EmployeeJobs = () => {
                                   <td>{job.location}</td>
                                   <td>{job.description}</td>
                                   <td>
-                                    {isJobInUserPosts(job.id) ? <span style={{ color: 'green' }}>APPLIED</span> :
-                                      <NavLink to={`/employee-job-view/${job.id}`}><i style={{ color: 'black' }} class="fa fa-eye fa-lg"></i></NavLink>
+                                    <span>
+                                    {isJobInUserPosts(job.id) ? <i style={{ color: 'green' }} className="fa fa-check-circle applied-icon"></i> :
+                                      <NavLink to={`/employee-job-view/${job.id}`}><i style={{ color: 'black' }} className="fa fa-briefcase"></i></NavLink>
                                     }
-                                  </td>
-
-                                  <td>
-                                    {isFavJobInUser(job.id) ? <span><i style={{ color: 'red'}} className="fa fa-heart" onClick={() => favJob(job.id)}></i></span> :
-                                     <span><i style={{ color: 'black'}} className="fa fa-heart" onClick={() => favJob(job.id)}></i></span>
-                                    }
-                                    
+                                    </span>
+                                    <span>
+                                      {!isFavJobInUser(job.id) ?<i style={{ color: 'black',marginLeft: '10px' }} className="fa fa-heart" onClick={() => favJob(job.id)}></i>
+                                       :<i style={{ color: 'red',marginLeft: '10px' }} className="fa fa-heart" onClick={() => favJob(job.id)}></i>
+                                      }
+                                    </span>
                                   </td>
                                   
                                 </tr>
