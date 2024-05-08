@@ -7,10 +7,29 @@ import jsPDF from 'jspdf';
 const EmployeePublicProfile = () => {
     const { userId } = useParams();
     const [user, setUser] = useState({});
+    const [base64Image, setBase64Image] = useState('');
     const pdfRef = useRef();
 
+    useEffect(() => {
+        const convert_image_base64 = user.imageurl;
+        fetch(convert_image_base64)
+          .then((response) => response.blob())
+          .then((blob) => {
+            // Convert the blob to base64
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64String = reader.result;
+              setBase64Image(base64String);
+              console.log(base64Image,'image');
+            };
+            reader.readAsDataURL(blob);
+          })
+          .catch((error) => console.error('Error fetching image:', error));
+      }, []);
+
     const downloadPDF = () => {
-        if (pdfRef.current) {
+        if (pdfRef.current) 
+        {
             const divElement = pdfRef.current;
             divElement.style.fontSize = '25px'; // Adjust font size as needed
 
@@ -77,7 +96,7 @@ const EmployeePublicProfile = () => {
         <div className='row' ref={pdfRef}>
            
             <div className='col-lg-12' style={{textAlign:'center'}}>
-               <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+               <img style={{height:'100px',width:'110px',borderRadius:'50%'}} src={base64Image} alt="User Profile Image" size="md" />
             </div>
     
             <div className='col-lg-11' style={{ textAlign: 'end' }}>

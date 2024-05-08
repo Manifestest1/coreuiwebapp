@@ -28,7 +28,9 @@ import EmployerEditProfile from "../views/components/employer/profile/EmployerEd
 import EmployerJobs from "../views/components/employer/job/EmployerJobs";
 import EmployerJobCreate from "../views/components/employer/job/EmployerJobCreate";
 import EmployerJobView from "../views/components/employer/job/EmployerJobView";
-import FavouriteJobs from "../views/components/employer/job/FavouriteJobs";
+import FavJob from "../views/components/employee/profile/FavJob";
+import { Provider } from 'react-redux';
+import store from "../store/store";
 
 const Componentsetup = ()=>{
     const navigate = useNavigate();
@@ -39,10 +41,10 @@ const Componentsetup = ()=>{
     });
 
     const [_token, setToken] = useState(() => {
-      return localStorage.getItem('_token') || null;
+      return localStorage.getItem('_token') || null; 
     });
   
-    // Initialize user state from localStorage, defaulting to null if not set
+    // Initialize user state from localStorage, defaulting to null if not set 
     const [user, setUser] = useState(() => {
       return JSON.parse(localStorage.getItem('user')) || '';
     });
@@ -58,7 +60,7 @@ const Componentsetup = ()=>{
     }, [user]);
 
     useEffect(() => {
-      localStorage.setItem('_token', _token);
+      localStorage.setItem('_token', _token); 
     }, [_token]);
    
       const handleClickToOpen = () => {
@@ -82,8 +84,8 @@ const Componentsetup = ()=>{
       };
    return(
     <>
-    
-        <AppHeader onLoginClick={handleClickToOpen} loggedIn={loggedIn} user={user} logout={logout}/>
+      <Provider store={store}>
+        <AppHeader onLoginClick={handleClickToOpen} loggedIn={loggedIn} user={user} logout={logout} />
         {isPopupOpen && (
         <DialogCompnent  open={isPopupOpen} onClose={handleToClose} login={login}/>
         )}
@@ -110,6 +112,7 @@ const Componentsetup = ()=>{
           <Route path="/employee-jobs" element={<EmployeeJobs/>}/>
           <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>
           <Route path="/employee-public-profile/:userId" element={<EmployeePublicProfile/>}/>
+          <Route path="/favourite-jobs" element={<FavJob/>}/>
 
            {/* End Employee Routes */}
            {/* Start Employer Routes */}
@@ -120,13 +123,13 @@ const Componentsetup = ()=>{
           <Route path="/employer-jobs" element={<EmployerJobs/>}/>
           <Route path="/employer-job-create" element={<EmployerJobCreate/>}/>
           <Route path="/employer-job-view/:jobId" element={<EmployerJobView/>}/>
-          <Route path="/favourite-jobs" element={<FavouriteJobs/>}/>
 
           {/* End Employer Routes */}
         </Routes>
         
         <AppFooter/>
-    
+        </Provider>
+        
     </>
    )
 }

@@ -7,8 +7,29 @@ import jsPDF from 'jspdf';
 const EmployeeProfile = ({ user, setUser }) => {
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const [base64Image, setBase64Image] = useState('');
 
-    // Function to handle image update
+    // Start image convert in base 64
+
+    useEffect(() => {
+        const convert_image_base64 = user.imageurl;
+        console.log(convert_image_base64,"Base 64 Image Convert");
+        fetch(convert_image_base64)
+          .then((response) => response.blob())
+          .then((blob) => {
+            // Convert the blob to base64
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64String = reader.result;
+              setBase64Image(base64String);
+            };
+            reader.readAsDataURL(blob);
+          })
+          .catch((error) => console.error('Error fetching image:', error));
+      }, []);
+
+    // End image convert in base 64
+    
     const handleImageUpdate = () => {
         // Trigger file selection dialog
         document.getElementById('imageInput').click();
@@ -46,13 +67,15 @@ const EmployeeProfile = ({ user, setUser }) => {
     const pdfRef = useRef();
 
     const downloadPDF = () => {
-        if (pdfRef.current) {
+        if (pdfRef.current) 
+        {
             const divElement = pdfRef.current;
             divElement.style.fontSize = '25px'; // Adjust font size as needed
-
+    
             html2canvas(divElement).then((canvas) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('p', 'mm', 'a4');
+                // Add image preview to the PDF directly
                 pdf.addImage(imgData, 'PNG', 15, 15, 150, 150); // A4 size: 210 x 297 mm
                 pdf.save('employer_profile.pdf');
             });
@@ -120,7 +143,7 @@ const EmployeeProfile = ({ user, setUser }) => {
                     {imagePreview ? (
                     <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={imagePreview} alt="Preview"/>
                     ) : (
-                    <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={user?.imageurl || 'default-profile-image-url'} alt="User Profile Image" size="md"/>
+                    <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={base64Image || 'default-profile-image-url'} alt="User Profile Image" size="md"/>
                     )}
                     {/* Button to replace input field */}
                     <button style={{cursor:'pointer',background: '#fb246a',borderRadius: '20%',border: 'none',position: 'absolute',bottom: '3px',left: '48%',width:'56px'}} onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>

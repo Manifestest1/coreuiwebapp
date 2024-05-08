@@ -1,61 +1,13 @@
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
-import {getCountry,updateEmployeeProfile ,getState,getCity} from '../../../../apiService';
+import {updateEmployeeProfile } from '../../../../apiService';
 
 const EmployeeEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
     const [selectedImage, setSelectedImage] = useState(null);
-    const [countryName, setcountryName] = useState(['']);
-     const [countryId, setCountryId] = useState();
-    // const [stateid, setstateid] = useState();
-    const [stateName, setstateName] = useState([]);
-    const [cityName, setcityName] = useState([]);
-
-    
-    useEffect(() => {
-        getCountry()
-            .then((response) => {
-                console.log(response, 'Country Name');
-                setcountryName(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching countries:', error);
-            
-    });
-});
-        // const hendelChange = (event) => {
-        //         const getcontryid = event.target.value;
-        //         setCountryId(getcontryid);
-        // }
-
-
-    useEffect(() => {
-        getState(countryId)
-            .then((response) => {
-                console.log(response, 'State Name');
-                setstateName(response.data);
-            })
-           
-},[countryId]);
-    useEffect(() => {
-        getCity()
-            .then((response) => {
-                console.log(response, 'City Name');
-                setcityName(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching cities:', error);
-            
-    });
-    });
-    
    
-    
-    // const handleState = (e) => {
-    //     // const stateId = e.target.value;
-    //     // fetchCities(stateId);
-    // };
+   
     
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -127,12 +79,12 @@ const EmployeeEditProfile = ({user,setUser})=>{
 {/* <!-- Hero Area Start--> */}
 
 
-<div class="slider-area ">
-    <div class="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="hero-cap text-center">
+<div className="slider-area ">
+    <div className="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
+        <div className="container">
+            <div className="row">
+                <div className="col-xl-12">
+                    <div className="hero-cap text-center">
                         <h2>Update Your Profile</h2>
                     </div>
                 </div>
@@ -141,27 +93,27 @@ const EmployeeEditProfile = ({user,setUser})=>{
     </div>
 </div>
 
-<div class="job-listing-area pt-120 pb-120">
-<div class="container">
-<div class="row">
+<div className="job-listing-area pt-120 pb-120">
+<div className="container">
+<div className="row">
 {/* <!-- Left content --> */}
-<div class="col-lg-12 col-md-12">
-    {/* <div class="row">
-        <div class="col-12">
-            <div class="small-section-tittle2 mb-45">
+<div className="col-lg-12 col-md-12">
+    {/* <div className="row">
+        <div className="col-12">
+            <div className="small-section-tittle2 mb-45">
                 <h4>Create Profile</h4>
             </div>
         </div>
     </div> */}
     {/* <!-- Job Category Listing start --> */}
-    <div class="job-category-listing mb-50">
+    <div className="job-category-listing mb-50">
         {/* <!-- single one --> */}
-        <div class="single-listing">
-           <div class="small-section-tittle2"> 
+        <div className="single-listing">
+           <div className="small-section-tittle2"> 
                  <h4>Update Profile</h4>
            </div>
             {/* <!-- Select job items start --> */}
-            <div class="select-job-items2">
+            <div className="select-job-items2">
             <form onSubmit={handleSubmit}>
             <div className='row'>
                 <div className='col-lg-2'>
@@ -265,34 +217,19 @@ const EmployeeEditProfile = ({user,setUser})=>{
                     <label className='mt-30'>country</label>
                 </div>
                 <div className='col-lg-10'>
-                     <select className='form-control mt-30' name="employee.country" onChange={handleChange}  value={user.employee?.country}>
-                        <option value="">Select country</option>
-                        {countryName && countryName.map((country, index) => (
-                            <option key={index} value={country.id} >{country.name}</option>
-                        ))}
-                    </select>
+                    <input className="form-control mt-30" type="text"value={user.employee?.country} onChange={handleChange} name="employee.country"/>  
                 </div>
                 <div className='col-lg-2'>
                     <label className='mt-30'>State</label>
                 </div>
                 <div className='col-lg-10'>
-                    <select className='form-control mt-30'  name="employee.state"onChange={handleChange} value={user.employee?.state}>
-                        <option value="">Select state</option>
-                        {stateName && stateName.map((state, index) => (
-                        <option key={index} value={state.state_id}>{state.state_name}</option>
-                        ))}
-                    </select>
+                    <input className="form-control mt-30" type="text"value={user.employee?.state} onChange={handleChange} name="employee.state"/>  
                 </div>
                 <div className='col-lg-2'>
                     <label className='mt-30'>City</label>
                 </div>
                 <div className='col-lg-10'>
-                    <select className='form-control mt-30' onChange={handleChange} name="employee.city" value={user?.employee?.city || ''}>
-                        <option value="">Select City</option>
-                        {cityName && cityName.map((city, index) => (
-                        <option key={index} value={city.city_name}>{city.city_name}</option>
-                        ))}
-                    </select>
+                    <input className="form-control mt-30" type="text"value={user.employee?.city} onChange={handleChange} name="employee.city"/>  
                 </div>
 
                 <div className='col-lg-2'>
@@ -315,7 +252,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
 
             
                 </div>
-                <div class="row">
+                <div className="row">
                     <div className='col-lg-5'></div>
                     <div className='col-lg-5'>
                     <button type='submit' className="btn head-btn2 mt-50">Update</button>

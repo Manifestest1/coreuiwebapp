@@ -1,35 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getJobonEmployee, searchJobGet, favrouiteJOb } from '../../../../apiService';
+import { useDispatch } from 'react-redux';
+import { addFavoriteJob } from '../../../../store/favoriteJobsSlice';
 
 const EmployeeJobs = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);  
   const [jobResults, setJobResults] = useState([]); 
   const [favJobResults, setFavJobResults] = useState([]); 
-  const [likedJobs, setLikedJobs] = useState(new Set());
 
-  const handleLike = (jobId) => {
-    if (likedJobs.has(jobId)) {
-      likedJobs.delete(jobId);
-    } else {
-      likedJobs.add(jobId);
-    }
-    setLikedJobs(new Set(likedJobs));
-    favrouiteJOb(jobId)
-    .then((r) => {
-         setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
-
-        console.log(jobId,"favjob like")
-
-    })
-    .catch((e) => {
-        if(e.response.status == 401)
-        {
-           
-        }
-    });
-  }
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -54,11 +35,10 @@ const EmployeeJobs = () => {
         setSearchResults(response.data.job);
         setJobResults(response.data.userJobPosts);
         setFavJobResults(response.data.userFavJob);
+        dispatch(addFavoriteJob(response.data.userFavJob));
       })
       .catch((error) => {
-        if (error.response.status === 401) {
-          // Handle unauthorized access
-        }
+        console.error('Error:', error);
       });
   }, []);
 
@@ -70,20 +50,16 @@ const EmployeeJobs = () => {
     return favJobResults.some((userJob) => userJob.id === jobId);
   };
   const favJob = (jobId) => {
-    // Check if jobId is valid
-    if (!jobId) {
-      console.log("Invalid jobId");
-      return; // Exit early if jobId is not provided
-    }
-  
     favrouiteJOb(jobId)
       .then((r) => {
         // Update state if response data is not empty
+        console.log(r.data.pivot, "Add Favrouite Job");
         setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
-        console.log(r, "test");
+        dispatch(addFavoriteJob(r.data.pivot));
       })
       .catch((e) => {
-        if (e.response && e.response.status === 401) {
+        if (e.response && e.response.status === 401) 
+        {
           // Handle unauthorized error
         }
       });
@@ -147,9 +123,9 @@ const EmployeeJobs = () => {
                                       <NavLink to={`/employee-job-view/${job.id}`}><i style={{ color: 'black' }} className="fa fa-briefcase"></i></NavLink>
                                     }
                                     </span>
-                                    <span>
-                                      {!isFavJobInUser(job.id) ?<i style={{ color: 'black',marginLeft: '10px' }} className="fa fa-heart" onClick={() => favJob(job.id)}></i>
-                                       :<i style={{ color: 'red',marginLeft: '10px' }} className="fa fa-heart" onClick={() => favJob(job.id)}></i>
+                                    <span onClick={() => favJob(job.id)} style={{cursor:'pointer',marginLeft: '10px'}}>
+                                      {isFavJobInUser(job.id) ?<i style={{ color: 'red'}} className="fa fa-heart"></i>
+                                       :<i style={{ color: 'black'}} className="fa fa-heart"></i>
                                       }
                                     </span>
                                   </td>
