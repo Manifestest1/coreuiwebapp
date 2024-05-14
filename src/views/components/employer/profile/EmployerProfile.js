@@ -96,8 +96,7 @@ const EmployerProfile = ({user,setUser})=>{
                             {imagePreview ? (
                                 <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={imagePreview} alt="Preview"/>
                             ) : (
-                                <img style={{ height: '145px', width: '150px', borderRadius: '50%' }}
-                                src={user?.imageurl || 'default-profile-image-url'} alt="User Profile Image" size="md"/>
+                                user.imagebaseurl? <img style={{height:'150px',width:'150px',borderRadius:'50%'}} src={user.imagebaseurl + user?.imageurl} alt="User Profile Image" size="md" /> :<img style={{height:'150px',width:'150px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
                             )}
                             {/* Button to replace input field */}
                         </div>

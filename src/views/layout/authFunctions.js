@@ -1,7 +1,7 @@
 import { gapi } from 'gapi-script';
 import {UserLoginApi,logoutUserProfile} from '../../apiService'
 
-export const loginFun = (setUser,navigate,setToken) => {    
+export const loginFun = (setUser,navigate,setToken,setLoggedIn) => {    
  
     gapi.auth2.getAuthInstance().signIn({
         scope: 'openid profile email',
@@ -16,6 +16,7 @@ export const loginFun = (setUser,navigate,setToken) => {
             {
               setUser(r.data.user); 
               setToken(r.data.authorisation.token);
+              setLoggedIn(true);
 
               if (r.data.user) 
               {

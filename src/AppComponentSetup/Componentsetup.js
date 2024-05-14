@@ -73,8 +73,7 @@ const Componentsetup = ()=>{
   
       const login = () => {
         setOpen(false);
-        loginFun(setUser,navigate,setToken);
-        setLoggedIn(true);
+        loginFun(setUser,navigate,setToken,setLoggedIn);
       };
     
       const logout = () => {

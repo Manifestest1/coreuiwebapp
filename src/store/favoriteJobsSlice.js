@@ -7,7 +7,7 @@ export const favoriteJobsSlice = createSlice({
     favoriteJobsCount: 0,
     favoriteJobsList: [],
   },
-  reducers: {
+  reducers: { 
     setFavoriteJobsCount: (state, action) => {
       state.favoriteJobsCount = action.payload;
     },

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState, useRef } from 'react';
-import { updateUserProfile } from '../../../../apiService';
+import { updateUserProfile,employeePdfDownload } from '../../../../apiService';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -66,20 +66,32 @@ const EmployeeProfile = ({ user, setUser }) => {
 
     const pdfRef = useRef();
 
-    const downloadPDF = () => {
-        if (pdfRef.current) 
-        {
-            const divElement = pdfRef.current;
-            divElement.style.fontSize = '25px'; // Adjust font size as needed
+    const downloadPDF = (userId) => {
+         console.log(userId,"Get Userid");
+
+         employeePdfDownload(userId)
+      .then((response) => {
+        console.log("Download submitted:", response);
+        
+      })
+      .catch((error) => {
+        console.error("Contact error", error);
+        // Handle API call error
+      });
+
+        // if (pdfRef.current) 
+        // {
+        //     const divElement = pdfRef.current;
+        //     divElement.style.fontSize = '25px'; // Adjust font size as needed
     
-            html2canvas(divElement).then((canvas) => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                // Add image preview to the PDF directly
-                pdf.addImage(imgData, 'PNG', 15, 15, 150, 150); // A4 size: 210 x 297 mm
-                pdf.save('employer_profile.pdf');
-            });
-        }
+        //     html2canvas(divElement).then((canvas) => {
+        //         const imgData = canvas.toDataURL('image/png');
+        //         const pdf = new jsPDF('p', 'mm', 'a4');
+        //         // Add image preview to the PDF directly
+        //         pdf.addImage(imgData, 'PNG', 15, 15, 150, 150); // A4 size: 210 x 297 mm
+        //         pdf.save('employer_profile.pdf');
+        //     });
+        // }
     };
 
     return(
@@ -127,23 +139,23 @@ const EmployeeProfile = ({ user, setUser }) => {
             <div className='row'>
                 <div className='col-lg-7'></div>
                 <div className='col-lg-2'>
-                   <button onClick={downloadPDF} className='btn'>Download PDF</button>
+                <button onClick={() => downloadPDF(user.id)} className='btn'>Download PDF</button>
                 </div>
                 <div className='col-lg-2'>
                    <NavLink style={{marginLeft: '10px'}} to="/employee-edit-profile" className="btn head-btn2">Edit Profile</NavLink>
                 </div>
             </div>
            
-            <div className='row' ref={pdfRef}>
+            <div className='row'>
                
-                <div className='col-lg-12' style={{textAlign:'center',display:'block'}}>
+                <div className='col-lg-12' style={{textAlign:'center',display:'block'}}>  
                    
                     <input id="imageInput" type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} name="imageurl" />
                     {/* Image preview */}
                     {imagePreview ? (
                     <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={imagePreview} alt="Preview"/>
                     ) : (
-                    <img style={{ height: '145px', width: '150px', borderRadius: '50%' }} src={base64Image || 'default-profile-image-url'} alt="User Profile Image" size="md"/>
+                        user.imagebaseurl? <img style={{height:'150px',width:'150px',borderRadius:'50%'}} src={user.imagebaseurl + user?.imageurl} alt="User Profile Image" size="md" /> :<img style={{height:'150px',width:'150px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
                     )}
                     {/* Button to replace input field */}
                     <button style={{cursor:'pointer',background: '#fb246a',borderRadius: '20%',border: 'none',position: 'absolute',bottom: '3px',left: '48%',width:'56px'}} onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>

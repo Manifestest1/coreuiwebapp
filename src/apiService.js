@@ -18,7 +18,7 @@ import instance from './axios';
   };
 
   export const updateUserProfile = (user) => {
-    return instance.post('/update-profile', user );
+    return instance.post('/update-profile', user ); 
   };
 
   export const updateEmployeeProfile = (user) => {
@@ -68,6 +68,10 @@ import instance from './axios';
 
   export const getPublicEmployeeProfile = (userId) => {
     return instance.get(`/public-profile-employee/${userId}`);
+  };
+
+  export const employeePdfDownload = (userId) => {
+    return instance.get(`/employee-download-pdf/${userId}`);
   };
 
   export const createContactDetail = (data) => {

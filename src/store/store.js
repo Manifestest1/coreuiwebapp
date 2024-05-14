@@ -1,6 +1,6 @@
 // In your store configuration file, e.g., store.js
 import { configureStore } from '@reduxjs/toolkit';
-import favoriteJobsReducer,{ selectFavoriteJobsCount } from './favoriteJobsSlice';
+import favoriteJobsReducer,{ selectFavoriteJobsCount,selectFavoriteJobsList } from './favoriteJobsSlice'; 
 
 const store = configureStore({
   reducer: {
@@ -8,5 +8,5 @@ const store = configureStore({
   },
 });
 
-export { selectFavoriteJobsCount };
+export { selectFavoriteJobsCount,selectFavoriteJobsList };
 export default store;

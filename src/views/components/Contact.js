@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import { createContactDetail } from "../../apiService";
@@ -12,52 +12,60 @@ const Contact = () => {
   });
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const captchaRef = useRef(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContactData((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
-  const handleRecaptchaChange = (token) => {
-    setRecaptchaToken(token);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!recaptchaToken) {
-      // Handle case where reCAPTCHA is not completed
-      return;
-    }
-
-    // Proceed with form submission
-    console.log("Contact form submitted:", contactData);
-    createContactDetail({ ...contactData, token: recaptchaToken })
-    .then((response) => {
-      if (response && response.status === 200) {
-        setContactData({
-          message: "",
-          name: "",
-          email: "",
-          subject: "",
-        });
-        console.log("Contact form submitted:", response.data);
-        setShowModal(true); // Show modal on successful submission
-      } else {
-        console.error("Unexpected response:", response);
-        // Handle unexpected response
-      }
-    })
-    .catch((error) => {
-      console.error("Contact error", error);
-      // Handle API call error
-    });
-  
-  };
-  // Function to handle closing the modal and reloading the page
-const handleCloseModal = () => {
+  const handleCloseModal = () => {
     setShowModal(false);
-    // Reload the page
-    window.location.reload();
+    window.location.reload();  
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (captchaRef.current) 
+    {
+    const gr_token = captchaRef.current.getValue();
+    // console.log(gr_token,"Google Captch");
+    captchaRef.current.reset();
+
+  
+    // Proceed with form submission
+   
+    createContactDetail({ ...contactData, 'g-recaptcha-response': gr_token })
+      .then((response) => {
+        console.log("Contact form submitted:", response);
+        
+        if (response && response.status === 200) 
+          {
+          setContactData({
+            message: "",
+            name: "",
+            email: "",
+            subject: "",
+          });
+          console.log("Contact form submitted:", response.data);
+          setShowModal(true); // Show modal on successful submission
+        } else {
+          console.error("Unexpected response:", response);
+          // Handle unexpected response
+        }
+      })
+      .catch((error) => {
+        console.error("Contact error", error);
+        // Handle API call error
+      });
+    } 
+    else 
+    {
+      console.error("ReCAPTCHA token is null");
+      // Handle null token error
+    }
+ 
   };
 
   return(
@@ -103,7 +111,7 @@ const handleCloseModal = () => {
 
                             <div class="col-12">
                                 <div class="form-group">
-                                   <ReCAPTCHA sitekey="6LdKrcspAAAAAAs_8mmBihWZ4vsZbww2zKFuJU55" onChange={handleRecaptchaChange}/>
+                                   <ReCAPTCHA ref={captchaRef} sitekey={process.env.REACT_APP_SITE_KEY}  />
                                 </div>
                             </div>
                             

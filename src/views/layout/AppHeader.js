@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } fro
 import { gapi } from 'gapi-script';
 import {getClientId,getJobonEmployee } from '../../apiService';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFavoriteJobsCount, selectFavoriteJobsList, removeFavoriteJob } from '../../store/favoriteJobsSlice'; 
+import { selectFavoriteJobsCount } from '../../store/favoriteJobsSlice'; 
 import { setFavoriteJobsCount} from '../../store/favoriteJobsSlice';
 
 
@@ -11,7 +11,6 @@ const client_id = getClientId();
 
 const AppHeader = ({ onLoginClick, loggedIn, user, logout }) => {
   const favoriteJobsCount = useSelector(state => state.favoriteJobs.favoriteJobsCount);
-  const favoriteJobsList = useSelector(selectFavoriteJobsList);
   const dispatch = useDispatch(); 
 
   useEffect(() => {
@@ -130,9 +129,8 @@ const AppHeader = ({ onLoginClick, loggedIn, user, logout }) => {
                             )}
                           </li>
                             <li>
-                              {user ? (
-                                <img style={{ height: '60px', width: '60px', borderRadius: '50%' }} src={user?.imageurl} alt="User Profile Image" size="md" />
-                              ) : ('')}
+                              {user ? 
+                              (user.imagebaseurl? <img style={{height:'60px',width:'60px',borderRadius:'50%'}} src={user.imagebaseurl + user?.imageurl} alt="User Profile Image" size="md" /> :<img style={{height:'60px',width:'60px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />):('')}
                               <ul className="submenu">
                                 {user && user.role_id === 1 && (
                                   <li><NavLink to="/employee-dashboard">Dashboard</NavLink></li>

@@ -1,14 +1,15 @@
 import { useState, useEffect,useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getJobonEmployee, searchJobGet, favrouiteJOb } from '../../../../apiService';
-import { useDispatch } from 'react-redux';
-import { addFavoriteJob } from '../../../../store/favoriteJobsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavoriteJob,removeFavoriteJob } from '../../../../store/favoriteJobsSlice';
 
 const EmployeeJobs = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);  
   const [jobResults, setJobResults] = useState([]); 
-  const [favJobResults, setFavJobResults] = useState([]); 
+  const [favJobResults, setFavJobResults] = useState([]);
+   
 
   const dispatch = useDispatch();
 
@@ -30,17 +31,23 @@ const EmployeeJobs = () => {
   };
 
   useEffect(() => {
+
+    const token = localStorage.getItem('_token');
+    if(token)
+      {
     getJobonEmployee()
       .then((response) => {
+        console.log(response,"GEt All Jobs");
         setSearchResults(response.data.job);
         setJobResults(response.data.userJobPosts);
-        setFavJobResults(response.data.userFavJob);
-        dispatch(addFavoriteJob(response.data.userFavJob));
+        setFavJobResults(response.data.userFavJob); 
+       
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, []);
+    }
+  },[]);
 
   const isJobInUserPosts = (jobId) => {
     return jobResults.some((userJob) => userJob.id === jobId);
@@ -52,10 +59,21 @@ const EmployeeJobs = () => {
   const favJob = (jobId) => {
     favrouiteJOb(jobId)
       .then((r) => {
-        // Update state if response data is not empty
-        console.log(r.data.pivot, "Add Favrouite Job");
-        setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
-        dispatch(addFavoriteJob(r.data.pivot));
+        console.log(r, "Add Favrouite Job");
+        if(r.data.pivot)
+        {
+            console.log("job Fav");
+            // Update state immediately
+            setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
+            dispatch(addFavoriteJob(r.data));
+        }
+        else
+        {
+            console.log("job Remove Fav");
+            const updatedFavJobResults = favJobResults.filter(job => job.id !== jobId);
+            setFavJobResults(updatedFavJobResults);
+            dispatch(removeFavoriteJob(r.data));
+        }
       })
       .catch((e) => {
         if (e.response && e.response.status === 401) 
@@ -63,7 +81,8 @@ const EmployeeJobs = () => {
           // Handle unauthorized error
         }
       });
-  };
+};
+
 
   return (
     <>
