@@ -7,16 +7,41 @@ const EmployerJobCreate = ()=>{
     const [jobs, setjobs] = useState({title: '',description: '',location: ''});
     const [isValid, setIsValid] = useState(true);
     const navigate = useNavigate()
+    const [errors, setErrors] = useState({
+        title: "",
+        description: "",
+        location: "",
+      });
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
         setIsValid(e.target.value.length > 0); 
         setjobs((prevUser) => ({ ...prevUser, [name]: value }));
+        setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
         };
 
       const handleJobSubmit = (e) => {
         e.preventDefault();
-    
+
+        const newErrors = {};
+
+        if (!jobs.title.trim()) {
+            newErrors.title = "Title is required";
+        }
+
+        if (!jobs.description.trim()) {
+            newErrors.description = "description is required";
+        }
+
+        if (!jobs.location.trim()) {
+            newErrors.location = "location is required";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
         const formData = new FormData();
     
         // Append Job data
@@ -77,24 +102,36 @@ const EmployerJobCreate = ()=>{
             <form onSubmit={handleJobSubmit}>
             <div className='row'>
                 <div className='col-lg-2'>
-                    <label className='mt-30'>Job Title</label>
+                    <label >Job Title</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" onChange={handleChange} name="title" type="text"/>
+                    <input className={`form-control ${errors.title ? "is-invalid" : ""}`}  
+                    onChange={handleChange} 
+                    name="title" 
+                    type="text"/>
+                    {errors.title && <div style={{color:'red'}} className="invalid-feedback">{errors.title}</div>}
                 </div>
 
                 <div className='col-lg-2'>
-                    <label className='mt-30'>Description</label>
+                    <label >Description</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" onChange={handleChange} name="description" type="text"/>
+                    <input className={`form-control ${errors.description ? "is-invalid" : ""}`}  
+                    onChange={handleChange} 
+                    name="description" 
+                    type="text"/>
+                    {errors.description && <div style={{color:'red'}} className="invalid-feedback">{errors.description}</div>}
                 </div>
 
                 <div className='col-lg-2'>
-                    <label className='mt-30'>Location</label>
+                    <label >Location</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" onChange={handleChange} name="location" type="text"/>
+                    <input className={`form-control ${errors.location ? "is-invalid" : ""}`}  
+                    onChange={handleChange} 
+                    name="location" 
+                    type="text"/>
+                     {errors.location && <div style={{color:'red'}} className="invalid-feedback">{errors.location}</div>}
                 </div>
             </div>
                 {/* <select className="form-control mt-30" name="select">

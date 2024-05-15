@@ -64,13 +64,13 @@ const EmployerJobView = ()=>{
         <div class="single-listing">
            <div class="small-section-tittle2"> 
                 <div className='row'>
-                    <div className='col-lg-8'>
+                    <div className='col-lg-9'>
                         <h4>Job</h4>
                     </div>
 
-                    <div className='col-lg-2'>
+                    <div className='col-lg-3'>
                        {countjobPostUsers > 0 ? (<p className="fw-bold" style={{color: '#252b60',background:'#ededed',padding:'6px', fontSize: '16px',fontWeight:700 }}>
-                       Job Application<span style={{padding: '4px 9px 4px 9px',color:'white',background: '#252b60',borderRadius: '50%'}}>{countjobPostUsers}</span> </p>): ('')}
+                       Job Application<span style={{marginLeft :'35%',padding: '4px 9px 4px 9px',color:'white',background: '#252b60',borderRadius: '50%'}}>{countjobPostUsers}</span> </p>): ('')}
                     </div>
                 </div>
                
@@ -119,7 +119,9 @@ const EmployerJobView = ()=>{
                                 <tbody>
                                     {jobPostUsers?.map(user => (
                                         <tr key={user.id}>
-                                            <td><img style={{height:50,borderRadius:'50%'}} src={user.imageurl} /></td>
+                                            <td>
+                                             {user.imagebaseurl? <img style={{height:'50px',borderRadius:'50%'}} src={user.imagebaseurl + user?.imageurl} alt="User Profile Image" size="md" /> :<img style={{height:'50px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />}
+                                            </td>
                                             <td>{user.name}</td>
                                             <td>
                                             <NavLink to={`/employee-public-profile/${user.id}`}><i style={{color:'black'}} class="fa fa-eye fa-lg"></i></NavLink>

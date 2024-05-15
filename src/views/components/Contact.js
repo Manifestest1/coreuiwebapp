@@ -12,11 +12,19 @@ const Contact = () => {
   });
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [errors, setErrors] = useState({
+    message: "",
+    name: "",
+    email: "",
+    subject: "",
+    recaptchaToken: "",
+  });
   const captchaRef = useRef(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContactData((prevUser) => ({ ...prevUser, [name]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
   const handleCloseModal = () => {
@@ -26,47 +34,79 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (captchaRef.current) 
-    {
-    const gr_token = captchaRef.current.getValue();
-    // console.log(gr_token,"Google Captch");
-    captchaRef.current.reset();
-
   
-    // Proceed with form submission
-   
-    createContactDetail({ ...contactData, 'g-recaptcha-response': gr_token })
-      .then((response) => {
-        console.log("Contact form submitted:", response);
-        
-        if (response && response.status === 200) 
-          {
-          setContactData({
-            message: "",
-            name: "",
-            email: "",
-            subject: "",
-          });
-          console.log("Contact form submitted:", response.data);
-          setShowModal(true); // Show modal on successful submission
-        } else {
-          console.error("Unexpected response:", response);
-          // Handle unexpected response
-        }
+    const newErrors = {};
+  
+    if (!contactData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+  
+    if (!contactData.email.trim() || !contactData.email.includes("@")) {
+      newErrors.email =
+        "Email is required and must be a valid email address";
+    }
+  
+    if (contactData.message.trim().split(/\s+/).length < 10) {
+      newErrors.message = "Message must be at least 30 words long";
+    }
+  
+    if (contactData.subject.trim().split(/\s+/).length < 10) {
+      newErrors.subject = "Subject must be less than 10 words long";
+    }
+  
+    // Check if reCAPTCHA token is empty
+    if (!recaptchaToken) {
+      newErrors.recaptchaToken = "Please verify the reCAPTCHA";
+      console.log(newErrors.recaptchaToken);
+    }
+  
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+  
+    if (captchaRef.current) {
+      const gr_token = captchaRef.current.getValue();
+      captchaRef.current.reset();
+  
+      // Proceed with form submission
+      createContactDetail({
+        ...contactData,
+        'g-recaptcha-response': gr_token,
       })
-      .catch((error) => {
-        console.error("Contact error", error);
-        // Handle API call error
+        .then((response) => {
+          console.log("Contact form submitted:", response);
+  
+          if (response && response.status === 200) {
+            setContactData({
+              message: "",
+              name: "",
+              email: "",
+              subject: "",
+            });
+            console.log("Contact form submitted:", response.data);
+            setShowModal(true); // Show modal on successful submission
+          } else {
+            console.error("Unexpected response:", response);
+            // Handle unexpected response
+          }
+        })
+        .catch((error) => {
+          console.error("Contact error", error);
+          // Handle API call error
+        });
+    } else {
+      // If the reCAPTCHA token is empty, set the error
+      setErrors({
+        ...newErrors,
+        recaptchaToken: "Please verify the reCAPTCHA",
       });
-    } 
-    else 
-    {
       console.error("ReCAPTCHA token is null");
       // Handle null token error
     }
- 
   };
+  
+  
 
   return(
     <>
@@ -90,30 +130,76 @@ const Contact = () => {
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message" onChange={handleChange}></textarea>
-                            </div>
+                            <textarea  
+                                className={`form-control ${errors.message ? "is-invalid" : ""}`} 
+                                name="message" 
+                                id="message"  
+                                onfocus="this.placeholder = ''" 
+                                onblur="this.placeholder = 'Enter Message'" 
+                                placeholder=" Enter Message" 
+                                onChange={handleChange}
+                            ></textarea>
+                            {errors.message && <div className="invalid-feedback" style={{color: 'red'}}>{errors.message}</div>}
                         </div>
-                        <div class="col-sm-6">
+                      </div>
+                      <div class="col-sm-6">
+                          <div class="form-group">
+                            <input 
+                              className={`form-control ${errors.name ? "is-invalid" : ""}`}  
+                              name="name" 
+                              id="name" 
+                              type="text" 
+                              onfocus="this.placeholder = ''" 
+                              onblur="this.placeholder = 'Enter your name'" 
+                              placeholder="Enter your name" 
+                              onChange={handleChange}
+                            />
+                              {errors.name && <div className="invalid-feedback" style={{color: 'red'}}>{errors.name}</div>}
+                          </div>
+                      </div>
+                      <div class="col-sm-6">
                             <div class="form-group">
-                                <input class="form-control valid" name="name" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" placeholder="Enter your name" onChange={handleChange}/>
-                            </div>
+                            <input 
+                                  className={`form-control ${errors.email ? "is-invalid" : ""}`} 
+                                  name="email" 
+                                  id="email" 
+                                  type="email" 
+                                  onfocus="this.placeholder = ''" 
+                                  onblur="this.placeholder = 'Enter email address'" 
+                                  placeholder="Email" 
+                                  onChange={handleChange}
+                              />
+                              {errors.email && <div className="invalid-feedback" style={{color: 'red'}}>{errors.email}</div>}
+                          </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input 
+                            className={`form-control ${errors.subject ? "is-invalid" : ""}`} 
+                            name="subject" 
+                            id="subject" 
+                            type="text" 
+                            onfocus="this.placeholder = ''" 
+                            onblur="this.placeholder = 'Enter Subject'" 
+                            placeholder="Enter Subject" 
+                            onChange={handleChange}
+                          />
+                          {errors.subject && <div className="invalid-feedback" style={{color: 'red'}}>{errors.subject}</div>}
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input class="form-control valid" name="email" id="email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder="Email" onChange={handleChange}/>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" placeholder="Enter Subject" onChange={handleChange}/>
-                            </div>
-                        </div>
+                      </div>
 
-                            <div class="col-12">
-                                <div class="form-group">
-                                   <ReCAPTCHA ref={captchaRef} sitekey={process.env.REACT_APP_SITE_KEY}  />
-                                </div>
-                            </div>
+                      <div className="col-12">
+                        <div className="form-group">
+                          <ReCAPTCHA 
+                          className={`form-control ${errors.recaptchaToken ? "is-invalid" : ""}`}  
+                          name="recaptchaToken" 
+                          id="recaptchaToken" 
+                          ref={captchaRef} 
+                          style={{width: '100%',height: 'auto', maxWidth: 'none', maxHeight: 'none', minwidth: '0', minHeight: '0'}}
+                          sitekey={process.env.REACT_APP_SITE_KEY} />
+                          {errors.recaptchaToken && <div className="invalid-feedback" style={{color: 'red'}}>{errors.recaptchaToken}</div>}
+                        </div>
+                      </div>
                             
                         </div>
                         <div class="form-group mt-3">
