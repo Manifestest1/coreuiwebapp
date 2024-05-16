@@ -6,6 +6,7 @@ import {updateEmployeeProfile } from '../../../../apiService';
 const EmployeeEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
     const [selectedImage, setSelectedImage] = useState(null);
+    const [errors, setErrors] = useState({});
    
    
     
@@ -38,7 +39,29 @@ const EmployeeEditProfile = ({user,setUser})=>{
       const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(); 
-    
+
+        const requiredFields = ['phone', 'current_address', 'qualification', 'skills', 'current_working_skill', 'languages','country', 'state', 'city', 'gender', 'permanent_address', 'working_from', 'work_experience'];
+        const formatErrors = {};
+
+        requiredFields.forEach(field => {
+            if (!user.employee?.[field]) {
+                formatErrors[field] = `${field.split('.').pop()} is required`;
+            }
+        });
+
+        if (!user.email || !validateEmail(user.email)) {
+            formatErrors['email'] = 'Email is required and should be in correct format';
+        }
+
+        if (!user.employee?.phone || !validatePhone(user.employee?.phone)) {
+            formatErrors['phone'] = 'Phone number is required and should be in correct format';
+        }
+
+        if (Object.keys(formatErrors).length > 0) {
+            setErrors(formatErrors);
+            return;
+        }
+        setErrors({});
         // Append user data
         if (user.name) formData.append('name', user.name);
         if (user.employee?.phone) formData.append('phone', user.employee?.phone);
@@ -71,6 +94,21 @@ const EmployeeEditProfile = ({user,setUser})=>{
               });
        
        };
+
+       const renderError = (fieldName) => {
+        return errors[fieldName] ? <span className="error-message" style={{color:'red'}}>{errors[fieldName]}</span> : null;
+    };
+
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    // Function to validate phone number
+    const validatePhone = (phone) => {
+        const re = /^[0-9]{10}$/;
+        return re.test(String(phone));
+    };
     return(
         <>
 {user ? (
@@ -128,6 +166,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                 </div>
                 <div className='col-lg-10'>
                     <input className="form-control mt-30" type="text" value={user.email} onChange={handleChange} name="email"/>
+                    {renderError('email')}
                 </div>
 
                 <div className='col-lg-2'>
@@ -135,33 +174,37 @@ const EmployeeEditProfile = ({user,setUser})=>{
                 </div>
                 <div className='col-lg-10'>
                     <input className="form-control mt-30" type="number"value={user.employee?.phone} onChange={handleChange} name="employee.phone"/>
+                    {renderError('phone')}
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Current Address</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.current_address} onChange={handleChange} name="employee.current_address"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.current_address} onChange={handleChange} name="employee.current_address"/>
+                    {renderError('current_address')}  
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Permanent Address</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.permanent_address} onChange={handleChange} name="employee.permanent_address"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.permanent_address} onChange={handleChange} name="employee.permanent_address"/>
+                    {renderError('permanent_address')}  
                 </div>
                 <div className='col-lg-2'>
                     <label className='mt-30'>Aadhar Number</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.adhar_card_no} onChange={handleChange} name="employee.adhar_card_no"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.adhar_card_no} onChange={handleChange} name="employee.adhar_card_no"/> 
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Qualification</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.qualification} onChange={handleChange} name="employee.qualification"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.qualification} onChange={handleChange} name="employee.qualification"/>
+                    {renderError('qualification')} 
                 </div>
 
                 <div className='col-lg-2'>
@@ -175,35 +218,40 @@ const EmployeeEditProfile = ({user,setUser})=>{
                     <label className='mt-30'>Skills</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.skills} onChange={handleChange} name="employee.skills"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.skills} onChange={handleChange} name="employee.skills"/>
+                    {renderError('skills')}   
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Working From</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.working_from} onChange={handleChange} name="employee.working_from"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.working_from} onChange={handleChange} name="employee.working_from"/>
+                    {renderError('working_from')}   
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Work Experience</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.work_experience} onChange={handleChange} name="employee.work_experience"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.work_experience} onChange={handleChange} name="employee.work_experience"/>
+                    {renderError('work_experience')}   
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Current working skill</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.current_working_skill} onChange={handleChange} name="employee.current_working_skill"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.current_working_skill} onChange={handleChange} name="employee.current_working_skill"/> 
+                    {renderError('current_working_skill')} 
                 </div>
 
                 <div className='col-lg-2'>
                     <label className='mt-30'>Languages</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.languages} onChange={handleChange} name="employee.languages"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.languages} onChange={handleChange} name="employee.languages"/>
+                    {renderError('languages')}  
                 </div>
 
                 <div className='col-lg-2'>
@@ -217,19 +265,22 @@ const EmployeeEditProfile = ({user,setUser})=>{
                     <label className='mt-30'>country</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.country} onChange={handleChange} name="employee.country"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.country} onChange={handleChange} name="employee.country"/>
+                    {renderError('country')}   
                 </div>
                 <div className='col-lg-2'>
                     <label className='mt-30'>State</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.state} onChange={handleChange} name="employee.state"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.state} onChange={handleChange} name="employee.state"/>
+                    {renderError('state')}   
                 </div>
                 <div className='col-lg-2'>
                     <label className='mt-30'>City</label>
                 </div>
                 <div className='col-lg-10'>
-                    <input className="form-control mt-30" type="text"value={user.employee?.city} onChange={handleChange} name="employee.city"/>  
+                    <input className="form-control mt-30" type="text"value={user.employee?.city} onChange={handleChange} name="employee.city"/>
+                    {renderError('city')}   
                 </div>
 
                 <div className='col-lg-2'>
@@ -248,6 +299,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                     </select>
+                    {renderError('gender')} 
                 </div>
 
             

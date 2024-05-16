@@ -1,5 +1,4 @@
 import React, { useState,useRef } from "react";
-import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import { createContactDetail } from "../../apiService";
 
@@ -17,7 +16,6 @@ const Contact = () => {
     name: "",
     email: "",
     subject: "",
-    recaptchaToken: "",
   });
   const captchaRef = useRef(null)
 
@@ -47,17 +45,11 @@ const Contact = () => {
     }
   
     if (contactData.message.trim().split(/\s+/).length < 10) {
-      newErrors.message = "Message must be at least 30 words long";
+      newErrors.message = "Message must be at least 10 words long";
     }
   
     if (contactData.subject.trim().split(/\s+/).length < 10) {
       newErrors.subject = "Subject must be less than 10 words long";
-    }
-  
-    // Check if reCAPTCHA token is empty
-    if (!recaptchaToken) {
-      newErrors.recaptchaToken = "Please verify the reCAPTCHA";
-      console.log(newErrors.recaptchaToken);
     }
   
     if (Object.keys(newErrors).length > 0) {
@@ -99,7 +91,6 @@ const Contact = () => {
       // If the reCAPTCHA token is empty, set the error
       setErrors({
         ...newErrors,
-        recaptchaToken: "Please verify the reCAPTCHA",
       });
       console.error("ReCAPTCHA token is null");
       // Handle null token error
@@ -131,15 +122,15 @@ const Contact = () => {
                         <div class="col-12">
                             <div class="form-group">
                             <textarea  
-                                className={`form-control ${errors.message ? "is-invalid" : ""}`} 
+                                className={`form-control ${errors.message ? "is-invalid" : "custom-class"}`} 
                                 name="message" 
                                 id="message"  
-                                onfocus="this.placeholder = ''" 
-                                onblur="this.placeholder = 'Enter Message'" 
+                                onFocus={(e) => e.target.placeholder = ''} 
+                                onBlur={(e) => e.target.placeholder = 'Enter Message'} 
                                 placeholder=" Enter Message" 
                                 onChange={handleChange}
                             ></textarea>
-                            {errors.message && <div className="invalid-feedback" style={{color: 'red'}}>{errors.message}</div>}
+                            {errors.message && <div className="invalid-feedback" >{errors.message}</div>}
                         </div>
                       </div>
                       <div class="col-sm-6">
@@ -154,7 +145,7 @@ const Contact = () => {
                               placeholder="Enter your name" 
                               onChange={handleChange}
                             />
-                              {errors.name && <div className="invalid-feedback" style={{color: 'red'}}>{errors.name}</div>}
+                              {errors.name && <div className="invalid-feedback" >{errors.name}</div>}
                           </div>
                       </div>
                       <div class="col-sm-6">
@@ -169,7 +160,7 @@ const Contact = () => {
                                   placeholder="Email" 
                                   onChange={handleChange}
                               />
-                              {errors.email && <div className="invalid-feedback" style={{color: 'red'}}>{errors.email}</div>}
+                              {errors.email && <div className="invalid-feedback" >{errors.email}</div>}
                           </div>
                       </div>
                       <div class="col-12">
@@ -184,20 +175,15 @@ const Contact = () => {
                             placeholder="Enter Subject" 
                             onChange={handleChange}
                           />
-                          {errors.subject && <div className="invalid-feedback" style={{color: 'red'}}>{errors.subject}</div>}
+                          {errors.subject && <div className="invalid-feedback" >{errors.subject}</div>}
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="form-group">
-                          <ReCAPTCHA 
-                          className={`form-control ${errors.recaptchaToken ? "is-invalid" : ""}`}  
-                          name="recaptchaToken" 
-                          id="recaptchaToken" 
+                          <ReCAPTCHA  className="form-control mt-30"
                           ref={captchaRef} 
-                          style={{width: '100%',height: 'auto', maxWidth: 'none', maxHeight: 'none', minwidth: '0', minHeight: '0'}}
                           sitekey={process.env.REACT_APP_SITE_KEY} />
-                          {errors.recaptchaToken && <div className="invalid-feedback" style={{color: 'red'}}>{errors.recaptchaToken}</div>}
                         </div>
                       </div>
                             
