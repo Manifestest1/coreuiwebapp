@@ -75,7 +75,7 @@ import instance from './axios';
   };
 
   export const createContactDetail = (data) => {
-    return instance.post('/create-contact', data );
+    return instance.post('/contact-mail-send', data );
   };
   export const employeeFavJob = () => { 
     return instance.get('/employee-fav-job');
