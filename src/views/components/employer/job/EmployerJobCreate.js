@@ -109,7 +109,8 @@ const EmployerJobCreate = ()=>{
                     onChange={handleChange} 
                     name="title" 
                     type="text"/>
-                    {errors.title && <div style={{color:'red'}} className="invalid-feedback">{errors.title}</div>}
+                    value={jobs.title || ''}
+                    {errors.title && <span style={{color:'red'}} className="error-message">{errors.title}</span>}
                 </div>
 
                 <div className='col-lg-2'>
@@ -120,7 +121,8 @@ const EmployerJobCreate = ()=>{
                     onChange={handleChange} 
                     name="description" 
                     type="text"/>
-                    {errors.description && <div style={{color:'red'}} className="invalid-feedback">{errors.description}</div>}
+                    value={jobs.description|| ''}
+                    {errors.description && <span className="error-message" style={{ color: 'red' }}>{errors.description}</span>}
                 </div>
 
                 <div className='col-lg-2'>
@@ -131,7 +133,8 @@ const EmployerJobCreate = ()=>{
                     onChange={handleChange} 
                     name="location" 
                     type="text"/>
-                     {errors.location && <div style={{color:'red'}} className="invalid-feedback">{errors.location}</div>}
+                    value={jobs.location|| ''}
+                     {errors.location && <span style={{color:'red'}} className="error-message">{errors.location}</span>}
                 </div>
             </div>
                 {/* <select className="form-control mt-30" name="select">

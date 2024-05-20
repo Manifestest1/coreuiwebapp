@@ -5,7 +5,6 @@ import {updateEmployeeProfile } from '../../../../apiService';
 
 const EmployeeEditProfile = ({user,setUser})=>{
     const navigate = useNavigate()
-    const [selectedImage, setSelectedImage] = useState(null);
     const [errors, setErrors] = useState({});
    
    
@@ -86,6 +85,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
         updateEmployeeProfile(formData)
               .then((response) => {
                 setUser(response.data);
+                setErrors({});
                 navigate('/employee-profile');
                 console.warn('Edit result', response);
               })
