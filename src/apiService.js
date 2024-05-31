@@ -37,6 +37,10 @@ import instance from './axios';
     return instance.get('/job-get-employee');
   };
 
+  export const getEmployee = () => {
+    return instance.get('/get-employee');
+  };
+
   export const searchJobGet = (jobsearch) => {
     return instance.post('/job-search-employer', jobsearch);
   };

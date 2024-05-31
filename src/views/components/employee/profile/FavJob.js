@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { employeeFavJob } from '../../../../apiService';
+import { NavLink } from 'react-router-dom';
 
 const FavJob = () => {
-    const [favJobs, setFavJobs] = useState([]);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await employeeFavJob();
-          setFavJobs(response.data);
-          console.log(' favorite jobs:', favJobs);
-        } catch (error) {
-          console.error('Error fetching favorite jobs:', error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+  const [favJobs, setFavJobs] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await employeeFavJob();
+        setFavJobs(response.data);
+        console.log(' favorite jobs:', favJobs);
+      } catch (error) {
+        console.error('Error fetching favorite jobs:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <main>
       <div className="slider-area">
-        <div className="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
+        <div className="single-slider section-overly slider-height2 d-flex align-items-center single-slider-contact" >
           <div className="container">
             <div className="row">
               <div className="col-xl-12">
@@ -33,7 +32,6 @@ const FavJob = () => {
           </div>
         </div>
       </div>
-
       <div className="job-listing-area pt-120 pb-120">
         <div className="container">
           <div className="row">
@@ -48,13 +46,17 @@ const FavJob = () => {
                             <tr>
                               <th>Serial no</th>
                               <th>Favourite Job</th>
+                              <th>Location</th>
                             </tr>
                           </thead>
                           <tbody>
                             {favJobs.map((job, index) => (
                               <tr key={job.id}>
                                 <td>{index + 1}</td>
-                                <td>{job.title}</td> {/* Replace job.title with job.name or correct property name */}
+                                <td className='fav-title' >
+                                    <NavLink id='fav-title' to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
+                                </td> {/* Replace job.title with job.name or correct property name */}
+                                <td>{job.location}</td>
                               </tr>
                             ))}
                           </tbody>

@@ -21,6 +21,7 @@ import EmployeeProfile from "../views/components/employee/profile/EmployeeProfil
 import EmployeeJobs from "../views/components/employee/job/EmployeeJobs";
 import EmployeeJobView from "../views/components/employee/job/EmployeeJobView";
 import EmployeePublicProfile from "../views/components/employee/profile/EmployeePublicProfile";
+import EmployeeDetails from "../views/components/employee/profile/EmployeeDetails";
 
 import EmployerDashboard from "../views/components/employer/EmployerDashboard";
 import EmployerProfile from "../views/components/employer/profile/EmployerProfile";
@@ -34,7 +35,6 @@ import store from "../store/store";
 
 const Componentsetup = ()=>{
     const navigate = useNavigate();
-    const [isPopupOpen, setOpen] = useState(false); 
 
     const [loggedIn, setLoggedIn] = useState(() => {
       return localStorage.getItem('loggedIn') === 'true'; 
@@ -63,31 +63,21 @@ const Componentsetup = ()=>{
       localStorage.setItem('_token', _token); 
     }, [_token]);
    
-      const handleClickToOpen = () => {
-          setOpen(true);
-      };
-   
-      const handleToClose = () => {
-          setOpen(false);
-      };
+       
+    
   
       const login = () => {
-        setOpen(false);
-        loginFun(setUser,navigate,setToken,setLoggedIn);
+        loginFun(setUser,navigate,setToken,setLoggedIn); 
       };
     
       const logout = () => {
-        setUser(null);
         setLoggedIn(false);
         logoutFun(navigate);
       };
    return(
     <>
       <Provider store={store}>
-        <AppHeader onLoginClick={handleClickToOpen} loggedIn={loggedIn} user={user} logout={logout} />
-        {isPopupOpen && (
-        <DialogCompnent  open={isPopupOpen} onClose={handleToClose} login={login}/>
-        )}
+        <AppHeader loggedIn={loggedIn} user={user} logout={logout} login={login} />
        
         <Routes>
           <Route path="/" element={<Home />} />
@@ -112,6 +102,7 @@ const Componentsetup = ()=>{
           <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>
           <Route path="/employee-public-profile/:userId" element={<EmployeePublicProfile/>}/>
           <Route path="/favourite-jobs" element={<FavJob/>}/>
+          <Route path="/employee-details" element={<EmployeeDetails/>}/>
 
            {/* End Employee Routes */}
            {/* Start Employer Routes */}

@@ -162,19 +162,19 @@
     padding-top: 120px;
     padding-bottom: 40px;
     @media #{$lg}{
-        padding-top: 50px;
+        padding-top: 0px;
         padding-bottom: 40px;
     }
     @media #{$md}{
-        padding-top: 50px;
+        padding-top: 0px;
         padding-bottom: 40px;
     }
     @media #{$sm}{
-        padding-top: 50px;
+        padding-top: 0px;
         padding-bottom: 40px;
     }
     @media #{$xs}{
-        padding-top: 20px;
+        padding-top: 0px;
         padding-bottom: 40px;
     }
 }

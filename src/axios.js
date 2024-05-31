@@ -5,15 +5,12 @@ const instance = axios.create({
   baseURL: 'http://localhost:8000/api/auth',
 });
 
-// Add a request interceptor
 instance.interceptors.request.use(
   function (config) 
   {
-    // Check if access token exists
     const accessToken = localStorage.getItem('_token');
     if (accessToken) 
     {
-      // Set authorization header with access token
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
@@ -24,7 +21,6 @@ instance.interceptors.request.use(
   }
 );
 
-// Add a response interceptor
 instance.interceptors.response.use(
   function (response) {
     return response;
@@ -39,21 +35,16 @@ instance.interceptors.response.use(
         const response = await axios.post('/refresh-token', {
           refreshToken: localStorage.getItem('_refreshToken'),
         });
-        // Update access token in local storage
         localStorage.setItem('_token', response.data.access_token);
-        // Retry the original request with the new access token
         return instance(originalRequest);
       } 
       catch (error) 
       {
-        // Handle token refresh failure
         console.error('Token refresh failed:', error);
 
-        // Remove All items
         localStorage.removeItem('_token');
         localStorage.removeItem('user');
         localStorage.removeItem('loggedIn');
-        // Redirect to login page or handle authentication error
         return Promise.reject(error);
       }
     }

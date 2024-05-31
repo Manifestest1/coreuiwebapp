@@ -1,170 +1,245 @@
-import { useState, useEffect,useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { getJobonEmployee, searchJobGet, favrouiteJOb } from '../../../../apiService';
-import { useDispatch, useSelector } from 'react-redux';
-import { addFavoriteJob,removeFavoriteJob } from '../../../../store/favoriteJobsSlice';
+import { getJobonEmployee } from '../../../../apiService';
 
 const EmployeeJobs = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);  
-  const [jobResults, setJobResults] = useState([]); 
-  const [favJobResults, setFavJobResults] = useState([]);
-   
-
-  const dispatch = useDispatch();
-
-  const handleChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('keyword', searchTerm);
-    searchJobGet(formData)
-      .then((response) => {
-        setSearchResults(response.data);
-      })
-      .catch((error) => {
-        console.error('Job Post error', error); 
-      });
-  };
+  const [jobResults, setJobResults] = useState([]);
 
   useEffect(() => {
-
     const token = localStorage.getItem('_token');
-    if(token)
-      {
-    getJobonEmployee()
-      .then((response) => {
-        console.log(response,"GEt All Jobs");
-        setSearchResults(response.data.job);
-        setJobResults(response.data.userJobPosts);
-        setFavJobResults(response.data.userFavJob); 
-       
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    if (token) {
+      getJobonEmployee()
+        .then((response) => {
+          console.log(response, "GEt All Jobs");
+          setJobResults(response.data.job);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
     }
-  },[]);
+  }, []);
 
-  const isJobInUserPosts = (jobId) => {
-    return jobResults.some((userJob) => userJob.id === jobId);
-  };
-
-  const isFavJobInUser = (jobId) => {
-    return favJobResults.some((userJob) => userJob.id === jobId);
-  };
-  const favJob = (jobId) => {
-    favrouiteJOb(jobId)
-      .then((r) => {
-        console.log(r, "Add Favrouite Job");
-        if(r.data.pivot)
-        {
-            console.log("job Fav");
-            // Update state immediately
-            setFavJobResults((prevFavJobResults) => [...prevFavJobResults, r.data]);
-            dispatch(addFavoriteJob(r.data));
-        }
-        else
-        {
-            console.log("job Remove Fav");
-            const updatedFavJobResults = favJobResults.filter(job => job.id !== jobId);
-            setFavJobResults(updatedFavJobResults);
-            dispatch(removeFavoriteJob(r.data));
-        }
-      })
-      .catch((e) => {
-        if (e.response && e.response.status === 401) 
-        {
-          // Handle unauthorized error
-        }
-      });
-};
-
-
-  return (
-    <>
-      <main>
-        <div class="slider-area ">
-          <div class="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
-            <div class="container">
-              <div class="row">
-                <div class="col-xl-12">
-                  <div class="hero-cap text-center">
-                    <h2>Employee Jobs</h2>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="job-listing-area pt-120 pb-120">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12 col-md-12">
-                <div class="job-category-listing mb-50">
-                  <div class="single-listing">
-                    <div class="select-job-items2">
-                      <form onSubmit={handleSearch}>
-                        <div className='row'>
-                          <div className='col-lg-10'>
-                            <input style={{ height: 50, marginTop: '4px' }} type="text" className="form-control" placeholder="Search job title or location..." value={searchTerm} onChange={handleChange} />
-                          </div>
-                          <div className='col-lg-2'>
-                            <button type='submit' className='btn'>Find Jobs</button>
-                          </div>
-
-                          <table style={{ textAlign: 'center', marginTop: '50px' }} className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th>ID</th>
-                                <th>Job</th>
-                                <th>Location</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {searchResults.map(job => (
-                                <tr key={job.id}>
-                                  <td>{job.id}</td>
-                                  <td>
-                                    <NavLink style={{ color: 'black' }} to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
-                                  </td>
-                                  <td>{job.location}</td>
-                                  <td>{job.description}</td>
-                                  <td>
-                                    <span>
-                                    {isJobInUserPosts(job.id) ? <i style={{ color: 'green' }} className="fa fa-check-circle applied-icon"></i> :
-                                      <NavLink to={`/employee-job-view/${job.id}`}><i style={{ color: 'black' }} className="fa fa-briefcase"></i></NavLink>
-                                    }
-                                    </span>
-                                    <span onClick={() => favJob(job.id)} style={{cursor:'pointer',marginLeft: '10px'}}>
-                                      {isFavJobInUser(job.id) ?<i style={{ color: 'red'}} className="fa fa-heart"></i>
-                                       :<i style={{ color: 'black'}} className="fa fa-heart"></i>
-                                      }
-                                    </span>
-                                  </td>
-                                  
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
+  return(
+        <>
+            <main>
+                <div class="slider-area ">
+                    <div class="single-slider section-overly slider-height2 d-flex align-items-center single-slider-contact" >
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="hero-cap text-center">
+                                        <h2>Get your job</h2>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </form>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </>
-  );
+                <div class="job-listing-area pt-120 pb-120">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-4">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="small-section-tittle2 mb-45">
+                                            <div class="ion"></div>
+                                            <h4>Filter Jobs</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="job-category-listing mb-50">
+                                    <div class="single-listing">
+                                       <div class="small-section-tittle2">
+                                             <h4>Job Category</h4>
+                                       </div>
+                                        <div class="select-job-items2">
+                                            <select name="select">
+                                                <option value="">All Category</option>
+                                                <option value="">Category 1</option>
+                                                <option value="">Category 2</option>
+                                                <option value="">Category 3</option>
+                                                <option value="">Category 4</option>
+                                            </select>
+                                        </div>
+                                        <div class="select-Categories pt-80 pb-50">
+                                            <div class="small-section-tittle2">
+                                                <h4>Job Type</h4>
+                                            </div>
+                                            <label class="container">Full Time
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Part Time
+                                                <input type="checkbox" checked="checked active"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Remote
+                                                <input type="checkbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Freelance
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="single-listing">
+                                       <div class="small-section-tittle2">
+                                             <h4>Job Location</h4>
+                                       </div>
+                                    {jobResults.map((job) => (
+                                        <div class="select-job-items2" key={job.id}>
+                                            <select name="select">
+                                                <option value="">{job.location}</option>
+                                            </select>
+                                        </div>    
+                                    ))}
+                                        <div class="select-Categories pt-80 pb-50">
+                                            <div class="small-section-tittle2">
+                                                <h4>Experience</h4>
+                                            </div>
+                                            <label class="container">1-2 Years
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">2-3 Years
+                                                <input type="checkbox" checked="checked active" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">3-6 Years
+                                                <input type="checkbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">6-more..
+                                                <input type="checkbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="single-listing">
+                                        <div class="select-Categories pb-50">
+                                            <div class="small-section-tittle2">
+                                                <h4>Posted Within</h4>
+                                            </div>
+                                            <label class="container">Any
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Today
+                                                <input type="checkbox" checked="checked active"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Last 2 days
+                                                <input type="checkbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Last 3 days
+                                                <input type="checkbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Last 5 days
+                                                <input type="checkbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="container">Last 10 days
+                                                <input type="checkbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="single-listing">
+                                        <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
+                                            <div class="small-section-tittle2">
+                                                <h4>Filter Jobs</h4>
+                                            </div>
+                                            <div class="widgets_inner">
+                                                <div class="range_item">
+                                                    <input type="text" class="js-range-slider" value="" />
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="price_text">
+                                                            <p>Price :</p>
+                                                        </div>
+                                                        <div class="price_value d-flex justify-content-center">
+                                                            <input type="text" class="js-input-from" id="amount" readonly />
+                                                            <span>to</span>
+                                                            <input type="text" class="js-input-to" id="amount" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aside>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-8">
+                                <section class="featured-job-area">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="count-job mb-35">
+                                                    <span>39, 782 Jobs found</span>
+                                                    <div class="select-job-items">
+                                                        <span>Sort by</span>
+                                                        <select name="select">
+                                                            <option value="">None</option>
+                                                            <option value="">job list</option>
+                                                            <option value="">job list</option>
+                                                            <option value="">job list</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {jobResults.map((job) => (
+                                            <div className="single-job-items mb-30" key={job.id}>
+                                              <div className="job-items">
+                                                <div className="company-img">
+                                                  <a href="#"><img src="assets/img/icon/job-list1.png" alt="" /></a>
+                                                </div>
+                                                <div className="job-tittle job-tittle2">
+                                                  <NavLink className="nav-link-style" to={`/employee-job-view/${job.id}`}>
+                                                    <h4>{job.title}</h4>
+                                                  </NavLink>
+                                                  <ul>
+                                                    <li>Creative Agency</li>
+                                                    <li><i className="fas fa-map-marker-alt"></i>Athens, Greece</li>
+                                                    <li>$3500 - $4000</li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                              <div className="items-link items-link2 f-right">
+                                                <a href="job_details.html">Full Time</a>
+                                                <span>7 hours ago</span>
+                                              </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination-area pb-115 text-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="single-wrap d-flex justify-content-center">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-start">
+                                            <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">03</a></li>
+                                        <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </>
+    )
 }
 
-export default EmployeeJobs;
+export default EmployeeJobs

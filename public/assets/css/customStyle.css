@@ -1,0 +1,292 @@
+/* Contact Section */
+#captcha {
+    border: none !important;
+    box-shadow: none !important;
+    margin-left: -2%;
+  }
+
+#con {
+  margin-top: 25px;  
+}
+  
+  /* Employee job Section */
+  .nav-link-style {
+    color: black;
+    text-decoration: none; 
+  }
+  
+  .nav-link-style:hover {
+    color: #fb246a;
+  }
+  #fav-job{ color: red}
+  #unfav-job{ color: black}
+  #employee-job-title{
+    height: 50px; 
+    margin-top: 4px;
+  }
+  #Find-Jobs{margin-top: 10px;}
+  #employee-job-table{
+    text-align: center; 
+    margin-top: 50px
+  }
+  #employee-job-seen{color: green}
+  #employee-job-notseen{color: black}
+  #employee-f{cursor:pointer;margin-left: 10px}
+  
+  /* Header Section */
+  #logout-button{
+    width: 135px!important;
+  }
+  #imagebaseurl{
+    height:70px; width:60px; border-radius:50%; cursor: pointer
+  }
+  #imageurl{
+    height:40px; width:30px; border-radius:50%
+  }
+  #appheader-submenu{margin-right:10%!important}
+
+  /* Employee Profile Section */
+
+  #edit-employee-button{
+    margin-left: -25px;
+  }
+  #employee-img{
+    text-align:center;
+    display:block;
+  }
+  #image-input{
+    display: none
+  }
+  #img-Preview{
+    height:70px; width:60px; border-radius:50%; cursor: pointer
+  }
+  #img-Previewstyle{
+    height: 145px; 
+    width: 150px; 
+    border-radius: 50%
+  }
+  #img-baseurl{
+    height:145px;
+    width:150px;
+    border-radius:50%;
+    cursor:pointer; 
+  }
+  #img-url{
+    height:145px;
+    width:150px;
+    border-radius:50%;
+    cursor:pointer; 
+  }
+  #image-update{
+    cursor:pointer; 
+    background: #fb246a; 
+    border-radius: 50%; 
+    border: none; 
+    position: absolute; 
+    bottom: 3px; 
+    left: 48.5%; 
+    width: 30px;
+    height:30px;
+  }
+
+  /* Employee Profile Section */
+  #dialog-title{ 
+    text-align: center; 
+    font-size: 25px; 
+    padding:50px; 
+    font-weight:800}
+  #dialog-login
+  { 
+    display: block; 
+    margin: auto
+  }
+
+  /* Employer edit profile Section */
+  #buton{
+    margin-top: 25px;
+  }
+  
+  /* Employer jobs Section */
+  #job-title{
+    height:50; 
+    margin-top:4px}
+  #eployer-jobs
+  {
+    margin-top:20px;
+    margin-left:0px
+  }
+  #eployer-jobs-bold{
+    color: #252b60;
+    background:#ededed;
+    padding:7px; 
+    font-size: 16px;
+    font-weight:700 
+  }
+  #eployer-jobs-length{
+    padding: 4px 9px 4px 9px;
+    color:white;
+    margin:30px;
+    background: #252b60;
+    border-radius: 50%
+  }
+  #employer-jobs-striped{
+    text-align:center;
+    margin-top:20px
+  }
+  #employer-job-view{color:black}
+
+  /* Employee-edit-profile-Section */
+  #error-mess{color:red}
+
+  /* Employee-public-profile-Section */
+  #employee-public-1{
+    height:100px;
+    width:100px;
+    border-radius:50%;
+    text-align: end ;
+  }
+  #employee-public-2{ text-align: end }
+  #employee-public-3{text-align:end; margin-top: 0px;}
+  #stile{height: 100px; width: 100px; border-radius: 50%}
+
+  /* Employer-job-create-Section */
+  .error-message{color:red}
+  #create_job{margin-left: 45px;}
+  #createjobButton{margin-top: 40px;}
+
+   /* Employer-job-view-Section */
+  #count-job{margin-left : 35%; 
+    padding: 4px 9px 4px 9px;
+    color:white;
+    background: #252b60;
+    border-radius: 50%
+  }
+  #job-post-users{
+    text-align:center;
+    margin-top:50px
+  } 
+  #employee-public{
+    height:50px;
+    border-radius:50%
+  }
+  #employee-public-image{
+    height:50px;
+    border-radius:50%
+  }
+  #mployee-public-prof{color:black}
+  #employee-bold{
+    color:#252b60;
+    font-size:18px;
+    font-weight:700
+  }
+
+  /* EmployerProfile.css */
+
+  .col-lg-6 .margen{
+    margin-left: 20px;
+  }
+
+#profile-main {
+  text-align: center;
+  display: block
+}
+
+#category-listing
+{
+  text-align:center; 
+  display: block
+}
+
+#category-listing-1
+{
+  text-align:center; 
+  display: block
+}
+
+#profile-row {
+  text-align: center;
+  display: block;
+}
+
+#image-preview {
+  height: 145px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+#image-button {
+  cursor: pointer;
+  background: #fb246a;
+  border-radius: 20%;
+  border: none;
+  position: absolute;
+  bottom: 3px;
+  left: 47%;
+  width: 56px;
+}
+
+#profile-image {
+  height: 145px;
+  width: 150px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#edit-button {
+  margin-top: 30px;
+}
+
+.label-customcss {
+  margin-top: 30px;
+}
+
+#in-put{
+  height:50;
+  margin-top:4px
+}
+
+  #job{
+  margin-top: 30px; 
+  margin-left: 0px
+}
+
+#emp-job-1 {
+  color: #252b60;
+  background: #ededed;
+  padding: 7px; 
+  font-size: 16px;
+  font-weight:700 
+}
+#emp-job-2{
+  padding: 4px 9px 4px 9px;
+  color:white; margin: 30px;
+  background: #252b60;
+  border-radius: 50%
+}
+#emp-job-3{
+  text-align: center;
+  margin-top: 10px
+}
+
+#emp-job-4{color:black}
+.fav-title{ 
+  color: black;
+  text-decoration: none; 
+}
+
+.fav-title:hover {
+  color: #fb246a;
+}
+
+#employer-preview{ height: 130px; width: 100px; border-radius: 50%}
+#employer-preview-1{height:100px; width: 100px; border-radius: 50%}
+#employer-preview-2{cursor:pointer; background: #fb246a; border-radius:  20%; border: none; position: absolute; bottom: 3px; left: 47%; width:56px}
+#footer{margin-right: 27px;}
+/* style.css */
+.slider-area .single-slider-contact 
+{
+  background-image: url('/assets/img/hero/about.jpg'); /* Leading slash to start from public folder */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+}

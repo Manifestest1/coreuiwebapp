@@ -3,19 +3,17 @@ import React,{ useEffect, useState } from 'react';
 import {getJobonEmployer,searchJobGet} from '../../../../apiService'
 
 const EmployerJobs = ()=>{
-
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [jobResults, setJobResults] = useState([]); 
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
      setSearchTerm((prevUser) => ({ ...prevUser, [name]: value }));
     };
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    
+    e.preventDefault(); 
     const formData = new FormData();
     formData.append('keyword', searchTerm.keyword);
     searchJobGet(formData)
@@ -26,97 +24,101 @@ const EmployerJobs = ()=>{
       console.error('Job Post error', error); 
     });
   };
-
     useEffect(() => {
-        getJobonEmployer()
-        .then((r) => {
-            console.log(r,"Job Get");
-            setSearchResults(r.data.job);
-            setJobResults(r.data.userJobPosts);
-        })
-        .catch((e) => {
-            console.log(e);
-        });
-      }, []); // Empty dependency array to ensure the effect runs only once
+      getJobonEmployer()
+      .then((r) => {
+          console.log(r,"Job Get");
+          setSearchResults(r.data.job);
+          setJobResults(r.data.userJobPosts);
+      })
+      .catch((e) => {
+          console.log(e);
+      });
+    }, []); 
 
-    return(
-        <>
-        <main>
+    const handlejobcreate = ()=>{
+      navigate('/employer-job-create');
+    }
 
-        {/* <!-- Hero Area Start--> */}
-            <div class="slider-area ">
-                <div class="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="hero-cap text-center">
-                                    <h2>Employer Jobs</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-          <div class="job-listing-area pt-120 pb-120">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-12 col-md-12">
-                  <div class="job-category-listing mb-50">
-                    <div class="single-listing">
-                      <div class="select-job-items2">
-                        <form onSubmit={handleSearch}>
-                          <div className='row'>
-                            <div className='col-lg-8'>
-                            <input style={{height:50,marginTop:'4px'}} type="text" className="form-control" placeholder="Search job title or location..." onChange={handleChange} name="keyword"/>
-                            </div>
-                            <div className='col-lg-2'>
-                                <button type='submit' className='btn'>Find Jobs</button>
-                            </div>
-                            <div className='col-lg-2'>
-                               <NavLink to="/employer-job-create" className="btn head-btn2">Job Create</NavLink>
-                            </div>
-
-                            <div className='col-lg-2'style={{marginTop:'30px',marginLeft:'0px'}}>
-                              <p className="fw-bold" style={{color: '#252b60',background:'#ededed',padding:'7px', fontSize: '16px',fontWeight:700 }}>
-                              Jobs <span style={{padding: '4px 9px 4px 9px',color:'white',margin:'30px',background: '#252b60',borderRadius: '50%'}}>{searchResults.length}</span> </p>
-                            </div>
-                            <table style={{textAlign:'center',marginTop:'10px'}} className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Job</th>
-                                        <th>Location</th>
-                                        <th>Description</th> 
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {searchResults.map(job => (
-                                        <tr key={job.id}>
-                                            <td>{job.id}</td>
-                                            <td>{job.title}</td>
-                                            <td>{job.location}</td>
-                                            <td>{job.description}</td>
-                                            <td>
-                                            <NavLink to={`/employer-job-view/${job.id}`}><i style={{color:'black'}} class="fa fa-eye fa-lg"></i></NavLink>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+  return(
+    <>
+      <main>
+          <div class="slider-area ">
+              <div class="single-slider section-overly slider-height2 d-flex align-items-center single-slider-contact" >
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-xl-12">
+                              <div class="hero-cap text-center">
+                                  <h2>Employer Jobs</h2>
+                              </div>
                           </div>
-                        </form>
                       </div>
+                  </div>
+              </div>
+          </div>
+        <div class="job-listing-area pt-120 pb-120">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 col-md-12">
+                <div class="job-category-listing mb-50">
+                  <div class="single-listing">
+                    <div class="select-job-items2">
+                      <form onSubmit={handleSearch}>
+                        <div className='row'>
+                          <div className='col-lg-8'>
+                          <input id='in-put' type="text" className="form-control" placeholder="Search job title or location..." onChange={handleChange} name="keyword"/>
+                          </div>
+                          <div className='col-lg-2'>
+                              <button id='create_job' type='submit' class="genric-btn success-border radius">Find Jobs</button>
+                          </div>
+                          <div className='col-lg-2'>
+                             <button  onClick={handlejobcreate} class="genric-btn success-border radius">Job Create</button>
+                          </div>
+                          <div className='col-lg-2'id='job' >
+                            <p className="fw-bold" id='emp-job-1' >
+                              Jobs <span id='emp-job-2' >{searchResults.length}</span> 
+                            </p>
+                          </div>
+                          <table id='emp-job-3'  className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>Job</th>
+                                <th>Location</th>
+                                <th>Description</th> 
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {searchResults.map((job, index) => (
+                                <tr key={job.id}>
+                                  <td>{index + 1}</td>
+                                  <td>
+                                    <NavLink className="nav-link-style"  to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
+                                  </td>
+                                  <td>{job.location}</td>
+                                  <td>{job.description}</td>
+                                  <td>
+                                    <NavLink to={`/employer-job-view/${job.id}`}>
+                                      <i id='emp-job-4'  class="fa fa-eye fa-lg"></i>
+                                    </NavLink>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </main>
-        </>
-    )
+        </div>
+      </main>
+    </>
+  )
 }
 
 export default EmployerJobs
