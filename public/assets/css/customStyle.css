@@ -55,7 +55,7 @@
     display:block;
   }
   #image-input{
-    display: none
+    display: none;
   }
   #img-Preview{
     height:70px; width:60px; border-radius:50%; cursor: pointer

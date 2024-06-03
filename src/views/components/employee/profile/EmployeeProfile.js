@@ -5,14 +5,13 @@ import { updateUserProfile,employeePdfDownload } from '../../../../apiService';
 const EmployeeProfile = ({ user, setUser }) => {
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
-    
+    const imageInputRef = useRef(null);
     const navigate = useNavigate();
     
     const handleImageUpdate = () => {
-        const imageInput = document.getElementById('image-input');
-        if (imageInput) {
-            imageInput.click();
-        }
+        if (imageInputRef.current) {
+            imageInputRef.current.click();
+        };
     };
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -97,7 +96,7 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                     </div>
                                                     <div className='row'>   
                                                         <div className='col-lg-12' id='employee-img' >
-                                                            <input id="image-input" type="file" accept="image/*" onChange={handleImageChange} name="imageurl" />
+                                                            <input id="image-input" type="file" accept="image/*" onChange={handleImageChange}  ref={imageInputRef} name="imageurl" />
                                                             {/* Image preview */}
                                                             {imagePreview ? (
                                                             <img id='img-Preview' src={imagePreview} alt="Preview"/>
