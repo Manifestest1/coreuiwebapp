@@ -54,7 +54,7 @@ const FavJob = () => {
                               <tr key={job.id}>
                                 <td>{index + 1}</td>
                                 <td className='fav-title' >
-                                    <NavLink id='fav-title' to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
+                                    <NavLink className='fav-title' to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
                                 </td> {/* Replace job.title with job.name or correct property name */}
                                 <td>{job.location}</td>
                               </tr>

@@ -105,10 +105,10 @@ const AppFooter = ()=>{
                             </div>
                             <div class="col-xl-2 col-lg-2">
                                 <div id='footer' class="footer-social f-right">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fas fa-globe"></i></a>
-                                    <a href="#"><i class="fab fa-behance"></i></a>
+                                    <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.google.com/maps/place/Indore,+Madhya+Pradesh/@22.724205,75.6990332,11z/data=!3m1!4b1!4m6!3m5!1s0x3962fcad1b410ddb:0x96ec4da356240f4!8m2!3d22.7195687!4d75.8577258!16zL20vMDFfeXZ5?entry=ttu"><i class="fas fa-globe"></i></a>
+                                    <a href="https://www.behance.net/"><i class="fab fa-behance"></i></a>
                                 </div>
                             </div>
                         </div>
