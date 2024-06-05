@@ -65,7 +65,7 @@ const EmployeeProfile = ({ user, setUser }) => {
             {user ? (
                     <main>
                         <div class="slider-area ">
-                            <div class="single-slider section-overly slider-height2 d-flex align-items-center"  style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
+                            <div class="single-slider section-overly slider-height2 d-flex align-items-center single-slider-contact" >
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-xl-12">

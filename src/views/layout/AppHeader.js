@@ -79,19 +79,19 @@ const AppHeader = ({ loggedIn, user, logout, login }) => {
                     <nav className="d-none d-lg-block">
                       <ul id="navigation">
                         <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="job-listing">Find a Jobs</NavLink></li>
-                        <li><NavLink to="about">About</NavLink></li>
-                        <li><NavLink to="employee-details">Employee Details</NavLink></li>
+                        <li><NavLink to="/job-listing">Find a Jobs</NavLink></li>
+                        <li><NavLink to="/about">About</NavLink></li>
+                        <li><NavLink to="/employee-details">Employee Details</NavLink></li>
                         <li>
                           <NavLink to="/">Page</NavLink>
                           <ul className="submenu">
-                            <li><NavLink to="blog">Blog</NavLink></li>
-                            <li><NavLink to="blog-details">Blog Details</NavLink></li>
-                            <li><NavLink to="elements">Elements</NavLink></li>
-                            <li><NavLink to="job-details">Job Details</NavLink></li>
+                            <li><NavLink to="/blog">Blog</NavLink></li>
+                            <li><NavLink to="/blog-details">Blog Details</NavLink></li>
+                            <li><NavLink to="/elements">Elements</NavLink></li>
+                            <li><NavLink to="/job-details">Job Details</NavLink></li>
                           </ul>
                         </li>
-                        <li><NavLink to="contact">Contact</NavLink></li>
+                        <li><NavLink to="/contact">Contact</NavLink></li>
                       </ul>
                     </nav>
                   </div>

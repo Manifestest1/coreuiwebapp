@@ -68,12 +68,14 @@ const EmployerJobs = ()=>{
                           <div className='col-lg-8'>
                           <input id='in-put' type="text" className="form-control" placeholder="Search job title or location..." onChange={handleChange} name="keyword"/>
                           </div>
-                          <div className='col-lg-2'>
+                          <div className='d-flex justify-content-center col-lg-2'>
                               <button id='create_job' type='submit' class="genric-btn success-border radius">Find Jobs</button>
                           </div>
                           <div className='col-lg-2'>
                              <button  onClick={handlejobcreate} class="genric-btn success-border radius">Job Create</button>
                           </div>
+                        </div>
+                        <div className='row'>
                           <div className='col-lg-2'id='job' >
                             <p className="fw-bold" id='emp-job-1' >
                               Jobs <span id='emp-job-2' >{searchResults.length}</span> 

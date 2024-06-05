@@ -38,10 +38,10 @@
     width: 135px!important;
   }
   #imagebaseurl{
-    height:70px; width:60px; border-radius:50%; cursor: pointer
+    height:60px; width:60px; border-radius:50%; cursor: pointer
   }
   #imageurl{
-    height:40px; width:30px; border-radius:50%
+    height:60px; width:60px; border-radius:50%
   }
   #appheader-submenu{margin-right:10%!important}
 
@@ -58,21 +58,21 @@
     display: none;
   }
   #img-Preview{
-    height:70px; width:60px; border-radius:50%; cursor: pointer
+    height:100px; width:100px; border-radius:50%; cursor: pointer
   }
   #img-Previewstyle{
-    height: 145px; 
+    height: 150px; 
     width: 150px; 
     border-radius: 50%
   }
   #img-baseurl{
-    height:145px;
+    height:150px;
     width:150px;
     border-radius:50%;
     cursor:pointer; 
   }
   #img-url{
-    height:145px;
+    height:150px;
     width:150px;
     border-radius:50%;
     cursor:pointer; 
@@ -151,7 +151,6 @@
 
   /* Employer-job-create-Section */
   .error-message{color:red}
-  #create_job{margin-left: 45px;}
   #createjobButton{margin-top: 40px;}
 
    /* Employer-job-view-Section */
@@ -278,7 +277,7 @@
   color: #fb246a;
 }
 
-#employer-preview{ height: 130px; width: 100px; border-radius: 50%}
+#employer-preview{ height: 100px; width: 100px; border-radius: 50%}
 #employer-preview-1{height:100px; width: 100px; border-radius: 50%}
 #employer-preview-2{cursor:pointer; background: #fb246a; border-radius:  20%; border: none; position: absolute; bottom: 3px; left: 47%; width:56px}
 #footer{margin-right: 27px;}

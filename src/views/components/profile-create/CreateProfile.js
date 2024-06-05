@@ -36,12 +36,12 @@ const CreateProfile = ({ setUser })=>{
         <>
             <main>
                 <div class="slider-area ">
-                    <div class="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
+                    <div class="single-slider section-overly slider-height2 d-flex align-items-center single-slider-contact" >
                         <div class="container">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="hero-cap text-center">
-                                        <h2>Create Your Profile</h2>
+                                        <h2>Select Profile</h2>
                                     </div>
                                 </div>
                             </div>
@@ -55,18 +55,17 @@ const CreateProfile = ({ setUser })=>{
                                     <div class="job-category-listing mb-50">
                                         <div class="single-listing">
                                            <div class="small-section-tittle2"> 
-                                                 <h4>Create Profile</h4>
+                                                 <h4>Select Profile</h4>
                                            </div>
                                             <div class="select-job-items2">
                                                 <select onClick={(e) => handleProfileChange(e.target.value)} className="form-control" name="select">
-                                                    <option value="">All Category</option>
                                                     <option value="1">Employee</option>
                                                     <option value="2">Employer</option>
                                                 </select>
                                                 <div class="row">
                                                     <div className='col-lg-5'></div>
                                                     <div className='col-lg-5'>
-                                                    <button  onClick={handleSubmit} className="btn head-btn2 mt-50">Submit</button>
+                                                    <button  onClick={handleSubmit} className="genric-btn success-border radius mt-30">Submit</button>
                                                     </div>
                                                 </div>  
                                             </div>

@@ -28,12 +28,12 @@ const EmployerJobView = ()=>{
             <main>
                 {/* <!-- Hero Area Start--> */}
                 <div class="slider-area ">
-                    <div class="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(assets/img/hero/about.jpg)` }}>
+                    <div class="single-slider section-overly slider-height2 d-flex align-items-center single-slider-contact" >
                         <div class="container">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="hero-cap text-center">
-                                        <h2>Job</h2>
+                                        <h2>{job.title}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -100,14 +100,14 @@ const EmployerJobView = ()=>{
                                                         </td>
                                                         <td>{user.name}</td>
                                                         <td>
-                                                        <NavLink to={`/employee-public-profile/${user.id}`}><i id='employee-public-prof' class="fa fa-eye fa-lg"></i></NavLink>
+                                                           <NavLink to={`/employee-public-profile/${user.id}`}><i id='employee-public-prof' class="fa fa-eye fa-lg"></i></NavLink>
                                                         </td>
                                                     </tr>
                                                 ))}
                                             </tbody>
                                         </table>
                                         : (
-                                            <p className="text-center fw-bold" id='employee-bold'>No Job Post .</p>
+                                            <p className="text-center fw-bold" id='employee-bold'></p>
                                         )}
                                     </div>
                                 </div>
