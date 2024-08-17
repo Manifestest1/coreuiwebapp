@@ -1,4 +1,3 @@
-// axios.js
 import axios from 'axios';
 
 const instance = axios.create({
@@ -6,17 +5,14 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-  function (config) 
-  {
+  function (config) {
     const accessToken = localStorage.getItem('_token');
-    if (accessToken) 
-    {
+    if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
   },
-  function (error) 
-  {
+  function (error) {
     return Promise.reject(error);
   }
 );
@@ -27,21 +23,16 @@ instance.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry)  
-    {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      try{
-        // Attempt to refresh token
+      try {
         const response = await axios.post('/refresh-token', {
           refreshToken: localStorage.getItem('_refreshToken'),
         });
         localStorage.setItem('_token', response.data.access_token);
         return instance(originalRequest);
-      } 
-      catch (error) 
-      {
+      } catch (error) {
         console.error('Token refresh failed:', error);
-
         localStorage.removeItem('_token');
         localStorage.removeItem('user');
         localStorage.removeItem('loggedIn');

@@ -32,7 +32,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
         e.preventDefault();
         const formData = new FormData(); 
 
-        const requiredFields = ['phone', 'current_address', 'qualification', 'skills', 'current_working_skill', 'languages','country', 'state', 'city', 'gender', 'permanent_address', 'working_from', 'work_experience'];
+        const requiredFields = ['phone', 'current_address', 'qualification', 'skills', 'marital_status', 'current_working_skill', 'languages','country', 'state', 'city', 'gender', 'marital_status', 'permanent_address', 'working_from', 'work_experience', 'company_name',  'Degree', 'responsibilities_and_achievements', 'coursework_or_academic_achievements','university_or_collegeName', 'graduation_date', 'project_title', 'brief_description', 'role_and_contributions', 'Technologies_used', 'dates_of_employment', 'location', 'job_title', 'professional_summary', 'linkedIn_profile', 'proficiency_level_of_language', 'References', 'issuing_organization', 'certification_name', 'date_of_certification' ];
         const formatErrors = {};
 
         requiredFields.forEach(field => {
@@ -73,11 +73,33 @@ const EmployeeEditProfile = ({user,setUser})=>{
         if (user.employee?.country) formData.append('country', user.employee?.country);
         if (user.employee?.pincode) formData.append('pincode', user.employee?.pincode);
         if (user.employee?.gender) formData.append('gender', user.employee?.gender);
+        if (user.employee?.marital_status) formData.append('marital_status', user.employee?.marital_status);
+        if (user.employee?.company_name) formData.append('company_name', user.employee?.company_name);
+        if (user.employee?.responsibilities_and_achievements) formData.append('responsibilities_and_achievements', user.employee?.responsibilities_and_achievements);
+        if (user.employee?.Degree) formData.append('Degree', user.employee?.Degree);
+        if (user.employee?.university_or_collegeName) formData.append('university_or_collegeName', user.employee?.university_or_collegeName);
+        if (user.employee?.graduation_date) formData.append('graduation_date', user.employee?.graduation_date);
+        if (user.employee?.coursework_or_academic_achievements) formData.append('coursework_or_academic_achievements', user.employee?.coursework_or_academic_achievements);
+        if (user.employee?.project_title) formData.append('project_title', user.employee?.project_title);
+        if (user.employee?.brief_description) formData.append('brief_description', user.employee?.brief_description);
+        if (user.employee?.role_and_contributions) formData.append('role_and_contributions', user.employee?.role_and_contributions);
+        if (user.employee?.Technologies_used) formData.append('Technologies_used', user.employee?.Technologies_used);
+        if (user.employee?.dates_of_employment) formData.append('dates_of_employment', user.employee?.dates_of_employment);
+        if (user.employee?.location) formData.append('location', user.employee?.location);
+        if (user.employee?.job_title) formData.append('job_title', user.employee?.job_title);
+        if (user.employee?.professional_summary) formData.append('professional_summary', user.employee?.professional_summary);
+        if (user.employee?.linkedIn_profile) formData.append('linkedIn_profile', user.employee?.linkedIn_profile);
+        if (user.employee?.proficiency_level_of_language) formData.append('proficiency_level_of_language', user.employee?.proficiency_level_of_language);
+        if (user.employee?.References) formData.append('References', user.employee?.References);
+        if (user.employee?.issuing_organization) formData.append('issuing_organization', user.employee?.issuing_organization);
+        if (user.employee?.certification_name) formData.append('certification_name', user.employee?.certification_name);
+        if (user.employee?.date_of_certification) formData.append('date_of_certification', user.employee?.date_of_certification);
     
         
         updateEmployeeProfile(formData)
               .then((response) => {
                 setUser(response.data);
+                console.log(response.data)
                 setErrors({});
                 navigate('/employee-profile');
                 console.warn('Edit result', response);
@@ -205,7 +227,8 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Certifications</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.certifications} onChange={handleChange} name="employee.certifications"/>  
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.certifications} onChange={handleChange} name="employee.certifications"/>
+                                                            {renderError('certifications')}    
                                                         </div>
                                                     </div>
                                         
@@ -264,7 +287,8 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Hobbies</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.hobbies} onChange={handleChange} name="employee.hobbies"/>  
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.hobbies} onChange={handleChange} name="employee.hobbies"/>
+                                                            {renderError('hobbies')}   
                                                         </div>
                                                     </div>
                                         
@@ -303,7 +327,9 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Pincode</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.pincode} onChange={handleChange} name="employee.pincode"/>  
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.pincode} onChange={handleChange} name="employee.pincode"/>
+                                                            {renderError('pincode')} 
+                                                              
                                                         </div>
                                                     </div>
                                         
@@ -321,6 +347,223 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             {renderError('gender')} 
                                                         </div>
                                                     </div>
+
+                                                    
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Marital status</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text" value={user.employee?.marital_status} onChange={handleChange} name="employee.marital_status"/>
+                                                            {renderError('marital_status')}  
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Company Name</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text" value={user.employee?.company_name} onChange={handleChange} name="employee.company_name"/>
+                                                            {renderError('company_name')}
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Responsibilities and Achievements</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text" value={user.employee?.responsibilities_and_achievements} onChange={handleChange} name="responsibilities_and_achievements"/>
+                                                            {renderError('responsibilities_and_achievements')}
+                                                        </div>
+                                                    </div >
+                                    
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Degree</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.Degree} onChange={handleChange} name="employee.Degree"/>
+                                                            {renderError('Degree')}
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>University or College Name</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.university_or_collegeName} onChange={handleChange} name="employee.university_or_collegeName"/>
+                                                            {renderError('university_or_collegeName')}  
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Graduation Date</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.graduation_date} onChange={handleChange} name="employee.graduation_date"/>
+                                                            {renderError('graduation_date')}  
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>    
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Coursework or Academic Achievements</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.coursework_or_academic_achievements} onChange={handleChange} name="coursework_or_academic_achievements"/> 
+                                                            {renderError('coursework_or_academic_achievements')}
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Project Title</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.project_title} onChange={handleChange} name="employee.project_title"/>
+                                                            {renderError('project_title')} 
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Brief Description</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.brief_description} onChange={handleChange} name="employee.brief_description"/> 
+                                                            {renderError('brief_description')} 
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Role and Contributions</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.role_and_contributions} onChange={handleChange} name="employee.role_and_contributions"/>
+                                                            {renderError('role_and_contributions')}   
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Technologies Used</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.Technologies_used} onChange={handleChange} name="employee.Technologies_used"/>
+                                                            {renderError('Technologies_used')}   
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Dates of Employment</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.dates_of_employment} onChange={handleChange} name="employee.dates_of_employment"/>
+                                                            {renderError('dates_of_employment')}   
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Location</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.location} onChange={handleChange} name="employee.location"/> 
+                                                            {renderError('location')} 
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Job Title</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.job_title} onChange={handleChange} name="employee.job_title"/>
+                                                            {renderError('job_title')}  
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Professional Summary</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.professional_summary} onChange={handleChange} name="employee.professional_summary"/> 
+                                                            {renderError('professional_summary')}  
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>LinkedIn Profile</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.linkedIn_profile} onChange={handleChange} name="employee.linkedIn_profile"/>
+                                                            {renderError('linkedIn_profile')}   
+                                                        </div>    
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Proficiency Level of Language</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.proficiency_level_of_language} onChange={handleChange} name="employee.proficiency_level_of_language"/>
+                                                            {renderError('proficiency_level_of_language')}   
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>References</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.References} onChange={handleChange} name="employee.References"/>
+                                                            {renderError('References')}   
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Issuing Organization</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.issuing_organization} onChange={handleChange} name="employee.issuing_organization"/> 
+                                                            {renderError('issuing_organization')} 
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Certification Name</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                        <input className="form-control mt-30" type="text"value={user.employee?.certification_name} onChange={handleChange} name="employee.certification_name"/> 
+                                                        {renderError('certification_name')}
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                        
+                                                    <div className='row'>
+                                                        <div className='col-lg-2'>
+                                                            <label className='mt-30'>Date of Certification</label>
+                                                        </div>
+                                                        <div className='col-lg-10'>
+                                                            <input className="form-control mt-30" type="text" value={user.employee?.date_of_certification} onChange={handleChange} name="employee.date_of_certification"/>  
+                                                            {renderError('date_of_certification')}
+                                                        </div>
+                                                    </div>
+
+
+
                                                     <div className="row">
                                                         <div className='col-lg-5'></div>
                                                         <div className='col-lg-5'>

@@ -1,13 +1,13 @@
 
 import instance from './axios';
 
-  export const getClientId = () => {
-    return "620552090072-ucb04bnq9lt3i3rsdhtnrfvkv9pne2c4.apps.googleusercontent.com";
-  };
+export const getClientId = () => {
+  return "487377604551-gort01f6fqu0ujrdfvqoif6sa0gio1lq.apps.googleusercontent.com";
+};
 
-  export const UserLoginApi = (user) => {
-    return instance.post('/login', user );
-  };
+export const UserLoginApi = (user) => {
+  return instance.post('/login', user);
+};
   
   export const getUserProfile = () => { 
     return instance.get('/user-profile');
@@ -81,6 +81,7 @@ import instance from './axios';
   export const createContactDetail = (data) => {
     return instance.post('/contact-mail-send', data );
   };
+  
   export const employeeFavJob = () => { 
     return instance.get('/employee-fav-job');
   };

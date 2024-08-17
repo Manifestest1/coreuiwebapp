@@ -41,7 +41,12 @@ const EmployeeProfile = ({ user, setUser }) => {
     const downloadPDF = (userId) => {
         console.log(userId,"Get Userid");
 
-      fetch('http://localhost:8000/api/auth/employee-download-pdf/'+userId)
+      fetch('https://staging.fyies.com/api/auth/employee-download-pdf/${userId}', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/pdf',
+        },
+    })
      .then(response => response.blob())
      .then(blob => {
        const url = window.URL.createObjectURL(new Blob([blob]));
@@ -215,10 +220,136 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                             <label className='mt-30'>{user.employee?.pincode}</label>  
                                                         </div>
                                                         <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Marital Status</label>
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>{user.employee?.marital_status}</label>
+                                                        </div>
+                                                        <div className='col-lg-3 '>
                                                             <label className='mt-30'>Gender</label>
                                                         </div>
                                                         <div className='col-lg-3'>
                                                             <label className='mt-30'>{user.employee?.gender}</label>  
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>company Name</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                           <label className='mt-30'>{user.employee?.company_name}</label>
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Responsibilities and Achievements</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.responsibilities_and_achievements}</label>
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Degree</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.Degree}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>University or College Name</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.university_or_collegeName}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Graduation Date</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.graduation_date}</label>   
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Course Work or Academic Achievements</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.coursework_or_academic_achievements}</label>  
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>project_title</label>
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>{user.employee?.project_title}</label>  
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Brief Description</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.brief_description}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Role and Contributions</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.role_and_contributions}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Technologies Used</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.Technologies_used}</label>  
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Dates of Employment</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.dates_of_employment}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Location</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.location}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Job Title</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.job_title}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Professional Summary</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.professional_summary}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>LinkedIn Profile</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.linkedIn_profile}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Proficiency Level of Language</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.proficiency_level_of_language}</label> 
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>References</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.References}</label>   
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Issuing Organization</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.issuing_organization}</label>  
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>certification Name</label>
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>{user.employee?.certification_name}</label>
+                                                        </div>
+                                                        <div className='col-lg-3 '>
+                                                            <label className='mt-30'>Date Of Certification</label>
+                                                        </div>
+                                                        <div className='col-lg-3'>
+                                                            <label className='mt-30'>{user.employee?.date_of_certification}</label>  
                                                         </div>
                                                     </div>
                                                 </div>
