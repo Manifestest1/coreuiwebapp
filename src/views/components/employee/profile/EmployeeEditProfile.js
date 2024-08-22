@@ -36,7 +36,8 @@ const EmployeeEditProfile = ({user,setUser})=>{
         const formatErrors = {};
 
         requiredFields.forEach(field => {
-            if (!user.employee?.[field]) {
+            if (!user.employee?.[field]) 
+            {
                 formatErrors[field] = `${field.split('.').pop()} is required`;
             }
         });
@@ -375,7 +376,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Responsibilities and Achievements</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text" value={user.employee?.responsibilities_and_achievements} onChange={handleChange} name="responsibilities_and_achievements"/>
+                                                            <input className="form-control mt-30" type="text" value={user.employee?.responsibilities_and_achievements} onChange={handleChange} name="employee.responsibilities_and_achievements"/>
                                                             {renderError('responsibilities_and_achievements')}
                                                         </div>
                                                     </div >
@@ -405,7 +406,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Graduation Date</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.graduation_date} onChange={handleChange} name="employee.graduation_date"/>
+                                                            <input className="form-control mt-30" type="date"value={user.employee?.graduation_date} onChange={handleChange} name="employee.graduation_date"/>
                                                             {renderError('graduation_date')}  
                                                         </div>
                                                     </div>
@@ -415,7 +416,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Coursework or Academic Achievements</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.coursework_or_academic_achievements} onChange={handleChange} name="coursework_or_academic_achievements"/> 
+                                                            <input className="form-control mt-30" type="text"value={user.employee?.coursework_or_academic_achievements} onChange={handleChange} name="employee.coursework_or_academic_achievements"/> 
                                                             {renderError('coursework_or_academic_achievements')}
                                                         </div>
                                                     </div>
@@ -465,7 +466,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Dates of Employment</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.dates_of_employment} onChange={handleChange} name="employee.dates_of_employment"/>
+                                                            <input className="form-control mt-30" type="date"value={user.employee?.dates_of_employment} onChange={handleChange} name="employee.dates_of_employment"/>
                                                             {renderError('dates_of_employment')}   
                                                         </div>
                                                     </div>
@@ -557,7 +558,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Date of Certification</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text" value={user.employee?.date_of_certification} onChange={handleChange} name="employee.date_of_certification"/>  
+                                                            <input className="form-control mt-30" type="date" value={user.employee?.date_of_certification} onChange={handleChange} name="employee.date_of_certification"/>  
                                                             {renderError('date_of_certification')}
                                                         </div>
                                                     </div>
