@@ -1,11 +1,37 @@
 
-import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
-import React,{ useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import React,{ useState } from 'react';
 import {updateEmployeeProfile } from '../../../../apiService';
+import DynamicForm from './projects_file';
 
 const EmployeeEditProfile = ({user,setUser})=>{
+
     const navigate = useNavigate()
     const [errors, setErrors] = useState({});
+
+    // Project File Code
+    
+    const [inputs, setInputs] = useState([
+        { id: Date.now(), projectName: '', briefDescription: '', roleAndContributions: '', technologiesUsed: '' }
+    ]);
+
+    const handleInputChange = (id, event) => {
+        const { name, value } = event.target;
+        setInputs(inputs.map(input => 
+            input.id === id ? { ...input, [name]: value } : input
+        ));
+    };
+
+    const addInputField = () => {
+        setInputs([...inputs, { id: Date.now(), projectName: '', briefDescription: '', roleAndContributions: '', technologiesUsed: '' }]);
+    };
+
+    const removeInputField = (id) => {
+        setInputs(inputs.filter(input => input.id !== id));
+    };
+
+
+    // Project File Code 
     
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,9 +56,10 @@ const EmployeeEditProfile = ({user,setUser})=>{
 
       const handleSubmit = (e) => {
         e.preventDefault();
+
         const formData = new FormData(); 
 
-        const requiredFields = ['phone', 'current_address', 'qualification', 'skills', 'marital_status', 'current_working_skill', 'languages','country', 'state', 'city', 'gender', 'marital_status', 'permanent_address', 'working_from', 'work_experience', 'company_name',  'Degree', 'responsibilities_and_achievements', 'coursework_or_academic_achievements','university_or_collegeName', 'graduation_date', 'project_title', 'brief_description', 'role_and_contributions', 'Technologies_used', 'dates_of_employment', 'location', 'job_title', 'professional_summary', 'linkedIn_profile', 'proficiency_level_of_language', 'References', 'issuing_organization', 'certification_name', 'date_of_certification' ];
+        const requiredFields = ['phone', 'current_address', 'qualification', 'skills', 'marital_status', 'current_working_skill', 'languages','country', 'state', 'city', 'gender', 'marital_status', 'permanent_address', 'working_from', 'work_experience', 'company_name',  'Degree', 'responsibilities_and_achievements', 'coursework_or_academic_achievements','university_or_collegeName', 'graduation_date', 'dates_of_employment', 'location', 'job_title', 'professional_summary', 'linkedIn_profile', 'proficiency_level_of_language', 'References', 'issuing_organization', 'certification_name', 'date_of_certification' ];
         const formatErrors = {};
 
         requiredFields.forEach(field => {
@@ -81,10 +108,6 @@ const EmployeeEditProfile = ({user,setUser})=>{
         if (user.employee?.university_or_collegeName) formData.append('university_or_collegeName', user.employee?.university_or_collegeName);
         if (user.employee?.graduation_date) formData.append('graduation_date', user.employee?.graduation_date);
         if (user.employee?.coursework_or_academic_achievements) formData.append('coursework_or_academic_achievements', user.employee?.coursework_or_academic_achievements);
-        if (user.employee?.project_title) formData.append('project_title', user.employee?.project_title);
-        if (user.employee?.brief_description) formData.append('brief_description', user.employee?.brief_description);
-        if (user.employee?.role_and_contributions) formData.append('role_and_contributions', user.employee?.role_and_contributions);
-        if (user.employee?.Technologies_used) formData.append('Technologies_used', user.employee?.Technologies_used);
         if (user.employee?.dates_of_employment) formData.append('dates_of_employment', user.employee?.dates_of_employment);
         if (user.employee?.location) formData.append('location', user.employee?.location);
         if (user.employee?.job_title) formData.append('job_title', user.employee?.job_title);
@@ -95,12 +118,32 @@ const EmployeeEditProfile = ({user,setUser})=>{
         if (user.employee?.issuing_organization) formData.append('issuing_organization', user.employee?.issuing_organization);
         if (user.employee?.certification_name) formData.append('certification_name', user.employee?.certification_name);
         if (user.employee?.date_of_certification) formData.append('date_of_certification', user.employee?.date_of_certification);
+
+        const payload = inputs.map(input => ({
+            projectName: input.projectName,
+            briefDescription: input.briefDescription,
+            roleAndContributions: input.roleAndContributions,
+            technologiesUsed: input.technologiesUsed
+        }));
+
+        // Send data to the API
+
+        for (const key in formData) {
+            if (formData.hasOwnProperty(key)) {
+                formData.append(key, formData[key]);
+            }
+        }
+
+        // Append payload as a JSON string to formData
+        formData.append('payload', JSON.stringify(payload));
+     
+        console.log('Response:', payload);
     
         
         updateEmployeeProfile(formData)
               .then((response) => {
                 setUser(response.data);
-                console.log(response.data)
+                console.log(response.data,"Update Employee Profile")
                 setErrors({});
                 navigate('/employee-profile');
                 console.warn('Edit result', response);
@@ -409,7 +452,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <input className="form-control mt-30" type="date"value={user.employee?.graduation_date} onChange={handleChange} name="employee.graduation_date"/>
                                                             {renderError('graduation_date')}  
                                                         </div>
-                                                    </div>
+                                                    </div> 
                                         
                                                     <div className='row'>    
                                                         <div className='col-lg-2'>
@@ -420,46 +463,14 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             {renderError('coursework_or_academic_achievements')}
                                                         </div>
                                                     </div>
-                                        
-                                                    <div className='row'>
-                                                        <div className='col-lg-2'>
-                                                            <label className='mt-30'>Project Title</label>
-                                                        </div>
-                                                        <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.project_title} onChange={handleChange} name="employee.project_title"/>
-                                                            {renderError('project_title')} 
-                                                        </div>
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <div className='col-lg-2'>
-                                                            <label className='mt-30'>Brief Description</label>
-                                                        </div>
-                                                        <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.brief_description} onChange={handleChange} name="employee.brief_description"/> 
-                                                            {renderError('brief_description')} 
-                                                        </div>
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <div className='col-lg-2'>
-                                                            <label className='mt-30'>Role and Contributions</label>
-                                                        </div>
-                                                        <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.role_and_contributions} onChange={handleChange} name="employee.role_and_contributions"/>
-                                                            {renderError('role_and_contributions')}   
-                                                        </div>
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <div className='col-lg-2'>
-                                                            <label className='mt-30'>Technologies Used</label>
-                                                        </div>
-                                                        <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.Technologies_used} onChange={handleChange} name="employee.Technologies_used"/>
-                                                            {renderError('Technologies_used')}   
-                                                        </div>
-                                                    </div>
+                                                    <DynamicForm
+                                                        inputs={inputs}
+                                                        handleInputChange={handleInputChange}
+                                                        addInputField={addInputField}
+                                                        removeInputField={removeInputField}
+                                                        handleSubmit={handleSubmit}
+                                                    />
+                                                   
                                         
                                                     <div className='row'>
                                                         <div className='col-lg-2'>

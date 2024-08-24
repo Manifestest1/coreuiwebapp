@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Switch, Route, Link, useNavigate } from 'react-router-dom';
-import React, { useEffect, useState, useRef } from 'react';
-import { updateUserProfile,employeePdfDownload } from '../../../../apiService';
+import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { updateUserProfile } from '../../../../apiService';
 
 const EmployeeProfile = ({ user, setUser }) => {
-    const [imageFile, setImageFile] = useState(null);
+    const [imageFile, setImageFile] = useState(null); 
     const [imagePreview, setImagePreview] = useState(null);
+    const [projectData, setProjectData] = useState([]);
     const imageInputRef = useRef(null);
     const navigate = useNavigate();
     
@@ -26,22 +27,41 @@ const EmployeeProfile = ({ user, setUser }) => {
         }
     };
 
+
+
     const updateUserImage = async (file) => {
         try {
             const formData = new FormData();
             formData.append('imageurl', file);
             const response = await updateUserProfile(formData);
             setUser(response.data);
+            setProjectData(response.data.projects);
             console.warn('Image updated successfully', response.data);
         } catch (error) {
             console.error('Error updating image', error);
         }
     };
 
+    const fetchProjectData = async () => {
+        try {
+            const response = await updateUserProfile(user.id); 
+            setProjectData(response.data.projects);
+            console.log('Project data fetched successfully', response.data.projects);
+        } catch (error) {
+            console.error('Error fetching project data', error);
+        }
+    };
+    
+    useEffect(() => {
+        if (user) {
+            fetchProjectData(); 
+        }
+    }, [user]);
+
     const downloadPDF = (userId) => {
         console.log(userId,"Get Userid");
 
-      fetch('https://staging.fyies.com/api/auth/employee-download-pdf/${userId}', {
+      fetch(`https://staging.fyies.com/jobsite/backend/api/auth/employee-download-pdf/${userId}`, {
         method: 'GET',
         headers: {
             'Accept': 'application/pdf',
@@ -268,30 +288,6 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                             <label className='mt-30'>{user.employee?.coursework_or_academic_achievements}</label>  
                                                         </div>
                                                         <div className='col-lg-3 '>
-                                                            <label className='mt-30'>project_title</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>{user.employee?.project_title}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Brief Description</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.brief_description}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Role and Contributions</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.role_and_contributions}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Technologies Used</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.Technologies_used}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
                                                             <label className='mt-30'>Dates of Employment</label>
                                                         </div>
                                                         <div className='col-lg-3'>
@@ -351,6 +347,45 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                         <div className='col-lg-3'>
                                                             <label className='mt-30'>{user.employee?.date_of_certification}</label>  
                                                         </div>
+                                                        <div className='row'>
+                                                        <div className='col-lg-12 project'>
+                                                            <label className='mt-30'>Project Details</label>
+                                                        </div>
+                                                    </div>
+                                                    {projectData.length > 0 ? (
+                                                        <div>
+                                                            {projectData.map((project, index) => (
+                                                                <div key={index} className='row'>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>Project Title</label>
+                                                                    </div>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>{project.project_name}</label>  
+                                                                    </div>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>Brief Description</label>
+                                                                    </div>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>{project.brief_description}</label>
+                                                                    </div>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>Role and Contributions</label>
+                                                                    </div>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>{project.role_and_contributions}</label>
+                                                                    </div>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>Technologies Used</label>
+                                                                    </div>
+                                                                    <div className='col-lg-3'>
+                                                                        <label className='mt-30'>{project.technologies_used}</label>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <p>No projects available.</p>
+                                                    )}
                                                     </div>
                                                 </div>
                                             </div>
