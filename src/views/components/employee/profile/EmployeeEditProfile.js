@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import React,{ useState } from 'react';
 import {updateEmployeeProfile } from '../../../../apiService';
 import DynamicForm from './projects_file';
+import CertificatesFile from './CertificatesFile';
 
 const EmployeeEditProfile = ({user,setUser})=>{
 
@@ -59,7 +60,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
 
         const formData = new FormData(); 
 
-        const requiredFields = ['phone', 'current_address', 'qualification', 'skills', 'marital_status', 'current_working_skill', 'languages','country', 'state', 'city', 'gender', 'marital_status', 'permanent_address', 'working_from', 'work_experience', 'company_name',  'Degree', 'responsibilities_and_achievements', 'coursework_or_academic_achievements','university_or_collegeName', 'graduation_date', 'dates_of_employment', 'location', 'job_title', 'professional_summary', 'linkedIn_profile', 'proficiency_level_of_language', 'References', 'issuing_organization', 'certification_name', 'date_of_certification' ];
+        const requiredFields = ['phone', 'current_address', 'qualification', 'skills', 'marriage_status', 'current_working_skill', 'languages','country', 'state', 'city', 'gender', 'marriage_status', 'permanent_address', 'working_from', 'work_experience', 'company_name',  'Degree', 'responsibilities_and_achievements', 'coursework_or_academic_achievements','university_or_collegeName', 'graduation_date', 'dates_of_employment', 'location', 'job_title', 'professional_summary', 'linkedIn_profile', 'proficiency_level_of_language', 'References' ];
         const formatErrors = {};
 
         requiredFields.forEach(field => {
@@ -89,7 +90,6 @@ const EmployeeEditProfile = ({user,setUser})=>{
         if (user.employee?.permanent_address) formData.append('permanent_address', user.employee?.permanent_address);
         if (user.employee?.adhar_card_no) formData.append('adhar_card_no', user.employee?.adhar_card_no);
         if (user.employee?.qualification) formData.append('qualification', user.employee?.qualification);
-        if (user.employee?.certifications) formData.append('certifications', user.employee?.certifications);
         if (user.employee?.skills) formData.append('skills', user.employee?.skills);
         if (user.employee?.working_from) formData.append('working_from', user.employee?.working_from);
         if (user.employee?.work_experience) formData.append('work_experience', user.employee?.work_experience);
@@ -101,7 +101,7 @@ const EmployeeEditProfile = ({user,setUser})=>{
         if (user.employee?.country) formData.append('country', user.employee?.country);
         if (user.employee?.pincode) formData.append('pincode', user.employee?.pincode);
         if (user.employee?.gender) formData.append('gender', user.employee?.gender);
-        if (user.employee?.marital_status) formData.append('marital_status', user.employee?.marital_status);
+        if (user.employee?.marriage_status) formData.append('marriage_status', user.employee?.marriage_status);
         if (user.employee?.company_name) formData.append('company_name', user.employee?.company_name);
         if (user.employee?.responsibilities_and_achievements) formData.append('responsibilities_and_achievements', user.employee?.responsibilities_and_achievements);
         if (user.employee?.Degree) formData.append('Degree', user.employee?.Degree);
@@ -115,15 +115,20 @@ const EmployeeEditProfile = ({user,setUser})=>{
         if (user.employee?.linkedIn_profile) formData.append('linkedIn_profile', user.employee?.linkedIn_profile);
         if (user.employee?.proficiency_level_of_language) formData.append('proficiency_level_of_language', user.employee?.proficiency_level_of_language);
         if (user.employee?.References) formData.append('References', user.employee?.References);
-        if (user.employee?.issuing_organization) formData.append('issuing_organization', user.employee?.issuing_organization);
-        if (user.employee?.certification_name) formData.append('certification_name', user.employee?.certification_name);
-        if (user.employee?.date_of_certification) formData.append('date_of_certification', user.employee?.date_of_certification);
+        if (user.employee?.certifications) formData.append('certifications', user.employee?.certifications);
+        
 
         const payload = inputs.map(input => ({
             projectName: input.projectName,
             briefDescription: input.briefDescription,
             roleAndContributions: input.roleAndContributions,
             technologiesUsed: input.technologiesUsed
+        }));
+
+        const result = inputs.map(input => ({
+            certificate_name: input.certificate_name,
+            date_of_certification: input.date_of_certification,
+            issuing_organization: input.issuing_organization,
         }));
 
         // Send data to the API
@@ -138,6 +143,10 @@ const EmployeeEditProfile = ({user,setUser})=>{
         formData.append('payload', JSON.stringify(payload));
      
         console.log('Response:', payload);
+
+        formData.append('result', JSON.stringify(result));
+     
+        console.log('result:', result);
     
         
         updateEmployeeProfile(formData)
@@ -399,8 +408,12 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             <label className='mt-30'>Marital status</label>
                                                         </div>
                                                         <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text" value={user.employee?.marital_status} onChange={handleChange} name="employee.marital_status"/>
-                                                            {renderError('marital_status')}  
+                                                            <select className="form-control mt-30" type="text" value={user.employee?.marriage_status} onChange={handleChange} name="employee.marriage_status">
+                                                                <option value="">Select Marital Status</option>
+                                                                <option value="married">Married</option>
+                                                                <option value="unmarried">UnMarried</option>
+                                                            </select>
+                                                            {renderError('marriage_status')}  
                                                         </div>
                                                     </div>
                                     
@@ -464,6 +477,14 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                         </div>
                                                     </div>
                                                     <DynamicForm
+                                                        inputs={inputs}
+                                                        handleInputChange={handleInputChange}
+                                                        addInputField={addInputField}
+                                                        removeInputField={removeInputField}
+                                                        handleSubmit={handleSubmit}
+                                                    />
+
+                                                    <CertificatesFile
                                                         inputs={inputs}
                                                         handleInputChange={handleInputChange}
                                                         addInputField={addInputField}
@@ -541,39 +562,6 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                             {renderError('References')}   
                                                         </div>
                                                     </div>
-                                        
-                                                    <div className='row'>
-                                                        <div className='col-lg-2'>
-                                                            <label className='mt-30'>Issuing Organization</label>
-                                                        </div>
-                                                        <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="text"value={user.employee?.issuing_organization} onChange={handleChange} name="employee.issuing_organization"/> 
-                                                            {renderError('issuing_organization')} 
-                                                        </div>
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <div className='col-lg-2'>
-                                                            <label className='mt-30'>Certification Name</label>
-                                                        </div>
-                                                        <div className='col-lg-10'>
-                                                        <input className="form-control mt-30" type="text"value={user.employee?.certification_name} onChange={handleChange} name="employee.certification_name"/> 
-                                                        {renderError('certification_name')}
-                                                        </div>
-                                                    </div>
-
-                                                    
-                                        
-                                                    <div className='row'>
-                                                        <div className='col-lg-2'>
-                                                            <label className='mt-30'>Date of Certification</label>
-                                                        </div>
-                                                        <div className='col-lg-10'>
-                                                            <input className="form-control mt-30" type="date" value={user.employee?.date_of_certification} onChange={handleChange} name="employee.date_of_certification"/>  
-                                                            {renderError('date_of_certification')}
-                                                        </div>
-                                                    </div>
-
 
 
                                                     <div className="row">

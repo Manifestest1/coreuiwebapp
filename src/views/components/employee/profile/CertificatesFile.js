@@ -1,0 +1,58 @@
+import React, { useState } from 'react';
+import { TextField, Button, Stack, Box } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+
+const CertificatesFile = ({ inputs = [], handleInputChange, addInputField, removeInputField,handleSubmit }) => {
+    // State to manage the list of input fields
+
+    return (
+        <Box sx={{ padding: 2 }}>
+            <form onSubmit={handleSubmit}>
+            {inputs.map(input => (
+                <Stack key={input.id} spacing={2} direction="row" alignItems="center">
+                     <div className='row'>
+
+                        <div className='col-lg-2'>
+                            <label className='mt-30'>Certificate Name</label>
+                        </div>
+                        <div className='col-lg-4'>
+                            <input className="form-control mt-30" type="text" name="certificate_name" value={input.certificate_name} onChange={(e) => handleInputChange(input.id, e)}/>
+                        </div>
+                    
+                        <div className='col-lg-2'>
+                            <label className='mt-30'> Date of Certification</label>
+                        </div>
+                        <div className='col-lg-4'>
+                            <input className="form-control mt-30" type="date"  name="date_of_certification" value={input.date_of_certification} onChange={(e) => handleInputChange(input.id, e)}/> 
+                        </div>
+
+                        <div className='col-lg-2'>
+                            <label className='mt-30'>Issuing Organization</label>
+                        </div>
+                        <div className='col-lg-4'>
+                            <input className="form-control mt-30" type="text"  name="issuing_organization" value={input.issuing_organization} onChange={(e) => handleInputChange(input.id, e)}/> 
+                        </div>
+                    </div>      
+                   
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => removeInputField(input.id)}
+                        // startIcon={<RemoveIcon />}
+                    >
+                        Remove
+                    </Button>
+                </Stack>
+            ))}
+             <Button variant="contained" color="primary" onClick={addInputField} sx={{ mt: 2 }}
+                startIcon={<AddIcon />}>
+                {/* The button text can be empty */}
+            </Button>
+
+                </form>
+        </Box>
+    );
+};
+
+export default CertificatesFile;

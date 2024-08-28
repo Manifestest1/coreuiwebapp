@@ -18,6 +18,7 @@ import CreateProfile from "../views/components/profile-create/CreateProfile";
 import EmployeeDashboard from "../views/components/employee/EmployeeDashboard"; 
 import EmployeeEditProfile from "../views/components/employee/profile/EmployeeEditProfile";
 import DynamicForm from "../views/components/employee/profile/projects_file";
+import CertificatesFile from "../views/components/employee/profile/CertificatesFile";
 import EmployeeProfile from "../views/components/employee/profile/EmployeeProfile";
 import EmployeeJobs from "../views/components/employee/job/EmployeeJobs";
 import EmployeeJobView from "../views/components/employee/job/EmployeeJobView";
@@ -99,6 +100,7 @@ const Componentsetup = ()=>{
           <Route path="/employee-dashboard" element={<EmployeeDashboard/>} /> 
           <Route path="/employee-edit-profile" element={<EmployeeEditProfile user={user} setUser={setUser}/>} />
           <Route path="/employee-dynamic" element={<DynamicForm/>}/>
+          <Route path="/employee-certificate" element={<CertificatesFile/>}/>
           <Route path="/employee-profile" element={<EmployeeProfile user={user} setUser={setUser} />}/>
           <Route path="/employee-jobs" element={<EmployeeJobs/>}/>
           <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>

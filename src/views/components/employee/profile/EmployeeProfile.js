@@ -6,6 +6,7 @@ const EmployeeProfile = ({ user, setUser }) => {
     const [imageFile, setImageFile] = useState(null); 
     const [imagePreview, setImagePreview] = useState(null);
     const [projectData, setProjectData] = useState([]);
+    const [certificateData, setCertificateData] = useState([]);
     const imageInputRef = useRef(null);
     const navigate = useNavigate();
     
@@ -42,6 +43,23 @@ const EmployeeProfile = ({ user, setUser }) => {
         }
     };
 
+    const fetchCertificateData = async () => {
+        try {
+            const response = await updateUserProfile(user.id); 
+            setCertificateData(response.data.certificates);
+            console.log('Project data fetched successfully', response.data.certificates);
+        } catch (error) {
+            console.error('Error fetching project data', error);
+        }
+    };
+    
+    useEffect(() => {
+        if (user) {
+            fetchCertificateData(); 
+            fetchProjectData();
+        }
+    }, [user]);
+
     const fetchProjectData = async () => {
         try {
             const response = await updateUserProfile(user.id); 
@@ -51,17 +69,11 @@ const EmployeeProfile = ({ user, setUser }) => {
             console.error('Error fetching project data', error);
         }
     };
-    
-    useEffect(() => {
-        if (user) {
-            fetchProjectData(); 
-        }
-    }, [user]);
 
     const downloadPDF = (userId) => {
         console.log(userId,"Get Userid");
 
-      fetch(`https://staging.fyies.com/jobsite/backend/api/auth/employee-download-pdf/${userId}`, {
+        fetch(`http://localhost:8000/api/auth/employee-download-pdf/${userId}`, {
         method: 'GET',
         headers: {
             'Accept': 'application/pdf',
@@ -243,7 +255,7 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                             <label className='mt-30'>Marital Status</label>
                                                         </div>
                                                         <div className='col-lg-3 '>
-                                                            <label className='mt-30'>{user.employee?.marital_status}</label>
+                                                            <label className='mt-30'>{user.employee?.marriage_status}</label>
                                                         </div>
                                                         <div className='col-lg-3 '>
                                                             <label className='mt-30'>Gender</label>
@@ -329,29 +341,12 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                         <div className='col-lg-3'>
                                                             <label className='mt-30'>{user.employee?.References}</label>   
                                                         </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Issuing Organization</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.issuing_organization}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>certification Name</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>{user.employee?.certification_name}</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Date Of Certification</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.date_of_certification}</label>  
-                                                        </div>
-                                                        <div className='row'>
-                                                        <div className='col-lg-12 project'>
-                                                            <label className='mt-30'>Project Details</label>
+                                                        <div className='row project'>
+                                                        <div className='col-lg-12 '>
+                                                            <label className='mt-30 '>Project Details</label>
                                                         </div>
                                                     </div>
+                                                    
                                                     {projectData.length > 0 ? (
                                                         <div>
                                                             {projectData.map((project, index) => (
@@ -378,13 +373,47 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                                         <label className='mt-30'>Technologies Used</label>
                                                                     </div>
                                                                     <div className='col-lg-3'>
-                                                                        <label className='mt-30'>{project.technologies_used}</label>
+                                                                        <label className='mt-30'>{project.Technologies_used}</label>
                                                                     </div>
                                                                 </div>
                                                             ))}
                                                         </div>
                                                     ) : (
                                                         <p>No projects available.</p>
+                                                    )}
+                                                                                                            <div className='row project'>
+                                                        <div className='col-lg-12 '>
+                                                            <label className='mt-30 '>Certificate Details</label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    {certificateData.length > 0 ? (
+                                                        <div>
+                                                            {certificateData.map((certificate, index) => (
+                                                                <div key={index} className='row'>
+                                                                <div className='col-lg-3 '>
+                                                                    <label className='mt-30'>certificate Name</label>
+                                                                </div>
+                                                                <div className='col-lg-3 '>
+                                                                    <label className='mt-30'>{certificate.certificate_name}</label>
+                                                                </div>
+                                                                <div className='col-lg-3 '>
+                                                                    <label className='mt-30'>Issuing Organization</label>
+                                                                </div>
+                                                                <div className='col-lg-3'>
+                                                                    <label className='mt-30'>{certificate.issuing_organization}</label>  
+                                                                </div>
+                                                                <div className='col-lg-3 '>
+                                                                    <label className='mt-30'>Date Of Certification</label>
+                                                                </div>
+                                                                <div className='col-lg-3'>
+                                                                    <label className='mt-30'>{certificate.date_of_certification}</label>  
+                                                                </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <p>No certificates available.</p>
                                                     )}
                                                     </div>
                                                 </div>
