@@ -10,8 +10,8 @@ const DynamicForm = ({ inputs = [], handleInputChange, addInputField, removeInpu
         <Box sx={{ padding: 2 }}>
             <form onSubmit={handleSubmit}>
             {inputs.map(input => (
-                <Stack key={input.id} spacing={2} direction="row" alignItems="center">
-                     <div className='row'>
+                <Stack key={input.id} spacing={2} direction="column" alignItems="center">
+                     <div className='row' >
 
                         <div className='col-lg-2'>
                             <label className='mt-30'>Project Title</label>
@@ -42,22 +42,28 @@ const DynamicForm = ({ inputs = [], handleInputChange, addInputField, removeInpu
                         </div>
                     </div>
                    
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => removeInputField(input.id)}
-                        // startIcon={<RemoveIcon />}
-                    >
-                        Remove
-                    </Button>
-                </Stack>
-            ))}
-             <Button variant="contained" color="primary" onClick={addInputField} sx={{ mt: 2 }}
-                startIcon={<AddIcon />}>
-                {/* The button text can be empty */}
-            </Button>
-
-                </form>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                            <Button
+                                variant="contained"
+                                className="genric-btn success-border radius mt-30"
+                                onClick={addInputField}
+                                startIcon={<AddIcon />}
+                            >
+                                Add
+                            </Button>
+                            <Button
+                                variant="contained"
+                                className="genric-btn success-border radius mt-30"
+                                onClick={() => removeInputField(input.id)}
+                                startIcon={<RemoveIcon />}
+                                sx={{ marginLeft: 2 }} // Adjust the margin here
+                            >
+                                Remove
+                            </Button>
+                        </Stack>
+                    </Stack>
+                ))}
+            </form>
         </Box>
     );
 };

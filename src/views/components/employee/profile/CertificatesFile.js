@@ -10,7 +10,7 @@ const CertificatesFile = ({ inputs = [], handleInputChange, addInputField, remov
         <Box sx={{ padding: 2 }}>
             <form onSubmit={handleSubmit}>
             {inputs.map(input => (
-                <Stack key={input.id} spacing={2} direction="row" alignItems="center">
+                <Stack key={input.id} spacing={2} direction="column" alignItems="center">
                      <div className='row'>
 
                         <div className='col-lg-2'>
@@ -37,18 +37,13 @@ const CertificatesFile = ({ inputs = [], handleInputChange, addInputField, remov
                    
                     <Button
                         variant="contained"
-                        color="secondary"
-                        onClick={() => removeInputField(input.id)}
-                        // startIcon={<RemoveIcon />}
-                    >
-                        Remove
-                    </Button>
+                        className="genric-btn success-border radius mt-30 remove"
+                        onClick={() => removeInputField(input.id)} 
+                        startIcon={<RemoveIcon />} />
                 </Stack>
             ))}
-             <Button variant="contained" color="primary" onClick={addInputField} sx={{ mt: 2 }}
-                startIcon={<AddIcon />}>
-                {/* The button text can be empty */}
-            </Button>
+             <Button variant="contained" className="genric-btn success-border radius mt-30" onClick={addInputField} sx={{ mt: 2 }}
+                startIcon={<AddIcon />} />
 
                 </form>
         </Box>
