@@ -289,9 +289,15 @@
   background-position: center; 
   background-repeat: no-repeat; 
 }
-.project{
+.row.project{
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center; 
+  align-items: center;
+  margin-left: 40%;
+  font-weight: bold;
+}
+
+.col-lg-6 .mt-30 span.profilecolor {
+  color: #252b60;
+  font-weight: bold;
 }

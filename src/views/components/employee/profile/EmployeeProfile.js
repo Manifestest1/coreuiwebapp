@@ -143,203 +143,204 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                             {/* Button to replace input field */}
                                                             <button id='image-update' onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>
                                                         </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Name</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                           <label className='mt-30'>{user.name}</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Email</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.email}</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Mobile Number</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.phone}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Current Address</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.current_address}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Permanent Address</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.permanent_address}</label>   
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Aadhar Number</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.adhar_card_no}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Qualification</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>{user.employee?.qualification}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Certifications</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.certifications}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Skills</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.skills}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Working From</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.working_from}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Work Experience</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.work_experience}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Current working skill</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.current_working_skill}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Languages</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.languages}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Hobbies</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.hobbies}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Country</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.country}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>State</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.state}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>City</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.city}</label>   
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Pincode</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.pincode}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Marital Status</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>{user.employee?.marriage_status}</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Gender</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.gender}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>company Name</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                           <label className='mt-30'>{user.employee?.company_name}</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Responsibilities and Achievements</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.responsibilities_and_achievements}</label>
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Degree</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.Degree}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>University or College Name</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.university_or_collegeName}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Graduation Date</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.graduation_date}</label>   
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Course Work or Academic Achievements</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.coursework_or_academic_achievements}</label>  
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Dates of Employment</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.dates_of_employment}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Location</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.location}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Job Title</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.job_title}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Professional Summary</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.professional_summary}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>LinkedIn Profile</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.linkedIn_profile}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>Proficiency Level of Language</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.proficiency_level_of_language}</label> 
-                                                        </div>
-                                                        <div className='col-lg-3 '>
-                                                            <label className='mt-30'>References</label>
-                                                        </div>
-                                                        <div className='col-lg-3'>
-                                                            <label className='mt-30'>{user.employee?.References}</label>   
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Name:   </span> 
+                                                                <span >{user.name}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Email:   </span>  
+                                                                <span >{user.email}</span>
+                                                            </label> 
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Mobile Number:   </span>  
+                                                                <span >{user.employee?.phone}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Current Address:   </span>  
+                                                                <span >{user.employee?.current_address}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Permanent Address:   </span>  
+                                                                <span >{user.employee?.permanent_address}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Aadhar Number:   </span>  
+                                                                <span >{user.employee?.adhar_card_no}</span>
+                                                            </label>
+                                                        </div> 
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Qualification:   </span>  
+                                                                <span >{user.employee?.qualification}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Certifications: </span> 
+                                                                <span >{user.employee?.certifications}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Skills:   </span>   
+                                                                <span >{user.employee?.skills}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Working From:   </span>  
+                                                                <span >{user.employee?.working_from}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>
+                                                                Work Experience:   </span> 
+                                                                <span >{user.employee?.work_experience}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Current working skill:   </span>  
+                                                                <span >{user.employee?.current_working_skill}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Languages:   </span>  
+                                                                <span >{user.employee?.languages}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Hobbies:   </span>  
+                                                                <span >{user.employee?.hobbies}</span>
+                                                        </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Country:   </span>  
+                                                                <span >{user.employee?.country}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>State:   </span>  
+                                                                <span >{user.employee?.state}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>City:   </span>  
+                                                                <span >{user.employee?.city}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Pincode:   </span>  
+                                                                <span >{user.employee?.pincode}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Marriage Status:   </span>
+                                                                <span >{user.employee?.marriage_status}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Gender:   </span>
+                                                                <span >{user.employee?.gender}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'><span className='profilecolor'>company Name:   </span>  
+                                                            <span >{user.employee?.company_name}</span>
+                                                        </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Responsibilities and Achievements:   </span>
+                                                                <span >{user.employee?.responsibilities_and_achievements}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Degree:   </span>  
+                                                                <span >{user.employee?.Degree}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>
+                                                                    University or College Name:   </span>  
+                                                                <span >{user.employee?.university_or_collegeName}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Graduation Date:   </span> 
+                                                                <span >{user.employee?.graduation_date}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                            <span className='profilecolor'>Course Work or Academic Achievements:   </span>  
+                                                                <span >{user.employee?.coursework_or_academic_achievements}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Dates of Employment: </span> 
+                                                                <span >{user.employee?.dates_of_employment}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor'>Location:   </span>  
+                                                                <span >{user.employee?.location}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor' >Job Title:   </span>  
+                                                                <span >{user.employee?.job_title}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor' >Professional Summary:   </span>  
+                                                                <span >{user.employee?.professional_summary}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor' >LinkedIn Profile:   </span>  
+                                                                <span >{user.employee?.linkedIn_profile}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor' >Proficiency Level of Language:   </span> 
+                                                                <span >{user.employee?.proficiency_level_of_language}</span>
+                                                            </label>
+                                                        </div>
+                                                        <div className='col-lg-6 '>
+                                                            <label className='mt-30'>
+                                                                <span className='profilecolor' >References:   </span>  
+                                                                <span >{user.employee?.References}</span>
+                                                            </label>
                                                         </div>
                                                         <div className='row project'>
                                                         <div className='col-lg-12 '>
@@ -348,32 +349,32 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                     </div>
                                                     
                                                     {projectData.length > 0 ? (
-                                                        <div>
+                                                        <div className='col-lg-12'>
                                                             {projectData.map((project, index) => (
                                                                 <div key={index} className='row'>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>Project Title</label>
+                                                                    <div className='col-lg-6'>
+                                                                        <label className='mt-30'>
+                                                                            <span className='profilecolor' >Project Title: </span>  
+                                                                            <span >{project.project_name}</span>
+                                                                        </label>
                                                                     </div>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>{project.project_name}</label>  
+                                                                    <div className='col-lg-6'>
+                                                                        <label className='mt-30'>
+                                                                            <span className='profilecolor' >Brief Description:   </span>  
+                                                                            <span >{project.brief_description}</span>
+                                                                        </label>
                                                                     </div>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>Brief Description</label>
+                                                                    <div className='col-lg-6'>
+                                                                        <label className='mt-30 profilecolor'>
+                                                                           <span className='profilecolor' >Role and Contributions:   </span>  
+                                                                            <span >{project.role_and_contributions}</span>
+                                                                            </label>
                                                                     </div>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>{project.brief_description}</label>
-                                                                    </div>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>Role and Contributions</label>
-                                                                    </div>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>{project.role_and_contributions}</label>
-                                                                    </div>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>Technologies Used</label>
-                                                                    </div>
-                                                                    <div className='col-lg-3'>
-                                                                        <label className='mt-30'>{project.Technologies_used}</label>
+                                                                    <div className='col-lg-6'>
+                                                                        <label className='mt-30'>
+                                                                        <span className='profilecolor' >Technologies Used:   </span> 
+                                                                            <span >{project.Technologies_used}</span>
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                             ))}
@@ -381,35 +382,35 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                     ) : (
                                                         <p>No projects available.</p>
                                                     )}
-                                                                                                            <div className='row project'>
+                                                    <div className='row project'>
                                                         <div className='col-lg-12 '>
                                                             <label className='mt-30 '>Certificate Details</label>
                                                         </div>
                                                     </div>
                                                     
                                                     {certificateData.length > 0 ? (
-                                                        <div>
+                                                        <div className='col-lg-12'>
                                                             {certificateData.map((certificate, index) => (
-                                                                <div key={index} className='row'>
-                                                                <div className='col-lg-3 '>
-                                                                    <label className='mt-30'>certificate Name</label>
+                                                            <div key={index} className='row'>
+                                                                <div className='col-lg-6 '>
+                                                                    <label className='mt-30'>
+                                                                        <span className='profilecolor' >Certificate Name:   </span> 
+                                                                        <span >{certificate.certificate_name}</span>
+                                                                    </label>
                                                                 </div>
-                                                                <div className='col-lg-3 '>
-                                                                    <label className='mt-30'>{certificate.certificate_name}</label>
+                                                                <div className='col-lg-6 '>
+                                                                    <label className='mt-30'>
+                                                                        <span className='profilecolor' >Issuing Organization:   </span>  
+                                                                        <span >{certificate.issuing_organization}</span>
+                                                                    </label>
                                                                 </div>
-                                                                <div className='col-lg-3 '>
-                                                                    <label className='mt-30'>Issuing Organization</label>
+                                                                <div className='col-lg-6 '>
+                                                                    <label className='mt-30 '>
+                                                                            <span className='profilecolor'>Date Of Certification:   </span>  
+                                                                            <span >{certificate.date_of_certification}</span>
+                                                                    </label>
                                                                 </div>
-                                                                <div className='col-lg-3'>
-                                                                    <label className='mt-30'>{certificate.issuing_organization}</label>  
-                                                                </div>
-                                                                <div className='col-lg-3 '>
-                                                                    <label className='mt-30'>Date Of Certification</label>
-                                                                </div>
-                                                                <div className='col-lg-3'>
-                                                                    <label className='mt-30'>{certificate.date_of_certification}</label>  
-                                                                </div>
-                                                                </div>
+                                                            </div>
                                                             ))}
                                                         </div>
                                                     ) : (

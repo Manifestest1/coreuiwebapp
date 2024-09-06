@@ -33,17 +33,29 @@ const CertificatesFile = ({ inputs = [], handleInputChange, addInputField, remov
                         <div className='col-lg-4'>
                             <input className="form-control mt-30" type="text"  name="issuing_organization" value={input.issuing_organization} onChange={(e) => handleInputChange(input.id, e)}/> 
                         </div>
-                    </div>      
-                   
-                    <Button
-                        variant="contained"
-                        className="genric-btn success-border radius mt-30 remove"
-                        onClick={() => removeInputField(input.id)} 
-                        startIcon={<RemoveIcon />} />
+                    </div> 
+
+                        <Stack direction="row" spacing={2} alignItems="center">
+                            <Button
+                                variant="contained"
+                                className="genric-btn success-border radius mt-30"
+                                onClick={addInputField}
+                                startIcon={<AddIcon />}
+                            >
+                                Add
+                            </Button>
+                            <Button
+                                variant="contained"
+                                className="genric-btn success-border radius mt-30"
+                                onClick={() => removeInputField(input.id)}
+                                startIcon={<RemoveIcon />}
+                                sx={{ marginLeft: 2 }} // Adjust the margin here
+                            >
+                                Remove
+                            </Button>
+                        </Stack>  
                 </Stack>
             ))}
-             <Button variant="contained" className="genric-btn success-border radius mt-30" onClick={addInputField} sx={{ mt: 2 }}
-                startIcon={<AddIcon />} />
 
                 </form>
         </Box>
