@@ -62,7 +62,7 @@ const AppHeader = ({ loggedIn, user, logout, login }) => {
                     <nav className="d-none d-lg-block">
                       <ul id="navigation">
                         <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/job-listing">Find a Jobs</NavLink></li>
+                        <li><NavLink to="/employee-jobs">Find a Jobs</NavLink></li>
                         <li><NavLink to="/about">About</NavLink></li>
                         <li><NavLink to="/employee-details">Employee Details</NavLink></li>
                         <li>

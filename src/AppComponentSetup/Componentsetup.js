@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { BrowserRouter as Router, Routes, Route, Link,useNavigate  } from 'react-router-dom';
+import {  BrowserRouter as Router, Routes, Route, useNavigate  } from 'react-router-dom';
 import AppHeader from '../views/layout/AppHeader';
 import AppFooter from '../views/layout/AppFooter';
 import Home from '../views/components/Home';
@@ -12,6 +12,7 @@ import Elements from '../views/components/Elements';
 import JobDetails from '../views/components/JobDetails';
 import DialogCompnent from '../views/layout/DialogComponent';
 import { loginFun, logoutFun } from '../views/layout/authFunctions';
+import MetaDataForm from "./MetaDataForm";
 
 import CreateProfile from "../views/components/profile-create/CreateProfile";
 
@@ -34,6 +35,7 @@ import EmployerJobView from "../views/components/employer/job/EmployerJobView";
 import FavJob from "../views/components/employee/profile/FavJob";
 import { Provider } from 'react-redux';
 import store from "../store/store";
+import { Description } from "@mui/icons-material";
 
 const Componentsetup = ()=>{
     const navigate = useNavigate();
@@ -80,7 +82,7 @@ const Componentsetup = ()=>{
     <>
       <Provider store={store}>
         <AppHeader loggedIn={loggedIn} user={user} logout={logout} login={login} />
-       
+        <MetaDataForm />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="job-listing" element={<FindJobs/>} /> 
@@ -103,7 +105,7 @@ const Componentsetup = ()=>{
           <Route path="/employee-certificate" element={<CertificatesFile/>}/>
           <Route path="/employee-profile" element={<EmployeeProfile user={user} setUser={setUser} />}/>
           <Route path="/employee-jobs" element={<EmployeeJobs/>}/>
-          <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>
+          <Route path="/employee-job-view/:jobId/:userId" element={<EmployeeJobView/>}/>
           <Route path="/employee-public-profile/:userId" element={<EmployeePublicProfile/>}/>
           <Route path="/favourite-jobs" element={<FavJob/>}/>
           <Route path="/employee-details" element={<EmployeeDetails/>}/>
@@ -116,7 +118,7 @@ const Componentsetup = ()=>{
           <Route path="/employer-profile" element={<EmployerProfile user={user} setUser={setUser} />}/>
           <Route path="/employer-jobs" element={<EmployerJobs/>}/>
           <Route path="/employer-job-create" element={<EmployerJobCreate/>}/>
-          <Route path="/employer-job-view/:jobId" element={<EmployerJobView/>}/>
+          <Route path="/employer-job-view/:jobId/:userId" element={<EmployerJobView/>}/>
 
           {/* End Employer Routes */}
         </Routes>

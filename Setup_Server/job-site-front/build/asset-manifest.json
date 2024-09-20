@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/jobsite/static/css/main.7c26c3fe.css",
+    "main.js": "/jobsite/static/js/main.0d622042.js",
+    "static/js/23.01756afc.chunk.js": "/jobsite/static/js/23.01756afc.chunk.js",
+    "index.html": "/jobsite/index.html",
+    "main.7c26c3fe.css.map": "/jobsite/static/css/main.7c26c3fe.css.map",
+    "main.0d622042.js.map": "/jobsite/static/js/main.0d622042.js.map",
+    "23.01756afc.chunk.js.map": "/jobsite/static/js/23.01756afc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7c26c3fe.css",
+    "static/js/main.0d622042.js"
+  ]
+}

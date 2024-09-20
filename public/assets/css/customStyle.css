@@ -252,13 +252,14 @@
 #emp-job-1 {
   color: #252b60;
   background: #ededed;
-  padding: 7px; 
+  padding: 5px; 
   font-size: 16px;
   font-weight:700 
 }
 #emp-job-2{
   padding: 4px 9px 4px 9px;
-  color:white; margin: 30px;
+  color:white; 
+  margin-left: 80px;
   background: #252b60;
   border-radius: 50%
 }
@@ -300,4 +301,13 @@
 .col-lg-6 .mt-30 span.profilecolor {
   color: #252b60;
   font-weight: bold;
+}
+.applycursor {
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+/* Hover effect */
+div .applycursor:hover {
+  color: #fb246a; /* Change this color to whatever you prefer */
 }
