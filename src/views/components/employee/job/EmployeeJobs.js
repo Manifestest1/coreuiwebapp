@@ -74,9 +74,9 @@ const EmployeeJobs = () => {
 
         if (userId && roleId) {
             if (roleId === 1) {
-                navigate(`/employee-job-view/${jobId}/${userId}`);
+                navigate(`/employee-job-view/${jobId}`);
             } else {
-                navigate(`/employer-job-view/${jobId}/${userId}`);
+                navigate(`/employer-job-view/${jobId}`);
             }
         } else {
             console.error("Cannot navigate: User ID or Role ID is null");
@@ -116,7 +116,7 @@ const EmployeeJobs = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="job-category-listing mb-50">
+                                <div className="job-category-listing mb-30">
                                     <div className="single-listing">
                                         <div className="small-section-tittle2">
                                             <h4>Company Type</h4>
@@ -131,116 +131,70 @@ const EmployeeJobs = () => {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="single-listing">
-                                        <div className="select-Categories pt-50 pb-50">
-                                            <div className="small-section-tittle2">
-                                                <h4>Job Type</h4>
-                                            </div>
-                                            <label className="container">Full Time
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Part Time
-                                                <input type="checkbox" checked="checked active" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Remote
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Freelance
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
+                                </div>
+                                <div className="job-category-listing mb-30">
+                                    <div className="single-listing ">
+                                        <div className="small-section-tittle2">
+                                            <h4>Job Type</h4>
+                                        </div>
+                                        <div className="select-job-items2">
+                                            <select name="select">
+                                                <option value="">All</option>
+                                                <option value="">Category 1</option>
+                                                <option value="">Category 2</option>
+                                                <option value="">Category 3</option>
+                                                <option value="">Category 4</option>
+                                            </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div className="job-category-listing mb-30">
                                     <div className="single-listing">
-                                        <div className="job-category-listing mb-50">
-                                            <div className="single-listing">
-                                            <div className="small-section-tittle2">
-                                                <h4>Job Location</h4>
-                                            </div>
-                                                <div className="select-job-items2">
-                                                    <select onChange={handleLocationChange}>
-                                                    <option value="">All Locations</option>
-                                                        {uniqueLocations.map((location, index) => (
-                                                            <option key={index} value={location}>{location}</option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-                                            </div>
+                                        <div className="small-section-tittle2">
+                                            <h4>Job Location</h4>
                                         </div>
-                                        <div className="single-listing">
-                                            <div className="select-Categories pt-50 pb-50">
-                                                <div className="small-section-tittle2">
-                                                    <h4>Department</h4>
-                                                </div>
-                                                <label className="container">1
-                                                    <input type="checkbox" />
-                                                    <span className="checkmark"></span>
-                                                </label>
-                                                <label className="container">2
-                                                    <input type="checkbox" checked="checked active" />
-                                                    <span className="checkmark"></span>
-                                                </label>
-                                                <label className="container">3
-                                                    <input type="checkbox" />
-                                                    <span className="checkmark"></span>
-                                                </label>
-                                                <label className="container">4
-                                                    <input type="checkbox" />
-                                                    <span className="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="single-listing">
-                                            <div className="job-category-listing mb-50">
-                                                <div className="small-section-tittle2">
-                                                    <h4>Experience</h4>
-                                                </div>
-                                                <div className="select-job-items2">
-                                                    <select onChange={handleExperienceChange}>
-                                                        <option value="">Select Experience</option>
-                                                        {uniqueExperiences.map((experience, index) => (
-                                                            <option key={index} value={experience}>{experience} Years</option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-                                            </div>
+                                        <div className="select-job-items2">
+                                            <select onChange={handleLocationChange}>
+                                            <option value="">All Locations</option>
+                                                {uniqueLocations.map((location, index) => (
+                                                    <option key={index} value={location}>{location}</option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="single-listing">
-                                        <div className="select-Categories pt-50 pb-50">
-                                            <div className="small-section-tittle2">
-                                                <h4>Posted Within</h4>
-                                            </div>
-                                            <label className="container">Any
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Today
-                                                <input type="checkbox" checked="checked active" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Last 2 days
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Last 3 days
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Last 5 days
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">Last 10 days
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
+                                </div>
+                                <div className="job-category-listing mb-30">
+                                    <div className="single-listing ">
+                                        <div className="small-section-tittle2">
+                                            <h4>Posted Within</h4>
+                                        </div>
+                                        <div className="select-job-items2">
+                                            <select name="select">
+                                                <option value="">All</option>
+                                                <option value="">Category 1</option>
+                                                <option value="">Category 2</option>
+                                                <option value="">Category 3</option>
+                                                <option value="">Category 4</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="job-category-listing mb-50">
+                                </div>
+                                <div className="job-category-listing mb-30">
+                                    <div className="single-listing ">
+                                        <div className="small-section-tittle2">
+                                            <h4>Experience</h4>
+                                        </div>
+                                        <div className="select-job-items2">
+                                            <select onChange={handleExperienceChange}>
+                                                <option value="">Select Experience</option>
+                                                {uniqueExperiences.map((experience, index) => (
+                                                    <option key={index} value={experience}>{experience} Years</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div className="job-category-listing mb-30">
                                         <div className="single-listing">
                                             <div className="small-section-tittle2">
                                                 <h4>Department</h4>
@@ -253,26 +207,7 @@ const EmployeeJobs = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="single-listing">
-                                        <div className="select-Categories pb-50">
-                                            <div className="small-section-tittle2">
-                                                <h4>Stipend</h4>
-                                            </div>
-                                            <label className="container">Any
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">unpaid
-                                                <input type="checkbox" checked="checked active" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                            <label className="container">10k
-                                                <input type="checkbox" />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="job-category-listing mb-50">
+                                    <div className="job-category-listing mb-30">
                                         <div className="single-listing">
                                             <div className="small-section-tittle2">
                                                 <h4>Job Title</h4>
@@ -285,8 +220,8 @@ const EmployeeJobs = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="single-listing">
-                                        <div className="select-Categories pb-50">
+                                    <div className="job-category-listing mb-30">
+                                        <div className="single-listing">
                                             <div className="small-section-tittle2">
                                                 <h4>Duration</h4>
                                             </div>
@@ -304,7 +239,7 @@ const EmployeeJobs = () => {
                                             </label>
                                         </div>
                                     </div>
-                                    <div className="job-category-listing mb-50">
+                                    <div className="job-category-listing mb-30">
                                         <div className="single-listing">
                                             <div className="small-section-tittle2">
                                                 <h4>Education</h4>
@@ -317,8 +252,8 @@ const EmployeeJobs = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="single-listing">
-                                        <div className="select-Categories pb-50">
+                                    <div className="job-category-listing mb-30">
+                                        <div className="single-listing">
                                             <div className="small-section-tittle2">
                                                 <h4>Posted By</h4>
                                             </div>
@@ -336,7 +271,7 @@ const EmployeeJobs = () => {
                                             </label>
                                         </div>
                                     </div>
-                                    <div className="job-category-listing mb-50">
+                                    <div className="job-category-listing mb-30">
                                         <div className="single-listing">
                                             <div className="small-section-tittle2">
                                                 <h4>Industry</h4>
@@ -344,35 +279,36 @@ const EmployeeJobs = () => {
                                             <div className="select-job-items2">
                                                 <select >
                                                 <option value="">All</option>
-                                                        <option  >1</option>
+                                                    <option  >1</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="single-listing">
-                                        <aside className="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
-                                            <div className="small-section-tittle2">
-                                                <h4>{filteredJobs.length} Jobs found</h4>
-                                            </div>
-                                            <div className="widgets_inner">
-                                                <div className="range_item">
-                                                    <input type="text" className="js-range-slider" value="" />
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="price_text">
-                                                            <p>Price :</p>
-                                                        </div>
-                                                        <div className="price_value d-flex justify-content-center">
-                                                            <input type="text" className="js-input-from" id="amount" readOnly />
-                                                            <span>to</span>
-                                                            <input type="text" className="js-input-to" id="amount" readOnly />
+                                    <div className="job-category-listing mb-30">
+                                        <div className="single-listing">
+                                            <aside className="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
+                                                <div className="small-section-tittle2">
+                                                    <h4>{filteredJobs.length} Jobs found</h4>
+                                                </div>
+                                                <div className="widgets_inner">
+                                                    <div className="range_item">
+                                                        <input type="text" className="js-range-slider" value="" />
+                                                        <div className="d-flex align-items-center">
+                                                            <div className="price_text">
+                                                                <p>Price :</p>
+                                                            </div>
+                                                            <div className="price_value d-flex justify-content-center">
+                                                                <input type="text" className="js-input-from" id="amount" readOnly />
+                                                                <span>to</span>
+                                                                <input type="text" className="js-input-to" id="amount" readOnly />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </aside>
+                                            </aside>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             <div className="col-xl-9 col-lg-9 col-md-8">
                                 <section className="featured-job-area">
                                     <div className="container">

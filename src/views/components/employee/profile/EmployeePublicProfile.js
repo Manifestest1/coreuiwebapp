@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPublicEmployeeProfile } from '../../../../apiService';
+import { getPublicEmployeeProfile, employeePdfDownload } from '../../../../apiService';
 
 const EmployeePublicProfile = () => {
     const { userId } = useParams();
@@ -9,26 +9,28 @@ const EmployeePublicProfile = () => {
     const [projectData, setProjectData] = useState([]);
 
     const downloadPDF = (userId) => {
-        console.log(userId,"Get Userid");
-
-        fetch(`http://localhost:8000/api/auth/employee-download-pdf/${userId}`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/pdf',
-        },
-    })
-     .then(response => response.blob())
-     .then(blob => {
-       const url = window.URL.createObjectURL(new Blob([blob]));
-       const link = document.createElement('a');
-       link.href = url;
-       link.setAttribute('download', 'file.pdf');
-       document.body.appendChild(link);
-       link.click();
-       link.parentNode.removeChild(link);
-     })
-     .catch(error => console.error('Error downloading file:', error));
-
+        if (!userId) {
+            console.error('User ID is undefined');
+            return;
+        }
+    
+        console.log(userId, "Get Userid");
+    
+        employeePdfDownload(userId)
+        .then(response => {
+            console.log('Response received:', response); // Log the raw response
+            return response.blob();
+        })
+            .then(blob => {
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'file.pdf');
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link); // Cleanup
+            })
+            .catch(error => console.error('Error downloading file:', error));
     };
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link, NavLink,useNavigate } from 'react-router-dom';
 import React,{ useEffect, useState } from 'react';
-import {createJobPost} from '../../../../apiService';
+import { createJobPost } from '../../../../apiService';
 
 const EmployerJobCreate = ()=>{
     const [jobs, setjobs] = useState({title: '',description: '',location: ''});

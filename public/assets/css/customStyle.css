@@ -5,6 +5,10 @@
     margin-left: -2%;
   }
 
+  #create_job{
+    margin-right: 10px;
+  }
+
 #con {
   margin-top: 25px;  
 }
@@ -246,7 +250,7 @@
 
   #job{
   margin-top: 30px; 
-  margin-left: 0px
+  margin-left: 0px;
 }
 
 #emp-job-1 {
@@ -259,7 +263,7 @@
 #emp-job-2{
   padding: 4px 9px 4px 9px;
   color:white; 
-  margin-left: 80px;
+  margin-left: 48px;
   background: #252b60;
   border-radius: 50%
 }

@@ -66,17 +66,15 @@ const EmployerJobs = ()=>{
                       <form onSubmit={handleSearch}>
                         <div className='row'>
                           <div className='col-lg-8'>
-                          <input id='in-put' type="text" className="form-control" placeholder="Search job title or location..." onChange={handleChange} name="keyword"/>
+                            <input id='in-put' type="text" className="form-control" placeholder="Search here..." onChange={handleChange} name="keyword"/>
                           </div>
-                          <div className='d-flex justify-content-center col-lg-2'>
+                          <div className='col-lg-4'>
                               <button id='create_job' type='submit' class="genric-btn success-border radius">Find Jobs</button>
-                          </div>
-                          <div className='col-lg-2'>
                              <button  onClick={handlejobcreate} class="genric-btn success-border radius">Job Create</button>
                           </div>
                         </div>
                         <div className='row'>
-                          <div className='col-lg-2'id='job' >
+                          <div className='col-lg-2' id='job' >
                             <p className="fw-bold" id='emp-job-1' >
                               Jobs <span id='emp-job-2' >{searchResults.length}</span> 
                             </p>
@@ -99,7 +97,7 @@ const EmployerJobs = ()=>{
                                     <NavLink className="nav-link-style"  to={`/employee-job-view/${job.id}`}>{job.title}</NavLink>
                                   </td>
                                   <td>{job.location}</td>
-                                  <td>{job.description}</td>
+                                  <td>{job.description} Years</td>
                                   <td>
                                     <NavLink to={`/employer-job-view/${job.id}`}>
                                       <i id='emp-job-4'  class="fa fa-eye fa-lg"></i>

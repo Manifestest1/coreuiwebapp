@@ -71,27 +71,27 @@ const EmployeeProfile = ({ user, setUser }) => {
     };
 
     const downloadPDF = (userId) => {
-        console.log(userId,"Get Userid");
-
-        fetch(`http://localhost:8000/api/auth/employee-download-pdf/${userId}`, {
-        method: 'GET',
-        // headers: {
-        //     'Accept': 'application/pdf',
-        // },
-    })
-     .then(response => response.blob())
-     .then(blob => {
-       const url = window.URL.createObjectURL(new Blob([blob]));
-       const link = document.createElement('a');
-       link.href = url;
-       link.setAttribute('download', 'file.pdf');
-       document.body.appendChild(link);
-       link.click();
-       link.parentNode.removeChild(link);
-     })
-     .catch(error => console.error('Error downloading file:', error));
-
+        console.log(userId, "Get Userid");
+        fetch(`http://localhost:8000/api/auth/employee-download-pdf/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'file.pdf');
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+            })
+            .catch(error => console.error('Error downloading file:', error));
     };
+    
+    
 
     const handleEditProfileClick = () => {
         navigate('/employee-edit-profile');
@@ -125,7 +125,7 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                     <div className='row'>
                                                         <div className='col-lg-8'></div>
                                                         <div className='col-lg-2'>
-                                                        <button onClick={() => downloadPDF(user.id)} class="genric-btn success-border radius">Download PDF</button>
+                                                            <button onClick={() => downloadPDF(user.id)} class="genric-btn success-border radius">Download PDF</button>
                                                         </div>
                                                         <div className='col-lg-2'>
                                                            <button id='edit-employee-button' onClick={handleEditProfileClick} class="genric-btn success-border radius">Edit Profile</button>

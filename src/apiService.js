@@ -76,7 +76,7 @@ export const UserLoginApi = (user) => {
 
   export const employeePdfDownload = (userId) => {
     return instance.get(`/employee-download-pdf/${userId}`);
-  };
+};
 
   export const createContactDetail = (data) => {
     return instance.post('/contact-mail-send', data );

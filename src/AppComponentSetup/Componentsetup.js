@@ -105,7 +105,7 @@ const Componentsetup = ()=>{
           <Route path="/employee-certificate" element={<CertificatesFile/>}/>
           <Route path="/employee-profile" element={<EmployeeProfile user={user} setUser={setUser} />}/>
           <Route path="/employee-jobs" element={<EmployeeJobs/>}/>
-          <Route path="/employee-job-view/:jobId/:userId" element={<EmployeeJobView/>}/>
+          <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>
           <Route path="/employee-public-profile/:userId" element={<EmployeePublicProfile/>}/>
           <Route path="/favourite-jobs" element={<FavJob/>}/>
           <Route path="/employee-details" element={<EmployeeDetails/>}/>
@@ -118,7 +118,7 @@ const Componentsetup = ()=>{
           <Route path="/employer-profile" element={<EmployerProfile user={user} setUser={setUser} />}/>
           <Route path="/employer-jobs" element={<EmployerJobs/>}/>
           <Route path="/employer-job-create" element={<EmployerJobCreate/>}/>
-          <Route path="/employer-job-view/:jobId/:userId" element={<EmployerJobView/>}/>
+          <Route path="/employer-job-view/:jobId" element={<EmployerJobView/>}/>
 
           {/* End Employer Routes */}
         </Routes>
