@@ -7,6 +7,7 @@ const EmployerProfile = ({user,setUser}) => {
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const navigate = useNavigate();
+    const baseURL = process.env.REACT_APP_URL; 
 
      const handleImageUpdate = () => {
         document.getElementById('imageInput').click();
@@ -76,7 +77,7 @@ const EmployerProfile = ({user,setUser}) => {
                                                                 {imagePreview ? (
                                                                     <img id='employer-preview'  src={imagePreview} alt="Preview"/>
                                                                 ) : (
-                                                                    user.imagebaseurl? <img id='employer-preview-1'  src={user.imagebaseurl + user?.imageurl} alt="User Profile Image" size="md" /> :<img style={{height:'150px',width:'150px',borderRadius:'50%'}} src={user?.imageurl} alt="User Profile Image" size="md" />
+                                                                    user.profile_image? <img id='img-baseurl' src={baseURL + user?.profile_image} alt="User Profile Image" size="md" /> :<img id='img-url' src="/download.png" alt="User Profile Image" size="md" />
                                                                 )}
                                                             </div>
                                                             <button id='employer-preview-2'  onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>    

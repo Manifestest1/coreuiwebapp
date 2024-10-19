@@ -10,7 +10,8 @@ const client_id = getClientId();
 const AppHeader = ({ loggedIn, user, logout, login }) => {
   const favoriteJobsCount = useSelector(selectFavoriteJobsCount);
   const dispatch = useDispatch();
-  
+  const baseURL = process.env.REACT_APP_URL; 
+
   useEffect(() => {
     const token = localStorage.getItem('_token');
     if (token) {
@@ -53,28 +54,34 @@ const AppHeader = ({ loggedIn, user, logout, login }) => {
                 <div className="logo">
                   <NavLink to="/">
                     <img src="assets/img/logo/logo.png" alt="Logo" />
-                  </NavLink>
+                  </NavLink>  
                 </div>
               </div>
-              <div className="col-lg-9 col-md-9">
-                <div className="menu-wrapper">
+              <div className="col-lg-9 col-md-9 ">
+                <div className="menu-wrapper f-right">
                   <div className="main-menu">
                     <nav className="d-none d-lg-block">
                       <ul id="navigation">
-                        <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/employee-jobs">Find a Jobs</NavLink></li>
-                        <li><NavLink to="/about">About</NavLink></li>
-                        <li><NavLink to="/employee-details">Employee Details</NavLink></li>
-                        <li>
-                          <NavLink to="/">Page</NavLink>
-                          <ul className="submenu">
-                            <li><NavLink to="/blog">Blog</NavLink></li>
-                            <li><NavLink to="/blog-details">Blog Details</NavLink></li>
-                            <li><NavLink to="/elements">Elements</NavLink></li>
-                            <li><NavLink to="/job-details">Job Details</NavLink></li>
-                          </ul>
-                        </li>
-                        <li><NavLink to="/contact">Contact</NavLink></li>
+                        {loggedIn && user.role_id !== null ? (
+                          <>
+                            <li><NavLink to="/employee-jobs">Find  Jobs</NavLink></li>
+                            <li><NavLink to="/employee-details">Find Employee</NavLink></li>
+                            <li>
+                              <NavLink to="/">Page</NavLink>
+                              <ul className="submenu">
+                                <li><NavLink to="/blog">Blog</NavLink></li>
+                                <li><NavLink to="/blog-details">Blog Details</NavLink></li>
+                                <li><NavLink to="/elements">Elements</NavLink></li>
+                                <li><NavLink to="/job-details">Job Details</NavLink></li>
+                              </ul>
+                            </li>
+                          </>
+                        ) : (
+                          <>
+                            <li><NavLink to="/about">About</NavLink></li>
+                            <li><NavLink to="/contact">Contact</NavLink></li>
+                          </>
+                        )}
                       </ul>
                     </nav>
                   </div>
@@ -85,38 +92,32 @@ const AppHeader = ({ loggedIn, user, logout, login }) => {
                           <ul id="navigation">
                             <li>
                               {user ? (
-                                user.imagebaseurl ? (
-                                  <img id='imagebaseurl' src={`${user.imagebaseurl}${user.imageurl}`} alt="User Profile" size="md" />
+                                user.role_id === null ? (
+                                  <img src="/download.png" size="md" height="60px" />
                                 ) : (
-                                  <img id='imageurl' src={user.imageurl} alt="User Profile" size="md" />
+                                  user.imagebaseurl ? (
+                                    <img id='imagebaseurl' src={`${user.imagebaseurl}${user.imageurl}`} alt="User Profile" size="md" />
+                                  ) : (
+                                    <img id='imageurl' src={user.imageurl} alt="User Profile" size="md" />
+                                  )
                                 )
-                              ) : ('')}
+                              ) : null}
                               <ul className="submenu" id='appheader-submenu'>
-                                {user && user.role_id === 1 && (
-                                  <li><NavLink to="/employee-dashboard">Dashboard</NavLink></li>
-                                )}
-                                {user && user.role_id === 2 && (
-                                  <li><NavLink to="/employer-dashboard">Dashboard</NavLink></li>
-                                )}
-                                {user && user.role_id === 1 && (
-                                  <li><NavLink to="/employee-profile">Profile</NavLink></li>
-                                )}
-                                {user && user.role_id === 1 && (
-                                  <li>
-                                    <NavLink to="/favourite-jobs">Like Jobs - {favoriteJobsCount}</NavLink>
-                                  </li>
-                                )}
-                                {user && user.role_id === 2 && (
-                                  <li><NavLink to="/employer-profile">Profile</NavLink></li>
-                                )}
-                                {user && user.role_id === 1 && (
-                                  <li><NavLink to="/employee-jobs">Jobs</NavLink></li>
-                                )}
-                                {user && user.role_id === 2 && (
-                                  <li><NavLink to="/employer-jobs">Jobs</NavLink></li>
-                                )}
                                 {user && user.role_id === null && (
-                                  <li><NavLink to="/create-profile">Create Profile</NavLink></li>
+                                    <li><NavLink to="/create-profile">Create Profile</NavLink></li>
+                                )}
+                                {user && user.role_id === 1 && (
+                                  <>
+                                    <li><NavLink to="/employee-profile">My Profile</NavLink></li>
+                                    <li><NavLink to="/favourite-jobs">Like Jobs - {favoriteJobsCount}</NavLink></li>
+                                  </>
+                                )}
+                                {user && user.role_id === 2 && (
+                                  <>
+                                    <li><NavLink to="/employer-dashboard">Dashboard</NavLink></li>
+                                    <li><NavLink to="/employer-profile">Profile</NavLink></li>
+                                    <li><NavLink to="/employer-jobs">Jobs</NavLink></li>
+                                  </>
                                 )}
                                 <li><NavLink id='logout-button' onClick={logout}>Logout</NavLink></li>
                               </ul>
@@ -125,7 +126,7 @@ const AppHeader = ({ loggedIn, user, logout, login }) => {
                         </nav>
                       </div>
                     ) : (
-                      <button className="genric-btn success-border radius" onClick={login}>Login</button>
+                        <button className="genric-btn success-border radius" onClick={login}>Login</button>
                     )}
                   </div>
                 </div>

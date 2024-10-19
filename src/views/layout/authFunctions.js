@@ -11,7 +11,6 @@ export const loginFun = (setUser, navigate, setToken, setLoggedIn) => {
       email: googleUser.wt.cu,
       name: googleUser.wt.Ad,
       google_id: googleUser.wt.NT,
-      imageurl: googleUser.wt.hK,
       password: "12345678"
     };
     UserLoginApi(payload)

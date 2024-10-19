@@ -22,6 +22,7 @@ import DynamicForm from "../views/components/employee/profile/projects_file";
 import CertificatesFile from "../views/components/employee/profile/CertificatesFile";
 import EmployeeProfile from "../views/components/employee/profile/EmployeeProfile";
 import EmployeeJobs from "../views/components/employee/job/EmployeeJobs";
+import FilterJob from "../views/components/employee/job/FilterJob";
 import EmployeeJobView from "../views/components/employee/job/EmployeeJobView";
 import EmployeePublicProfile from "../views/components/employee/profile/EmployeePublicProfile";
 import EmployeeDetails from "../views/components/employee/profile/EmployeeDetails";
@@ -105,6 +106,7 @@ const Componentsetup = ()=>{
           <Route path="/employee-certificate" element={<CertificatesFile/>}/>
           <Route path="/employee-profile" element={<EmployeeProfile user={user} setUser={setUser} />}/>
           <Route path="/employee-jobs" element={<EmployeeJobs/>}/>
+          <Route path="/filter-jobs" element={<FilterJob/>}/>
           <Route path="/employee-job-view/:jobId" element={<EmployeeJobView/>}/>
           <Route path="/employee-public-profile/:userId" element={<EmployeePublicProfile/>}/>
           <Route path="/favourite-jobs" element={<FavJob/>}/>

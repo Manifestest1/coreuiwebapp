@@ -61,7 +61,6 @@ const Contact = () => {
       const gr_token = captchaRef.current.getValue();
       captchaRef.current.reset();
   
-      // Proceed with form submission
       createContactDetail({
         ...contactData,
         'g-recaptcha-response': gr_token,
@@ -77,7 +76,7 @@ const Contact = () => {
               subject: "",
             });
             console.log("Contact form submitted:", response.data);
-            setShowModal(true); // Show modal on successful submission
+            setShowModal(true);
           } else {
             console.error("Unexpected response:", response);
             // Handle unexpected response
@@ -85,15 +84,12 @@ const Contact = () => {
         })
         .catch((error) => {
           console.error("Contact error", error);
-          // Handle API call error
         });
     } else {
-      // If the reCAPTCHA token is empty, set the error
       setErrors({
         ...newErrors,
       });
       console.error("ReCAPTCHA token is null");
-      // Handle null token error
     }
   }; 
 

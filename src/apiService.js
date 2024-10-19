@@ -13,8 +13,8 @@ export const UserLoginApi = (user) => {
     return instance.get('/user-profile');
   };
  
-  export const createUserProfile = async (selectedRole) => {
-    return await instance.post('/create-profile', { role: selectedRole });
+  export const createUserProfile = async (roleId) => {
+    return await instance.post('/create-profile', { role: roleId });
   };
 
   export const updateUserProfile = (user) => {
@@ -36,6 +36,10 @@ export const UserLoginApi = (user) => {
   export const getJobonEmployee = () => {
     return instance.get('/job-get-employee');
   };
+
+  // export const employeeDownloadPdf = (userId) => {
+  //   return instance.get(`/employee-download-pdf/${userId}`);
+  // };
 
   export const getEmployee = () => {
     return instance.get('/get-employee');

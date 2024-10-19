@@ -3,13 +3,21 @@ import React,{ useEffect, useState } from 'react';
 import { createJobPost } from '../../../../apiService';
 
 const EmployerJobCreate = ()=>{
-    const [jobs, setjobs] = useState({title: '',description: '',location: ''});
+    const [jobs, setjobs] = useState({title: '',description: '',location: '',company_type: '',job_type: '',posted_within: '',department: '',duration: '',education: '',industry: '',salary: ''});
     const [isValid, setIsValid] = useState(true);
     const navigate = useNavigate()
     const [errors, setErrors] = useState({
         title: "",
         description: "",
         location: "",
+        company_type: '',
+        job_type: '',
+        posted_within: '',
+        department: '',
+        duration: '',
+        education: '',
+        industry: '',
+        salary: ''
     });
 
     const handleChange = (e) => {
@@ -31,6 +39,32 @@ const EmployerJobCreate = ()=>{
         if (!jobs.location.trim()) {
             newErrors.location = "location is required";
         }
+        if (!jobs.company_type.trim()) {
+            newErrors.company_type = "company_type is required";
+        }
+        if (!jobs.job_type.trim()) {
+            newErrors.job_type = "job_type is required";
+        }
+        if (!jobs.posted_within.trim()) {
+            newErrors.posted_within = "posted_within  is required";
+        }
+        if (!jobs.department.trim()) {
+            newErrors.department = "department is required";
+        }
+        if (!jobs.duration.trim()) {
+            newErrors.duration = "duration is required";
+        }
+        if (!jobs.education.trim()) {
+            newErrors.education = "education is required";
+        }
+        if (!jobs.industry.trim()) {
+            newErrors.industry = "industry is required";
+        }
+        if (!jobs.salary.trim()) {
+            newErrors.salary = "salary is required";
+        } else if (isNaN(jobs.salary) || Number(jobs.salary) < 0) {
+            newErrors.salary = "Salary must be a positive number";
+        }
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
@@ -39,6 +73,14 @@ const EmployerJobCreate = ()=>{
         formData.append('title', jobs.title);
         formData.append('description', jobs.description);
         formData.append('location', jobs.location);
+        formData.append('company_type', jobs.company_type);
+        formData.append('job_type', jobs.job_type);
+        formData.append('posted_within', jobs.posted_within);
+        formData.append('department', jobs.department);
+        formData.append('duration', jobs.duration);
+        formData.append('education', jobs.education);
+        formData.append('industry', jobs.industry);
+        formData.append('salary', jobs.salary);
         createJobPost(formData)
         .then((response) => {
             console.warn('Job Post result', response);
@@ -77,11 +119,8 @@ const EmployerJobCreate = ()=>{
                                         <div class="select-job-items2">
                                             <form onSubmit={handleJobSubmit}>
                                                 <div className='row'>
-                                                    <div className='col-lg-2'>
-                                                        <label >Job Title</label>
-                                                    </div>
-                                                    <div className='col-lg-10 '>
-                                                        <input className="form-control " 
+                                                        <label className='col-lg-2'>Job Title</label>
+                                                        <input className="form-control col-lg-10" 
                                                         onChange={handleChange} 
                                                         name="title" 
                                                         type="text"
@@ -90,11 +129,9 @@ const EmployerJobCreate = ()=>{
                                                         {errors.title && <span className="error-message">{errors.title}</span>}
                                                     </div>
 
-                                                    <div className='col-lg-2'>
-                                                        <label className='mt-30'>Description</label>
-                                                    </div>
-                                                    <div className='col-lg-10'>
-                                                        <input className="form-control mt-30"  
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Experience</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
                                                         onChange={handleChange} 
                                                         name="description" 
                                                         type="text"
@@ -103,11 +140,9 @@ const EmployerJobCreate = ()=>{
                                                         {errors.description && <span className="error-message" >{errors.description}</span>}
                                                     </div>
                                     
-                                                    <div className='col-lg-2'>
-                                                        <label className='mt-30'>Location</label>
-                                                    </div>
-                                                    <div className='col-lg-10'>
-                                                        <input className="form-control mt-30"  
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Location</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
                                                         onChange={handleChange} 
                                                         name="location" 
                                                         type="text"
@@ -115,7 +150,95 @@ const EmployerJobCreate = ()=>{
                                                         value={jobs.location|| ''}/>
                                                          {errors.location && <span  className="error-message">{errors.location}</span>}
                                                     </div>
-                                                </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Company Type</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="company_type" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.company_type ? 'red' : '' }}
+                                                        value={jobs.company_type|| ''}/>
+                                                         {errors.company_type && <span  className="error-message">{errors.company_type}</span>}
+                                                    </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Job Type</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="job_type" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.job_type ? 'red' : '' }}
+                                                        value={jobs.job_type|| ''}/>
+                                                         {errors.job_type && <span  className="error-message">{errors.job_type}</span>}
+                                                    </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>posted Within</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="posted_within" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.posted_within ? 'red' : '' }}
+                                                        value={jobs.posted_within|| ''}/>
+                                                         {errors.posted_within && <span  className="error-message">{errors.posted_within}</span>}
+                                                    </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Department</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="department" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.department ? 'red' : '' }}
+                                                        value={jobs.department|| ''}/>
+                                                         {errors.department && <span  className="error-message">{errors.department}</span>}
+                                                    </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Duration</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="duration" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.duration ? 'red' : '' }}
+                                                        value={jobs.duration|| ''}/>
+                                                         {errors.duration && <span  className="error-message">{errors.duration}</span>}
+                                                    </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Education</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="education" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.education ? 'red' : '' }}
+                                                        value={jobs.education|| ''}/>
+                                                         {errors.education && <span  className="error-message">{errors.education}</span>}
+                                                    </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Industry</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="industry" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.industry ? 'red' : '' }}
+                                                        value={jobs.industry|| ''}/>
+                                                         {errors.industry && <span  className="error-message">{errors.industry}</span>}
+                                                    </div>
+
+                                                    <div className='row'>
+                                                        <label className='mt-30 col-lg-2'>Salary</label>
+                                                        <input className="form-control mt-30 col-lg-10"  
+                                                        onChange={handleChange} 
+                                                        name="salary" 
+                                                        type="text"
+                                                        style={{ borderColor: errors.salary ? 'red' : '' }}
+                                                        value={jobs.salary|| ''}/>
+                                                         {errors.salary && <span  className="error-message">{errors.salary}</span>}
+                                                    </div>
+
                                                 <div class="row">
                                                     <div className='col-lg-5'></div>
                                                     <div className='col-lg-5'>

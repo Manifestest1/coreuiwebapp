@@ -9,18 +9,14 @@ const EmployeePublicProfile = () => {
     const [projectData, setProjectData] = useState([]);
 
     const downloadPDF = (userId) => {
-        if (!userId) {
-            console.error('User ID is undefined');
-            return;
-        }
-    
         console.log(userId, "Get Userid");
-    
-        employeePdfDownload(userId)
-        .then(response => {
-            console.log('Response received:', response); // Log the raw response
-            return response.blob();
-        })
+        fetch(`http://localhost:8000/api/auth/employee-download-pdf/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
             .then(blob => {
                 const url = window.URL.createObjectURL(new Blob([blob]));
                 const link = document.createElement('a');
@@ -28,7 +24,7 @@ const EmployeePublicProfile = () => {
                 link.setAttribute('download', 'file.pdf');
                 document.body.appendChild(link);
                 link.click();
-                link.parentNode.removeChild(link); // Cleanup
+                link.parentNode.removeChild(link);
             })
             .catch(error => console.error('Error downloading file:', error));
     };
@@ -305,7 +301,7 @@ const EmployeePublicProfile = () => {
                                                                     <div className='col-lg-6'>
                                                                         <label className='mt-30 profilecolor'>
                                                                            <span className='profilecolor' >Role and Contributions:   </span>  
-                                                                            <span >{project.role_and_contributions}</span>
+                                                                            <span >{project.role_of_employee}</span>
                                                                             </label>
                                                                     </div>
                                                                     <div className='col-lg-6'>
