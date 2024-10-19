@@ -7,8 +7,11 @@ const EmployeeProfile = ({ user, setUser }) => {
     const [imagePreview, setImagePreview] = useState(null);
     const [projectData, setProjectData] = useState([]);
     const [certificateData, setCertificateData] = useState([]);
+    const [educationData, setEducationData] = useState([]);
+    const [experienceData, setExperienceData] = useState([]);
     const imageInputRef = useRef(null);
     const navigate = useNavigate();
+    const baseURL = process.env.REACT_APP_API_URL; 
     
     const handleImageUpdate = () => {
         if (imageInputRef.current) {
@@ -28,47 +31,27 @@ const EmployeeProfile = ({ user, setUser }) => {
         }
     };
 
-
-
     const updateUserImage = async (file) => {
         try {
             const formData = new FormData();
-            formData.append('imageurl', file);
-            const response = await updateUserProfile(formData);
-            setUser(response.data);
-            setProjectData(response.data.projects);
+            formData.append('profile_image', file); 
+
+            const response = await updateUserProfile(formData); 
+            setUser(response.data); 
+            console.log(response.data,"responses")
+            setProjectData(response.data.projects); 
+            setCertificateData(response.data.certificates);
+            setEducationData(response.data.education);
+            setExperienceData(response.data.experience);
             console.warn('Image updated successfully', response.data);
         } catch (error) {
             console.error('Error updating image', error);
         }
     };
-
-    const fetchCertificateData = async () => {
-        try {
-            const response = await updateUserProfile(user.id); 
-            setCertificateData(response.data.certificates);
-            console.log('Project data fetched successfully', response.data.certificates);
-        } catch (error) {
-            console.error('Error fetching project data', error);
-        }
-    };
     
     useEffect(() => {
-        if (user) {
-            fetchCertificateData(); 
-            fetchProjectData();
-        }
-    }, [user]);
-
-    const fetchProjectData = async () => {
-        try {
-            const response = await updateUserProfile(user.id); 
-            setProjectData(response.data.projects);
-            console.log('Project data fetched successfully', response.data.projects);
-        } catch (error) {
-            console.error('Error fetching project data', error);
-        }
-    };
+        updateUserImage();  
+    }, []);
 
     const downloadPDF = (userId) => {
         console.log(userId, "Get Userid");
@@ -90,8 +73,6 @@ const EmployeeProfile = ({ user, setUser }) => {
             })
             .catch(error => console.error('Error downloading file:', error));
     };
-    
-    
 
     const handleEditProfileClick = () => {
         navigate('/employee-edit-profile');
@@ -107,7 +88,7 @@ const EmployeeProfile = ({ user, setUser }) => {
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <div class="hero-cap text-center">
-                                                <h2>Employee Profile</h2>
+                                                <h4>My Profile</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -119,303 +100,197 @@ const EmployeeProfile = ({ user, setUser }) => {
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12">
-                                        <div class="job-category-listing mb-50">
+                                        <div class=" mb-50">
                                             <div class="single-listing">
                                                 <div class="select-job-items2">
-                                                    <div className='row'>
-                                                        <div className='col-lg-8'></div>
+                                                    <div className='row '>
                                                         <div className='col-lg-2'>
+                                                            <input id="image-input" type="file" accept="image/*" onChange={handleImageChange}  ref={imageInputRef} name="profile_image" />
+                                                            {/* Image preview */}
+                                                            {imagePreview ? (
+                                                                <img id='img-Preview' src={imagePreview} alt="Preview" className="profile-image"/>
+                                                            ) : (
+                                                                user.profile_image ? (
+                                                                    <img id='img-baseurl' src={`${baseURL}/uploads/${user.profile_image}`}  alt="Profile" className="profile-image" />
+                                                                ) : (
+                                                                    <img id='img-url' src="/download.png"  alt="Default Profile" className="profile-image" />
+                                                                )
+                                                            )}
+                                                            {/* Button to replace input field */}
+                                                            <button className='image-update' onClick={handleImageUpdate}><i className="fas fa-camera"></i></button>
+                                                        </div>
+                                                        <div className='col-lg-6'>
+                                                            <h4>
+                                                                <div>{user.name}</div>
+                                                            </h4>
+                                                            <div>
+                                                                <span >{user.employee?.linkedIn_profile}</span><br /> 
+                                                                <span >Email:   {user.email}</span><br/>
+                                                                <span >Contact:   {user.employee?.phone}</span><br />
+                                                                <span >Address:   {user.employee?.current_address}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col-lg-2 mt-30'>
                                                             <button onClick={() => downloadPDF(user.id)} class="genric-btn success-border radius">Download PDF</button>
                                                         </div>
-                                                        <div className='col-lg-2'>
+                                                        <div className='col-lg-2 mt-30'>
                                                            <button id='edit-employee-button' onClick={handleEditProfileClick} class="genric-btn success-border radius">Edit Profile</button>
                                                         </div>
                                                     </div>
-                                                    <div className='row'>   
-                                                        <div className='col-lg-12' id='employee-img' >
-                                                            <input id="image-input" type="file" accept="image/*" onChange={handleImageChange}  ref={imageInputRef} name="imageurl" />
-                                                            {/* Image preview */}
-                                                            {imagePreview ? (
-                                                            <img id='img-Preview' src={imagePreview} alt="Preview"/>
-                                                            ) : (
-                                                                user.imagebaseurl? <img id='img-baseurl' src={user.imagebaseurl + user?.imageurl} alt="User Profile Image" size="md" /> :<img id='img-url' src={user?.imageurl} alt="User Profile Image" size="md" />
-                                                            )}
-                                                            {/* Button to replace input field */}
-                                                            <button id='image-update' onClick={handleImageUpdate}><i class="fas fa-camera"></i></button>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Name:   </span> 
-                                                                <span >{user.name}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Email:   </span>  
-                                                                <span >{user.email}</span>
-                                                            </label> 
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Mobile Number:   </span>  
-                                                                <span >{user.employee?.phone}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Current Address:   </span>  
-                                                                <span >{user.employee?.current_address}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Permanent Address:   </span>  
-                                                                <span >{user.employee?.permanent_address}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Aadhar Number:   </span>  
-                                                                <span >{user.employee?.adhar_card_no}</span>
-                                                            </label>
+                                                    <div className='row background-change mt-30'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4 >About:</h4>
+                                                            <div className='margin mt-30'>{user.employee?.professional_summary}</div> 
                                                         </div> 
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Qualification:   </span>  
-                                                                <span >{user.employee?.qualification}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Certifications: </span> 
-                                                                <span >{user.employee?.certifications}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Skills:   </span>   
-                                                                <span >{user.employee?.skills}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Working From:   </span>  
-                                                                <span >{user.employee?.working_from}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>
-                                                                Work Experience:   </span> 
-                                                                <span >{user.employee?.work_experience}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Current working skill:   </span>  
-                                                                <span >{user.employee?.current_working_skill}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Languages:   </span>  
-                                                                <span >{user.employee?.languages}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Hobbies:   </span>  
-                                                                <span >{user.employee?.hobbies}</span>
-                                                        </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Country:   </span>  
-                                                                <span >{user.employee?.country}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>State:   </span>  
-                                                                <span >{user.employee?.state}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>City:   </span>  
-                                                                <span >{user.employee?.city}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Pincode:   </span>  
-                                                                <span >{user.employee?.pincode}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Marriage Status:   </span>
-                                                                <span >{user.employee?.marriage_status}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Gender:   </span>
-                                                                <span >{user.employee?.gender}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'><span className='profilecolor'>company Name:   </span>  
-                                                            <span >{user.employee?.company_name}</span>
-                                                        </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Responsibilities and Achievements:   </span>
-                                                                <span >{user.employee?.responsibilities_and_achievements}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Degree:   </span>  
-                                                                <span >{user.employee?.Degree}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>
-                                                                    University or College Name:   </span>  
-                                                                <span >{user.employee?.university_or_collegeName}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Graduation Date:   </span> 
-                                                                <span >{user.employee?.graduation_date}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                            <span className='profilecolor'>Course Work or Academic Achievements:   </span>  
-                                                                <span >{user.employee?.coursework_or_academic_achievements}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Dates of Employment: </span> 
-                                                                <span >{user.employee?.dates_of_employment}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor'>Location:   </span>  
-                                                                <span >{user.employee?.location}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor' >Job Title:   </span>  
-                                                                <span >{user.employee?.job_title}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor' >Professional Summary:   </span>  
-                                                                <span >{user.employee?.professional_summary}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor' >LinkedIn Profile:   </span>  
-                                                                <span >{user.employee?.linkedIn_profile}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor' >Proficiency Level of Language:   </span> 
-                                                                <span >{user.employee?.proficiency_level_of_language}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='col-lg-6 '>
-                                                            <label className='mt-30'>
-                                                                <span className='profilecolor' >References:   </span>  
-                                                                <span >{user.employee?.References}</span>
-                                                            </label>
-                                                        </div>
-                                                        <div className='row project'>
-                                                        <div className='col-lg-12 '>
-                                                            <label className='mt-30 '>Project Details</label>
-                                                        </div>
                                                     </div>
-                                                    
-                                                    {projectData.length > 0 ? (
-                                                        <div className='col-lg-12'>
-                                                            {projectData.map((project, index) => (
-                                                                <div key={index} className='row'>
-                                                                    <div className='col-lg-6'>
-                                                                        <label className='mt-30'>
-                                                                            <span className='profilecolor' >Project Title: </span>  
-                                                                            <span >{project.project_name}</span>
-                                                                        </label>
+                                                    <div className='row background-change'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4>Educational Qualification</h4>
+                                                            {educationData.length > 0 ? (
+                                                                 educationData.map((education, index) => (
+                                                                    <div className="custom-flex">
+                                                                    <span className="custom-bullet">•</span>
+                                                                    <div className='margin mt-30'>
+                                                                        <h5>{education.institution_names}</h5>
+                                                                        <span>{education.course}</span><br/>
+                                                                        <span>{education.from_year}</span><br/>
+                                                                        <span>{education.to_year}</span><br/>
+                                                                        <span>{education.grading}</span><br/>
+                                                                        <span>{education.description}</span><br/> 
                                                                     </div>
-                                                                    <div className='col-lg-6'>
-                                                                        <label className='mt-30'>
-                                                                            <span className='profilecolor' >Brief Description:   </span>  
-                                                                            <span >{project.brief_description}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div className='col-lg-6'>
-                                                                        <label className='mt-30 profilecolor'>
-                                                                           <span className='profilecolor' >Role and Contributions:   </span>  
-                                                                            <span >{project.role_and_contributions}</span>
-                                                                            </label>
-                                                                    </div>
-                                                                    <div className='col-lg-6'>
-                                                                        <label className='mt-30'>
-                                                                        <span className='profilecolor' >Technologies Used:   </span> 
-                                                                            <span >{project.Technologies_used}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    ) : (
-                                                        <p>No projects available.</p>
-                                                    )}
-                                                    <div className='row project'>
-                                                        <div className='col-lg-12 '>
-                                                            <label className='mt-30 '>Certificate Details</label>
-                                                        </div>
+                                                                </div>  
+                                                                ))
+                                                            ) : (
+                                                                <p></p>
+                                                            )}
+                                                        </div> 
                                                     </div>
-                                                    
-                                                    {certificateData.length > 0 ? (
-                                                        <div className='col-lg-12'>
-                                                            {certificateData.map((certificate, index) => (
-                                                            <div key={index} className='row'>
-                                                                <div className='col-lg-6 '>
-                                                                    <label className='mt-30'>
-                                                                        <span className='profilecolor' >Certificate Name:   </span> 
-                                                                        <span >{certificate.certificate_name}</span>
-                                                                    </label>
-                                                                </div>
-                                                                <div className='col-lg-6 '>
-                                                                    <label className='mt-30'>
-                                                                        <span className='profilecolor' >Issuing Organization:   </span>  
-                                                                        <span >{certificate.issuing_organization}</span>
-                                                                    </label>
-                                                                </div>
-                                                                <div className='col-lg-6 '>
-                                                                    <label className='mt-30 '>
-                                                                            <span className='profilecolor'>Date Of Certification:   </span>  
-                                                                            <span >{certificate.date_of_certification}</span>
-                                                                    </label>
-                                                                </div>
+                                                    <div className='row background-change'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4 >Skills</h4> 
+                                                            {user.employee?.skills ? (
+                                                                <ul className="skills-list margin ">
+                                                                    {user.employee.skills.split(',').map((skill, index) => (
+                                                                        <li key={index} className="skill-item">
+                                                                        <span className="custom-bullet">•</span> 
+                                                                        <span>{skill.trim()}</span>
+                                                                      </li> // Adding dot before each skill
+                                                                    ))}
+                                                                </ul>
+                                                            ) : (
+                                                                <span>No skills available</span>
+                                                            )}
+                                                        </div> 
+                                                    </div>
+                                                    <div className='row background-change'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4>Current Working Status</h4> 
+                                                        </div>
+                                                        <div className='row margin mt-30'>
+                                                        {user.employee?.company_logo ? (
+                                                            <img src={`${baseURL}/uploads/${user.employee?.company_logo}`}  alt="Profile" className="custom-size" />
+                                                            ) : (
+                                                                <img src="/download.png" alt="Default Profile" className="custom-size" />
+                                                            )}
+                                                            <div>
+                                                                <h5 >{user.employee?.company_name}</h5>
+                                                                <h6 >{user.employee?.job_title}</h6>
+                                                                <span >{user.employee?.technologies_used}</span><br/>
+                                                                <span >{user.employee?.working_from}</span><br/>
+                                                                <span >{user.employee?.location}</span><br/>
+                                                                <span > {user.employee?.responsibilities_and_achievements}</span>
                                                             </div>
-                                                            ))}
                                                         </div>
+                                                    </div>
+                                                    <div className='row background-change'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4>Experience</h4>
+                                                        </div> 
+                                                        {experienceData.length > 0 ? (
+                                                        experienceData.map((experience, index) => (
+                                                            <div className='row  col-lg-12 margin mt-30' key={index}>
+                                                               { experience.company_image ? (
+                                                                    <img src={`${baseURL}/uploads/${experience.company_image}`} alt="Profile" className="custom-size" />
+                                                                ) : (
+                                                                    <img src="/download.png" alt="Default Profile" className="custom-size" />
+                                                                )} 
+                                                                    <div>
+                                                                        <h5>{experience.company_name}</h5>
+                                                                        <h6>{experience.role_of_employee}</h6>
+                                                                        <span >{experience.used_technology}</span><br />
+                                                                        <span >{experience.working_to} - </span>
+                                                                        <span >{experience.working_from}</span><br />
+                                                                        <span >{experience.location}</span><br />
+                                                                        <span > {experience.responsibilities}</span>
+                                                                    </div>
+                                                            </div>
+                                                            
+                                                        ))
+                                                        ) : (
+                                                            <p></p>
+                                                        )}
+                                                    </div>
+                                                    <div className='row background-change'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4 >Projects</h4>  
+                                                        </div>
+                                                    {projectData.length > 0 ? (
+                                                        projectData.map((project, index) => (
+                                                            <div className='row  col-lg-12 margin mt-30' key={index}>
+                                                                    { project.company_image ? (
+                                                                        <img src={`${baseURL}/uploads/${project.company_image}`} alt="Profile" className="custom-size" />
+                                                                    ) : (
+                                                                        <img src="/download.png" alt="Default Profile" className="custom-size" />
+                                                                    )} 
+                                                                    <div>
+                                                                        <h5>{project.project_name}</h5>
+                                                                        <h6>{project.role_of_employee}</h6>
+                                                                        <span>{project.technologies_used}</span><br />
+                                                                        <span>{project.brief_description}</span><br />
+                                                                    </div>
+                                                            </div>
+                                                        ))
                                                     ) : (
-                                                        <p>No certificates available.</p>
+                                                        <p></p>
                                                     )}
+                                                </div>
+                                                <div className='row background-change'>
+                                                    <div className='col-lg-12 mt-30'>
+                                                        <h4>Certification</h4> 
+                                                    </div>
+                                                    {certificateData.length > 0 ? (
+                                                        certificateData.map((certificate, index) => (
+                                                            <div className='row  col-lg-12 margin' key={index}>
+                                                                    <div className='mt-30'>
+                                                                        <h5>{certificate.certificate_name}</h5>
+                                                                        <span>{certificate.issuing_organization}</span><br/>
+                                                                        <span>{certificate.date_of_certification}</span><br/>
+                                                                        <span>{certificate.grade}</span><br/>
+                                                                        <span>{certificate.description}</span><br/>
+                                                                    </div>
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <p></p>
+                                                    )}
+                                                </div>
+                                                    <div className='row background-change'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4>Achievements</h4>
+                                                            <div className=' margin mt-30'>{user.employee?.coursework_or_academic_achievements}</div>
+                                                        </div> 
+                                                    </div>
+                                                    <div className='row background-change'>
+                                                        <div className='col-lg-12 mt-30'>
+                                                            <h4>General</h4>
+                                                            </div>
+                                                            <div className=' margin mt-30'> 
+                                                            <span >Gender:   {user.employee?.gender}</span><br/>
+                                                            <span >Marriage Status:   {user.employee?.marital_status === 1 ? 'Married' : 'Unmarried'}</span><br/>
+                                                            <span >Aadhar Number:   {user.employee?.adhar_card_no}</span> <br/>
+                                                            <span >Languages:   {user.employee?.languages}</span><br/>
+                                                            <span >Hobbies:   {user.employee?.hobbies}</span><br/>
+                                                        </div> 
                                                     </div>
                                                 </div>
                                             </div>
