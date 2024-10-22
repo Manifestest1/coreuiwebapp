@@ -88,7 +88,7 @@ const EmployeeProfile = ({ user, setUser }) => {
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <div class="hero-cap text-center">
-                                                <h4>My Profile</h4>
+                                                <h2>My Profile</h2>
                                             </div>
                                         </div>
                                     </div>

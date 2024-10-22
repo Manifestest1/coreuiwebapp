@@ -52,7 +52,8 @@ const CreateProfile = ({ setUser }) => {
                                         </div>
                                         <div className="select-job-items2">
                                             <div className="row">
-                                                <div className="col-lg-6 text-center">
+                                                <div className="col-lg-3"></div>
+                                                <div className="col-lg-3 text-center">
                                                     <img
                                                         src="/assets/img/logo/boy.png" 
                                                         className="point" 
@@ -60,7 +61,7 @@ const CreateProfile = ({ setUser }) => {
                                                     />
                                                     <p>Employee</p>
                                                 </div>
-                                                <div className="col-lg-6 text-center">
+                                                <div className="col-lg-3 text-center">
                                                     <img
                                                         src="/assets/img/logo/profile.png"
                                                         className="point" 
@@ -68,6 +69,7 @@ const CreateProfile = ({ setUser }) => {
                                                     />
                                                     <p>Employer</p>
                                                 </div>
+                                                <div className="col-lg-3"></div>
                                             </div>
                                         </div>
                                     </div> 

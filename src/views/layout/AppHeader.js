@@ -10,7 +10,7 @@ const client_id = getClientId();
 const AppHeader = ({ loggedIn, user, logout, login }) => {
   const favoriteJobsCount = useSelector(selectFavoriteJobsCount);
   const dispatch = useDispatch();
-  const baseURL = process.env.REACT_APP_URL; 
+  const baseURL = process.env.REACT_APP_API_URL;  
 
   useEffect(() => {
     const token = localStorage.getItem('_token');
@@ -95,11 +95,11 @@ const AppHeader = ({ loggedIn, user, logout, login }) => {
                                 user.role_id === null ? (
                                   <img src="/download.png" size="md" height="60px" />
                                 ) : (
-                                  user.imagebaseurl ? (
-                                    <img id='imagebaseurl' src={`${user.imagebaseurl}${user.imageurl}`} alt="User Profile" size="md" />
-                                  ) : (
-                                    <img id='imageurl' src={user.imageurl} alt="User Profile" size="md" />
-                                  )
+                                  user.profile_image ? (
+                                    <img id='imagebaseurl' src={`${baseURL}/uploads/${user.profile_image}`}  alt="Profile" className="profile-image" />
+                                ) : (
+                                    <img id='imageurl' src="/download.png"  alt="Default Profile" className="profile-image" />
+                                )
                                 )
                               ) : null}
                               <ul className="submenu" id='appheader-submenu'>
@@ -114,8 +114,7 @@ const AppHeader = ({ loggedIn, user, logout, login }) => {
                                 )}
                                 {user && user.role_id === 2 && (
                                   <>
-                                    <li><NavLink to="/employer-dashboard">Dashboard</NavLink></li>
-                                    <li><NavLink to="/employer-profile">Profile</NavLink></li>
+                                    <li><NavLink to="/employer-profile">My Profile</NavLink></li>
                                     <li><NavLink to="/employer-jobs">Jobs</NavLink></li>
                                   </>
                                 )}
