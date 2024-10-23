@@ -260,92 +260,93 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                            </div>
                                             <div className="select-job-items2">
                                                 <form onSubmit={handleSubmit}>
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Name</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text" value={user.name} onChange={handleChange} name="name"/>
-                                                    </div>
-                                    
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Email</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text" value={user.email} onChange={handleChange} name="email"/>
+                                                    <div className='row mt-30 '>
+                                                       <label className='col-lg-2 d-flex justify-content-end'>Name</label>
+                                                       <input className="form-control col-lg-3" type="text" value={user.name} onChange={handleChange} name="name"/>
+                                                        <label className='col-lg-2 d-flex justify-content-end'>Email</label>
+                                                        <input className="form-control col-lg-3" type="text" value={user.email} onChange={handleChange} name="email"/>
                                                         {renderError('email')}
-                                                    </div >
+                                                    </div>
                                     
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Mobile Number</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="number"value={user.employee?.phone} onChange={handleChange} name="employee.phone"/>
+                                                    <div className='row mt-30'>
+                                                        <label className='col-lg-2 d-flex justify-content-end' >Mobile Number</label>
+                                                        <input className="form-control col-lg-3" type="number"value={user.employee?.phone} onChange={handleChange} name="employee.phone"/>
                                                         {renderError('phone')}
+                                                        <label className='col-lg-2 d-flex justify-content-end'>Current Address</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.current_address} onChange={handleChange} name="employee.current_address"/>
+                                                        {renderError('current_address')}
+                                                    </div>
+                                        
+                                                    <div className='row mt-30'>    
+                                                        <label className='col-lg-2 d-flex justify-content-end'>Aadhar Number</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.adhar_card_no} onChange={handleChange} name="employee.adhar_card_no"/>
+                                                        <label className='col-lg-2 d-flex justify-content-end'>Skills</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.skills} onChange={handleChange} name="employee.skills"/>
+                                                        {renderError('skills')}
                                                     </div>
                                     
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Current Address</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.current_address} onChange={handleChange} name="employee.current_address"/>
-                                                        {renderError('current_address')}  
-                                                    </div>
-                                        
-                                                    <div className='row'>    
-                                                        <label className='mt-30 col-lg-2'>Aadhar Number</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.adhar_card_no} onChange={handleChange} name="employee.adhar_card_no"/>
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Skills</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.skills} onChange={handleChange} name="employee.skills"/>
-                                                        {renderError('skills')}   
-                                                    </div>
-                                    
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Current working skill</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.current_working_skill} onChange={handleChange} name="employee.current_working_skill"/> 
-                                                        {renderError('current_working_skill')} 
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Languages</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.languages} onChange={handleChange} name="employee.languages"/>
+                                                    <div className='row mt-30'>
+                                                        <label className='col-lg-2 d-flex justify-content-end'>Current working skill</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.current_working_skill} onChange={handleChange} name="employee.current_working_skill"/> 
+                                                        {renderError('current_working_skill')}
+                                                        <label className='col-lg-2 d-flex justify-content-end'>Languages</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.languages} onChange={handleChange} name="employee.languages"/>
                                                         {renderError('languages')}  
                                                     </div>
                                         
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Hobbies</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.hobbies} onChange={handleChange} name="employee.hobbies"/>
-                                                        {renderError('hobbies')}   
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Gender</label>
-                                                        <select className="form-control mt-30 col-lg-8"  onChange={handleChange} name="employee.gender" value={user.employee?.gender}>
+                                                    <div className='row mt-30'>
+                                                        <label className='d-flex justify-content-end col-lg-2'>Hobbies</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.hobbies} onChange={handleChange} name="employee.hobbies"/>
+                                                        {renderError('hobbies')}
+                                                        <label className='d-flex justify-content-end col-lg-2'>Gender</label>
+                                                        <select className="form-control col-lg-3"  onChange={handleChange} name="employee.gender" value={user.employee?.gender}>
                                                             <option value="">Select Gender</option>
                                                             <option value="Male">Male</option>
                                                             <option value="Female">Female</option>
                                                             <option value="Other">Other</option>
                                                         </select>
-                                                        {renderError('gender')} 
+                                                        {renderError('gender')}   
                                                     </div>
 
-                                                    
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Marital status</label>
-                                                        <select className="form-control mt-30 col-lg-8" type="text" value={user.employee?.marriage_status} onChange={handleChange} name="employee.marriage_status">
+                                                    <div className='mt-30 row'>
+                                                        <label className='d-flex justify-content-end col-lg-2'>Marital status</label>
+                                                        <select className="form-control col-lg-3" type="text" value={user.employee?.marriage_status} onChange={handleChange} name="employee.marriage_status">
                                                             <option value="">Select Marital Status</option>
                                                             <option value="1">Married</option>
                                                             <option value="0">UnMarried</option>
                                                         </select>
                                                         {renderError('marriage_status')}  
-                                                    </div>
-                                    
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Company Name</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text" value={user.employee?.company_name} onChange={handleChange} name="employee.company_name"/>
+                                                        <label className='d-flex justify-content-end col-lg-2'>Company Name</label>
+                                                        <input className="form-control col-lg-3" type="text" value={user.employee?.company_name} onChange={handleChange} name="employee.company_name"/>
                                                         {renderError('company_name')}
                                                     </div>
                                     
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Responsibilities and Achievements</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text" value={user.employee?.responsibilities_and_achievements} onChange={handleChange} name="employee.responsibilities_and_achievements"/>
+                                                    <div className='mt-30 row'>
+                                                        <label className='d-flex justify-content-end col-lg-2'>Responsibilities and Achievements</label>
+                                                        <input className="form-control col-lg-3" type="text" value={user.employee?.responsibilities_and_achievements} onChange={handleChange} name="employee.responsibilities_and_achievements"/>
                                                         {renderError('responsibilities_and_achievements')}
+                                                        <label className='d-flex justify-content-end col-lg-2'>Dates of Employment</label>
+                                                        <input className="form-control col-lg-3" type="date"value={user.employee?.dates_of_employment} onChange={handleChange} name="employee.dates_of_employment"/>
+                                                        {renderError('dates_of_employment')}  
                                                     </div > 
+                                    
+                                                    <div className='row mt-30'>
+                                                        <label className='d-flex justify-content-end col-lg-2'>Location</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.location} onChange={handleChange} name="employee.location"/> 
+                                                        {renderError('location')} 
+                                                        <label className='d-flex justify-content-end col-lg-2'>Job Title</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.job_title} onChange={handleChange} name="employee.job_title"/>
+                                                        {renderError('job_title')}
+                                                    </div>
+                                        
+                                                    <div className='row mt-30 '>
+                                                        <label className='d-flex justify-content-end col-lg-2'>Professional Summary</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.professional_summary} onChange={handleChange} name="employee.professional_summary"/> 
+                                                        {renderError('professional_summary')} 
+                                                        <label className='d-flex justify-content-end col-lg-2'>LinkedIn Profile</label>
+                                                        <input className="form-control col-lg-3" type="text"value={user.employee?.linkedIn_profile} onChange={handleChange} name="employee.linkedIn_profile"/>
+                                                        {renderError('linkedIn_profile')}   
+                                                    </div>
                                         
                                                     <DynamicForm
                                                         inputs={inputs}
@@ -376,37 +377,6 @@ const EmployeeEditProfile = ({user,setUser})=>{
                                                         removeInputField={removeInputField}
                                                         handleSubmit={handleSubmit}
                                                     />
-                                                   
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Dates of Employment</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="date"value={user.employee?.dates_of_employment} onChange={handleChange} name="employee.dates_of_employment"/>
-                                                        {renderError('dates_of_employment')}   
-                                                    </div>
-                                    
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Location</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.location} onChange={handleChange} name="employee.location"/> 
-                                                        {renderError('location')} 
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Job Title</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.job_title} onChange={handleChange} name="employee.job_title"/>
-                                                        {renderError('job_title')}  
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>Professional Summary</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.professional_summary} onChange={handleChange} name="employee.professional_summary"/> 
-                                                        {renderError('professional_summary')}  
-                                                    </div>
-                                        
-                                                    <div className='row'>
-                                                        <label className='mt-30 col-lg-2'>LinkedIn Profile</label>
-                                                        <input className="form-control mt-30 col-lg-8" type="text"value={user.employee?.linkedIn_profile} onChange={handleChange} name="employee.linkedIn_profile"/>
-                                                        {renderError('linkedIn_profile')}      
-                                                    </div>
 
                                                     <div className="row">
                                                         <div className='col-lg-5'></div>
