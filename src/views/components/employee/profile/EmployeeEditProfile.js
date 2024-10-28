@@ -11,6 +11,8 @@ import ImageUpload from './ImageUpload';
 const EmployeeEditProfile = ({ user, setUser }) => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [imagePreviews, setImagePreviews] = useState({});
+  const baseURL = process.env.REACT_APP_API_URL; 
 
   const [inputs, setInputs] = useState([
     { id: Date.now(), project_name: '', brief_description: '', role_of_employee: '', technologies_used: '', company_image: '' }
@@ -106,6 +108,34 @@ const EmployeeEditProfile = ({ user, setUser }) => {
     }
   };
 
+  const handleFileChange = (id, event) => {
+    const file = event.target.files[0]; // Get the first selected file
+    
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setImagePreviews((prev) => ({
+                ...prev,
+                [id]: reader.result, 
+            }));
+        };
+
+        reader.readAsDataURL(file); 
+        setUser((prevUser) => ({
+            ...prevUser,
+            employee: {
+                ...prevUser.employee,
+                [id]: file.name, 
+            },
+        }));
+    }
+};
+
+
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -128,7 +158,8 @@ const EmployeeEditProfile = ({ user, setUser }) => {
         if (user.employee?.job_title) formData.append('job_title', user.employee?.job_title);
         if (user.employee?.professional_summary) formData.append('professional_summary', user.employee?.professional_summary);
         if (user.employee?.linkedIn_profile) formData.append('linkedIn_profile', user.employee?.linkedIn_profile);
-        
+        if (user.employee?.company_logo) formData.append('linkedIn_profile', user.employee?.company_logo);
+
         const payload = inputs.map(input => ({
             project_name: input.project_name,
             company_image: input.company_image,
@@ -304,6 +335,34 @@ const EmployeeEditProfile = ({ user, setUser }) => {
                                                         <label className='d-flex justify-content-end col-lg-2'>LinkedIn Profile</label>
                                                         <input className="form-control col-lg-3" type="text"value={user.employee?.linkedIn_profile} onChange={handleChange} name="employee.linkedIn_profile"/>  
                                                     </div>
+
+                                                    <div className='row mt-30'>
+                                                        <label className='d-flex justify-content-end col-lg-2'>Company Image</label>
+
+                                                        <input
+                                                            className="form-control col-lg-3"
+                                                            type="file"
+                                                            accept="image/*"
+                                                            onChange={(event) => handleFileChange("company_logo", event)} 
+                                                        />
+
+                                                        {imagePreviews["company_logo"] ? (
+                                                            <img
+                                                                src={imagePreviews["company_logo"]} 
+                                                                alt="Preview"
+                                                                className="img-design"
+                                                                style={{ width: '50px', height: '50px' }}
+                                                            />
+                                                        ) : (
+                                                            <img
+                                                                src={`${baseURL}/uploads/${user.employee?.company_logo}`} 
+                                                                alt=""
+                                                                style={{ width: '50px', height: '50px' }}
+                                                            />
+                                                        )}
+                                                    </div>
+
+
                                         
                                                     <DynamicForm
                                                         setInputs={setInputs}
