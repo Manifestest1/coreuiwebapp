@@ -1,53 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Stack, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const ExperienceForm = ({ inputs = [], handleInputChange, addInputField, removeInputField }) => {
+const baseURL = process.env.REACT_APP_API_URL;
+
+const ExperienceForm = ({ inputs, setInputs, handleInputChange, addInputField, removeInputField }) => {
+    const [imagePreviews, setImagePreviews] = useState({});
+
     const handleFileChange = (id, event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = () => {
-                handleInputChange(id, {
-                    target: {
-                        name: 'company_image',
-                        value: reader.result
-                    }
-                });
+            reader.onloadend = () => {
+                setImagePreviews((prev) => ({ ...prev, [id]: reader.result }));
             };
             reader.readAsDataURL(file);
+            
+            setInputs((prevInputs) => 
+                prevInputs.map((input) => 
+                    input.id === id ? { ...input, company_image: file.name } : input
+                )
+            );
         }
     };
 
     return (
         <>
-            <div className='row mt-30'>
-                <label className='col-lg-8'>Experience</label>
+            <label className='mt-30'>Experience</label>
+            <div className='row'>
+                <label className='col-lg-10 d-flex justify-content-end'>Add New Experience</label>
                 <Button
-                    sx={{ marginBottom: 2 }}
+                    sx={{ borderRadius: '50%' }}
                     variant="contained"
-                    className="genric-btn success-border radius col-lg-2"
+                    startIcon={<AddIcon />}
+                    className="genric-btn success-border"
                     onClick={addInputField}
                 >
-                    Add Experience
                 </Button>
             </div>
             {inputs.map((input, index) => (
                 <React.Fragment key={input.id}>
                     <Stack direction="row" spacing={2} alignItems="center" sx={{ marginTop: index === 0 ? '0' : '30px' }}>
-                        <Box sx={{ border: '1px solid #ced4da', width: '100%', padding: '20px' }}>
+                        <Box sx={{ border: '1px solid #ced4da', width: '83%', padding: '20px' }}>
                             <div className='row mt-30'>
                                 <label className='d-flex justify-content-end col-lg-2'>Company Image</label>
                                 <input
-                                    className="col-lg-3 form-control"
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => handleFileChange(input.id, e)}
-                                />
-                                {input.company_image && (
-                                    <img src={input.company_image} alt="Company" style={{ width: '100px', height: '100px' }} />
-                                )}
+                                        className="form-control col-lg-3"  
+                                        type="file" 
+                                        accept="image/*"  
+                                        name="company_image"
+                                        onChange={(e) => handleFileChange(input.id, e)}
+                                    />
+                                    {input.company_image && (
+                                        imagePreviews[input.id] ? (
+                                            <img src={imagePreviews[input.id]} alt="Preview" className="img-design" style={{ width: '50px', height: '50px' }} />
+                                        ) : (
+                                            <img src={`${baseURL}/uploads/${input.company_image}`} alt="" style={{ width: '50px', height: '50px' }} />
+                                        )
+                                    )}
                                 <label className='d-flex justify-content-end col-lg-2'>Company Name</label>
                                 <input
                                     className="col-lg-3 form-control"
@@ -118,14 +129,15 @@ const ExperienceForm = ({ inputs = [], handleInputChange, addInputField, removeI
 
                         <Button
                             variant="contained"
-                            className="genric-btn success-border radius col-lg-2"
+                            className="genric-btn success-border"
+                            startIcon={<RemoveIcon />}
                             onClick={() => removeInputField(input.id)}
                             sx={{
                                 height: '50%',
-                                alignSelf: 'center'
+                                alignSelf: 'center',
+                                borderRadius: '50%'
                             }}
-                        >
-                            Remove Experience 
+                        > 
                         </Button>
                     </Stack>
                 </React.Fragment>

@@ -1,24 +1,27 @@
 import React from 'react';
 import { Button, Stack, Box } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const CertificatesFile = ({ inputs = [], handleInputChange, addInputField, removeInputField }) => {
     return (
         <>
-            <div className='row mt-30'>
-                <label className='col-lg-8'>Certificates</label>
+            <label className='mt-30'>Certificates</label>
+            <div className='row'>
+                <label className='col-lg-10 d-flex justify-content-end'>Add New Certificate</label>
                 <Button
-                    sx={{ marginBottom: 2 }}
+                    sx={{ borderRadius: '50%'}}
                     variant="contained"
-                    className="genric-btn success-border radius col-lg-2"
+                    className="genric-btn success-border "
+                    startIcon={<AddIcon />}
                     onClick={addInputField}
                 >
-                    Add Certificates
                 </Button>
             </div>
             {inputs.map((input, index) => (
                 <React.Fragment key={input.id}>
                     <Stack direction="row" spacing={2} alignItems="center" sx={{ marginTop: index === 0 ? '0' : '30px' }}>
-                        <Box sx={{ border: '1px solid #ced4da', width: '75%', padding: '20px' }}>
+                        <Box sx={{ border: '1px solid #ced4da', width: '83%', padding: '20px' }}>
                             <div className='row mt-30'>
                                 <label className='d-flex justify-content-end col-lg-2'>Certificate Name</label>
                                 <input
@@ -71,14 +74,15 @@ const CertificatesFile = ({ inputs = [], handleInputChange, addInputField, remov
 
                         <Button
                             variant="contained"
-                            className="genric-btn success-border radius col-lg-2"
+                            className="genric-btn success-border"
+                            startIcon={<RemoveIcon />}
                             onClick={() => removeInputField(input.id)}
                             sx={{
                                 height: '50%',
-                                alignSelf: 'center'
+                                alignSelf: 'center',
+                                borderRadius: '50%'
                             }}
                         >
-                            Remove Certificate 
                         </Button>
                     </Stack>
                 </React.Fragment>

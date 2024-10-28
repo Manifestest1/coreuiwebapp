@@ -106,17 +106,15 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                     <div className='row '>
                                                         <div className='col-lg-2'>
                                                             <input id="image-input" type="file" accept="image/*" onChange={handleImageChange}  ref={imageInputRef} name="profile_image" />
-                                                            {/* Image preview */}
                                                             {imagePreview ? (
-                                                                <img id='img-Preview' src={imagePreview} alt="Preview" className="profile-image"/>
+                                                                <img id='img-Preview' src={imagePreview} alt="Preview" className="img-design"/>
                                                             ) : (
                                                                 user.profile_image ? (
-                                                                    <img id='img-baseurl' src={`${baseURL}/uploads/${user.profile_image}`}  alt="Profile" className="profile-image" />
+                                                                    <img src={`${baseURL}/uploads/${user.profile_image}`}  alt="Profile" className="img-design " />
                                                                 ) : (
-                                                                    <img id='img-url' src="/download.png"  alt="Default Profile" className="profile-image" />
+                                                                    <img  src="/download.png"  alt="Default Profile" className="img-design" />
                                                                 )
                                                             )}
-                                                            {/* Button to replace input field */}
                                                             <button className='image-update' onClick={handleImageUpdate}><i className="fas fa-camera"></i></button>
                                                         </div>
                                                         <div className='col-lg-6'>
@@ -130,11 +128,9 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                                 <span >Address:   {user.employee?.current_address}</span>
                                                             </div>
                                                         </div>
-                                                        <div className='col-lg-2 mt-30'>
-                                                            <button onClick={() => downloadPDF(user.id)} class="genric-btn success-border radius">Download PDF</button>
-                                                        </div>
-                                                        <div className='col-lg-2 mt-30'>
-                                                           <button id='edit-employee-button' onClick={handleEditProfileClick} class="genric-btn success-border radius">Edit Profile</button>
+                                                        <div className='margin mt-30'>
+                                                            <button id='edit-employee-button' onClick={handleEditProfileClick} class="genric-btn success-border radius">Edit Profile</button>
+                                                            <button onClick={() => downloadPDF(user.id)} className="genric-btn success-border radius margin-l">Download Resume</button>
                                                         </div>
                                                     </div>
                                                     <div className='row background-change mt-30'>

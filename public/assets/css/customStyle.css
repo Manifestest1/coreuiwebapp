@@ -122,15 +122,7 @@
   border-radius: 50%
 }
 
-#img-baseurl
-{
-  height:150px;
-  width:150px;
-  border-radius:50%;
-  cursor:pointer; 
-}
-
-#img-url
+.img-design
 {
   height:150px;
   width:150px;
@@ -532,4 +524,40 @@ div .point
 .custom-flex
 {
   display: flex;
+}
+
+.image-upload-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ca {
+  cursor: pointer;
+  background: #fb246a;
+  border-radius: 50%;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.bottom-0 {
+  bottom: 0px; 
+}
+
+.end-0 {
+  right: 57px; 
+}
+
+.margin-l
+{
+  margin-left: 10px;
 }
