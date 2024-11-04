@@ -12,6 +12,7 @@ const EmployeeEditProfile = ({ user, setUser }) => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [imagePreviews, setImagePreviews] = useState({});
+  const [fileInputs, setFileInputs] = useState({});
   const baseURL = process.env.REACT_APP_API_URL; 
 
   const [inputs, setInputs] = useState([
@@ -132,10 +133,6 @@ const EmployeeEditProfile = ({ user, setUser }) => {
     }
 };
 
-
-
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -158,15 +155,24 @@ const EmployeeEditProfile = ({ user, setUser }) => {
         if (user.employee?.job_title) formData.append('job_title', user.employee?.job_title);
         if (user.employee?.professional_summary) formData.append('professional_summary', user.employee?.professional_summary);
         if (user.employee?.linkedIn_profile) formData.append('linkedIn_profile', user.employee?.linkedIn_profile);
-        if (user.employee?.company_logo) formData.append('linkedIn_profile', user.employee?.company_logo);
+        if (user.employee?.company_logo) formData.append('company_logo', user.employee?.company_logo);
 
-        const payload = inputs.map(input => ({
-            project_name: input.project_name,
-            company_image: input.company_image,
-            brief_description: input.brief_description,
-            role_of_employee: input.role_of_employee,
-            technologies_used: input.technologies_used
-        }));
+        const projectDataArray = inputs.map((input) => ({
+          project_name: input.project_name,
+          brief_description: input.brief_description,
+          role_of_employee: input.role_of_employee,
+          technologies_used: input.technologies_used
+      }));
+  
+      // Append the payload as a JSON string
+      formData.append('payload', JSON.stringify(projectDataArray));
+      
+      // Loop through inputs to append each corresponding file
+      inputs.forEach((input) => {
+          if (fileInputs[input.id]) {
+              formData.append('company_image[]', fileInputs[input.id]); // Append the file
+          }
+      });
 
         const result = certificatesInputs.map(input => ({
             certificate_name: input.certificate_name,
@@ -201,10 +207,6 @@ const EmployeeEditProfile = ({ user, setUser }) => {
                 formData.append(key, formData[key]);
             }
         }
-
-        formData.append('payload', JSON.stringify(payload));
-     
-        console.log('Response:', payload);
 
         formData.append('result', JSON.stringify(result));
      
@@ -263,7 +265,7 @@ const EmployeeEditProfile = ({ user, setUser }) => {
                                            </div>
                                            <ImageUpload user={user} setUser={setUser} />
                                             <div className="select-job-items2">
-                                                <form onSubmit={handleSubmit}>
+                                                <form onSubmit={handleSubmit} enctype="multipart/form-data">
                                                     <div className='row mt-30 '>
                                                        <label className='col-lg-2 d-flex justify-content-end'>Name</label>
                                                        <input className="form-control col-lg-3" type="text" value={user.name} onChange={handleChange} name="name"/>
@@ -365,6 +367,8 @@ const EmployeeEditProfile = ({ user, setUser }) => {
 
                                         
                                                     <DynamicForm
+                                                        fileInputs={fileInputs}
+                                                        setFileInputs={setFileInputs}
                                                         setInputs={setInputs}
                                                         inputs={inputs}
                                                         handleInputChange={handleInputChange}

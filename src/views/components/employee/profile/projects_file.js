@@ -5,9 +5,9 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 const baseURL = process.env.REACT_APP_API_URL;
 
-const DynamicForm = ({ inputs, setInputs, handleInputChange, addInputField, removeInputField }) => {
+const DynamicForm = ({ inputs, setInputs, handleInputChange, addInputField, removeInputField, fileInputs, setFileInputs  }) => {
     const [imagePreviews, setImagePreviews] = useState({});
-
+    
     const handleFileChange = (id, event) => {
         const file = event.target.files[0];
         if (file) {
@@ -16,6 +16,11 @@ const DynamicForm = ({ inputs, setInputs, handleInputChange, addInputField, remo
                 setImagePreviews((prev) => ({ ...prev, [id]: reader.result }));
             };
             reader.readAsDataURL(file);
+            
+            setFileInputs((prevFiles) => ({
+                ...prevFiles,
+                [id]: file
+            }));
             
             setInputs((prevInputs) => 
                 prevInputs.map((input) => 
