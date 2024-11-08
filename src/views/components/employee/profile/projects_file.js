@@ -60,9 +60,9 @@ const DynamicForm = ({ inputs, setInputs, handleInputChange, addInputField, remo
                                     />
                                     {input.company_image && (
                                         imagePreviews[input.id] ? (
-                                            <img src={imagePreviews[input.id]} alt="Preview" className="img-design" style={{ width: '50px', height: '50px' }} />
+                                            <img src={imagePreviews[input.id]} alt="Preview" className="edit-image"  />
                                         ) : (
-                                            <img src={`${baseURL}/uploads/${input.company_image}`} alt="" style={{ width: '50px', height: '50px' }} />
+                                            <img src={`${baseURL}/uploads/${input.company_image}`} alt="" className="edit-image"   />
                                         )
                                     )}
                                     <label className='d-flex justify-content-end col-lg-2'>Project Title</label>

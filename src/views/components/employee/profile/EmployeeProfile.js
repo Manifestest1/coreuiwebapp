@@ -205,8 +205,8 @@ const EmployeeProfile = ({ user, setUser }) => {
                                                         {experienceData.length > 0 ? (
                                                         experienceData.map((experience, index) => (
                                                             <div className='row  col-lg-12 margin mt-30' key={index}>
-                                                               { experience.company_image ? (
-                                                                    <img src={`${baseURL}/uploads/${experience.company_image}`} alt="Profile" className="custom-size" />
+                                                               { experience.company_pic ? (
+                                                                    <img src={`${baseURL}/uploads/${experience.company_pic}`} alt="Profile" className="custom-size" />
                                                                 ) : (
                                                                     <img src="/download.png" alt="Default Profile" className="custom-size" />
                                                                 )} 

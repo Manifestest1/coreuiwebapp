@@ -561,3 +561,9 @@ div .point
 {
   margin-left: 10px;
 }
+
+.edit-image
+{
+  width: 50px;
+  height:50px
+}

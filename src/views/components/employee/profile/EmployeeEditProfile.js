@@ -13,6 +13,8 @@ const EmployeeEditProfile = ({ user, setUser }) => {
   const [errors, setErrors] = useState({});
   const [imagePreviews, setImagePreviews] = useState({});
   const [fileInputs, setFileInputs] = useState({});
+  const [fileData, setFileData] = useState({});
+  const [fileImage, setImageFile] = useState({});
   const baseURL = process.env.REACT_APP_API_URL; 
 
   const [inputs, setInputs] = useState([
@@ -24,7 +26,7 @@ const EmployeeEditProfile = ({ user, setUser }) => {
   ]);
 
   const [experienceInputs, setExperienceInputs] = useState([
-    { id: Date.now(), company_image: '', company_name: '', role_of_employee: '', used_technology: '', working_from: '', working_to: '', location: '', responsibilities: '' }
+    { id: Date.now(), company_pic: '', company_name: '', role_of_employee: '', used_technology: '', working_from: '', working_to: '', location: '', responsibilities: '' }
   ]);
 
   const [certificatesInputs, setCertificatesInputs] = useState([
@@ -69,7 +71,7 @@ const EmployeeEditProfile = ({ user, setUser }) => {
   };
 
   const addExperienceInputField = () => {
-    setExperienceInputs([...experienceInputs, { id: Date.now(), company_image: '', company_name: '', role_of_employee: '', used_technology: '', working_from: '', working_to: '', location: '', responsibilities: '' }]);
+    setExperienceInputs([...experienceInputs, { id: Date.now(), company_pic: '', company_name: '', role_of_employee: '', used_technology: '', working_from: '', working_to: '', location: '', responsibilities: '' }]);
   };
 
   const addCertificatesInputField = () => {
@@ -110,28 +112,28 @@ const EmployeeEditProfile = ({ user, setUser }) => {
   };
 
   const handleFileChange = (id, event) => {
-    const file = event.target.files[0]; // Get the first selected file
-    
+    const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-
         reader.onloadend = () => {
-            setImagePreviews((prev) => ({
-                ...prev,
-                [id]: reader.result, 
-            }));
+            setImagePreviews((prev) => ({ ...prev, [id]: reader.result }));
         };
-
-        reader.readAsDataURL(file); 
-        setUser((prevUser) => ({
-            ...prevUser,
-            employee: {
-                ...prevUser.employee,
-                [id]: file.name, 
-            },
+        reader.readAsDataURL(file);
+        
+        setImageFile((prevFiles) => ({
+            ...prevFiles,
+            [id]: file
         }));
+        
+        setUser((prevInputs) => 
+          Array.isArray(prevInputs) 
+              ? prevInputs.map((input) => 
+                  input.id === id ? { ...input, company_logo: file.name } : input
+                )
+              : prevInputs
+      );
     }
-};
+  };  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -155,26 +157,24 @@ const EmployeeEditProfile = ({ user, setUser }) => {
         if (user.employee?.job_title) formData.append('job_title', user.employee?.job_title);
         if (user.employee?.professional_summary) formData.append('professional_summary', user.employee?.professional_summary);
         if (user.employee?.linkedIn_profile) formData.append('linkedIn_profile', user.employee?.linkedIn_profile);
-        if (user.employee?.company_logo) formData.append('company_logo', user.employee?.company_logo);
-
-        const projectDataArray = inputs.map((input) => ({
+        if (user.employee && fileImage[user.employee.id]) {
+          formData.append('company_logo', fileImage[user.employee.id]);
+      }
+      
+        const project_Data = inputs.map((input) => ({
           project_name: input.project_name,
           brief_description: input.brief_description,
           role_of_employee: input.role_of_employee,
           technologies_used: input.technologies_used
       }));
-  
-      // Append the payload as a JSON string
-      formData.append('payload', JSON.stringify(projectDataArray));
       
-      // Loop through inputs to append each corresponding file
       inputs.forEach((input) => {
           if (fileInputs[input.id]) {
-              formData.append('company_image[]', fileInputs[input.id]); // Append the file
+              formData.append('company_image[]', fileInputs[input.id]); 
           }
       });
 
-        const result = certificatesInputs.map(input => ({
+        const certificate_data = certificatesInputs.map(input => ({
             certificate_name: input.certificate_name,
             date_of_certification: input.date_of_certification,
             issuing_organization: input.issuing_organization,
@@ -192,7 +192,6 @@ const EmployeeEditProfile = ({ user, setUser }) => {
         }));
 
         const experience_data = experienceInputs.map(input => ({
-            company_image: input.company_image,
             company_name: input.company_name,
             role_of_employee: input.role_of_employee,
             used_technology: input.used_technology,
@@ -201,39 +200,39 @@ const EmployeeEditProfile = ({ user, setUser }) => {
             location: input.location,
             responsibilities: input.responsibilities,
         }));
+      
+        experienceInputs.forEach((input, index) => {
+          if (fileData[input.id]) {
+              formData.append(`company_pic[]`, fileData[input.id]);
+          }
+      });
 
         for (const key in formData) {
             if (formData.hasOwnProperty(key)) {
                 formData.append(key, formData[key]);
             }
         }
+  
+        formData.append('project_data', JSON.stringify(project_Data));
 
-        formData.append('result', JSON.stringify(result));
-     
-        console.log('result:', result);
+        formData.append('certificate_data', JSON.stringify(certificate_data));
 
         formData.append('education_data', JSON.stringify(education_data));
-     
-        console.log('education_data:', education_data);
 
         formData.append('experience_data', JSON.stringify(experience_data));
-     
-        console.log('experience_data:', experience_data);
-    
         
         updateEmployeeProfile(formData)
-              .then((response) => {
-                setUser(response.data);
-                console.log(response.data,"Update Employee Profile")
-                setErrors({});
-                navigate('/employee-profile');
-                console.warn('Edit result', response);
-              })
-              .catch((error) => {
-                console.error('Edit error', error);
-              });
-       
-       };
+          .then((response) => {
+            setUser(response.data);
+            console.log(response.data,"Update Employee Profile")
+            setErrors({});
+            navigate('/employee-profile');
+            console.warn('Edit result', response);
+          })
+          .catch((error) => {
+            console.error('Edit error', error);
+          });
+        };
 
     return(
         <>
@@ -352,14 +351,13 @@ const EmployeeEditProfile = ({ user, setUser }) => {
                                                             <img
                                                                 src={imagePreviews["company_logo"]} 
                                                                 alt="Preview"
-                                                                className="img-design"
-                                                                style={{ width: '50px', height: '50px' }}
+                                                                className="edit-image" 
                                                             />
                                                         ) : (
                                                             <img
                                                                 src={`${baseURL}/uploads/${user.employee?.company_logo}`} 
                                                                 alt=""
-                                                                style={{ width: '50px', height: '50px' }}
+                                                                className="edit-image" 
                                                             />
                                                         )}
                                                     </div>
@@ -385,6 +383,8 @@ const EmployeeEditProfile = ({ user, setUser }) => {
                                                     />
 
                                                     <ExperienceForm
+                                                        fileInputs={fileData}
+                                                        setFileInputs={setFileData}
                                                         inputs={experienceInputs} 
                                                         setInputs={setExperienceInputs}
                                                         handleInputChange={handleExperienceInputChange} 

@@ -5,7 +5,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 const baseURL = process.env.REACT_APP_API_URL;
 
-const ExperienceForm = ({ inputs, setInputs, handleInputChange, addInputField, removeInputField }) => {
+const ExperienceForm = ({ inputs, setInputs, handleInputChange, addInputField, removeInputField, fileInputs, setFileInputs }) => {
     const [imagePreviews, setImagePreviews] = useState({});
 
     const handleFileChange = (id, event) => {
@@ -16,10 +16,15 @@ const ExperienceForm = ({ inputs, setInputs, handleInputChange, addInputField, r
                 setImagePreviews((prev) => ({ ...prev, [id]: reader.result }));
             };
             reader.readAsDataURL(file);
-            
-            setInputs((prevInputs) => 
-                prevInputs.map((input) => 
-                    input.id === id ? { ...input, company_image: file.name } : input
+
+            setFileInputs((prevFiles) => ({
+                ...prevFiles,
+                [id]: file
+            }));
+
+            setInputs((prevInputs) =>
+                prevInputs.map((input) =>
+                    input.id === id ? { ...input, company_pic: file.name } : input
                 )
             );
         }
@@ -39,24 +44,25 @@ const ExperienceForm = ({ inputs, setInputs, handleInputChange, addInputField, r
                 >
                 </Button>
             </div>
-            {inputs.map((input, index) => (
-                <React.Fragment key={input.id}>
-                    <Stack direction="row" spacing={2} alignItems="center" sx={{ marginTop: index === 0 ? '0' : '30px' }}>
-                        <Box sx={{ border: '1px solid #ced4da', width: '83%', padding: '20px' }}>
-                            <div className='row mt-30'>
-                                <label className='d-flex justify-content-end col-lg-2'>Company Image</label>
-                                <input
-                                        className="form-control col-lg-3"  
-                                        type="file" 
-                                        accept="image/*"  
-                                        name="company_image"
+            {Array.isArray(inputs) ? (
+                inputs.map((input, index) => (
+                    <React.Fragment key={input.id}>
+                        <Stack direction="row" spacing={2} alignItems="center" sx={{ marginTop: index === 0 ? '0' : '30px' }}>
+                            <Box sx={{ border: '1px solid #ced4da', width: '83%', padding: '20px' }}>
+                                <div className='row mt-30'>
+                                    <label className='d-flex justify-content-end col-lg-2'>Company Image</label>
+                                    <input
+                                        className="form-control col-lg-3"
+                                        type="file"
+                                        accept="image/*"
+                                        name="company_pic"
                                         onChange={(e) => handleFileChange(input.id, e)}
                                     />
-                                    {input.company_image && (
+                                    {input.company_pic && (
                                         imagePreviews[input.id] ? (
-                                            <img src={imagePreviews[input.id]} alt="Preview" className="img-design" style={{ width: '50px', height: '50px' }} />
+                                            <img src={imagePreviews[input.id]} alt="Preview" className="edit-image" />
                                         ) : (
-                                            <img src={`${baseURL}/uploads/${input.company_image}`} alt="" style={{ width: '50px', height: '50px' }} />
+                                            <img src={`${baseURL}/uploads/${input.company_pic}`} alt="Company" className="edit-image" />
                                         )
                                     )}
                                 <label className='d-flex justify-content-end col-lg-2'>Company Name</label>
@@ -137,13 +143,14 @@ const ExperienceForm = ({ inputs, setInputs, handleInputChange, addInputField, r
                                 alignSelf: 'center',
                                 borderRadius: '50%'
                             }}
-                        > 
-                        </Button>
+                        />
                     </Stack>
                 </React.Fragment>
-            ))}
-        </>
-    );
+            ))
+        ) : (
+            <p>No experience available</p> // Optional: message when inputs is not an array
+        )}
+    </>
+);
 };
-
 export default ExperienceForm;
