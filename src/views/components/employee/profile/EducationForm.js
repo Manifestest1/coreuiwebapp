@@ -50,17 +50,6 @@ const EducationForm = ({ inputs = [], handleInputChange, addInputField, removeIn
                                     value={input.from_year}
                                     onChange={(e) => handleInputChange(input.id, e)}
                                 />
-                                <label className='d-flex justify-content-end col-lg-2'>Role of Employee</label>
-                                <input
-                                    className="col-lg-3 form-control"
-                                    type="text"
-                                    name="role_of_employee"
-                                    value={input.role_of_employee}
-                                    onChange={(e) => handleInputChange(input.id, e)}
-                                />
-                            </div>
-
-                            <div className='row mt-30'>
                                 <label className='d-flex justify-content-end col-lg-2'>To Year</label>
                                 <input
                                     className="col-lg-3 form-control"
@@ -69,6 +58,9 @@ const EducationForm = ({ inputs = [], handleInputChange, addInputField, removeIn
                                     value={input.to_year}
                                     onChange={(e) => handleInputChange(input.id, e)}
                                 />
+                            </div>
+
+                            <div className='row mt-30'>
                                 <label className='d-flex justify-content-end col-lg-2'>Grade</label>
                                 <input
                                     className="col-lg-3 form-control"
@@ -77,12 +69,9 @@ const EducationForm = ({ inputs = [], handleInputChange, addInputField, removeIn
                                     value={input.grading}
                                     onChange={(e) => handleInputChange(input.id, e)}
                                 />
-                            </div>
-
-                            <div className='row mt-30'>
                                 <label className='d-flex justify-content-end col-lg-2'>Description</label>
                                 <input
-                                    className="col-lg-8 form-control"
+                                    className="col-lg-3 form-control"
                                     type="text"
                                     name="description"
                                     value={input.description}

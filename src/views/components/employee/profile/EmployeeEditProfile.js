@@ -112,29 +112,28 @@ const EmployeeEditProfile = ({ user, setUser }) => {
   };
 
   const handleFileChange = (id, event) => {
-    const file = event.target.files[0];
+  const file = event.target.files[0];
+  console.log(file, 'file');
     if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagePreviews((prev) => ({ ...prev, [id]: reader.result }));
-        };
-        reader.readAsDataURL(file);
-        
-        setImageFile((prevFiles) => ({
-            ...prevFiles,
-            [id]: file
-        }));
-        
-        setUser((prevInputs) => 
-          Array.isArray(prevInputs) 
-              ? prevInputs.map((input) => 
-                  input.id === id ? { ...input, company_logo: file.name } : input
-                )
-              : prevInputs
-      );
-    }
-  };  
+      const reader = new FileReader();
+      reader.onloadend = () => {
+          setImagePreviews((prev) => ({ ...prev, [id]: reader.result }));
+      };
+      reader.readAsDataURL(file);
 
+      setImageFile((prevFiles) => ({
+          ...prevFiles,
+          [id]: file
+      }));
+      setUser((prevUser) => ({
+          ...prevUser,
+          employee: {
+              ...prevUser.employee,
+              company_logo: file.name, 
+          }
+      }));
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -157,9 +156,10 @@ const EmployeeEditProfile = ({ user, setUser }) => {
         if (user.employee?.job_title) formData.append('job_title', user.employee?.job_title);
         if (user.employee?.professional_summary) formData.append('professional_summary', user.employee?.professional_summary);
         if (user.employee?.linkedIn_profile) formData.append('linkedIn_profile', user.employee?.linkedIn_profile);
-        if (user.employee && fileImage[user.employee.id]) {
-          formData.append('company_logo', fileImage[user.employee.id]);
-      }
+        if (fileImage["company_logo"]) {
+          formData.append('company_logo', fileImage["company_logo"]);
+        }
+       
       
         const project_Data = inputs.map((input) => ({
           project_name: input.project_name,
@@ -341,24 +341,27 @@ const EmployeeEditProfile = ({ user, setUser }) => {
                                                         <label className='d-flex justify-content-end col-lg-2'>Company Image</label>
 
                                                         <input
-                                                            className="form-control col-lg-3"
-                                                            type="file"
-                                                            accept="image/*"
-                                                            onChange={(event) => handleFileChange("company_logo", event)} 
+                                                          className="form-control col-lg-3"
+                                                          type="file"
+                                                          accept="image/*"
+                                                          name='company_logo'
+                                                          onChange={(event) => handleFileChange('company_logo', event)} 
                                                         />
 
-                                                        {imagePreviews["company_logo"] ? (
-                                                            <img
-                                                                src={imagePreviews["company_logo"]} 
-                                                                alt="Preview"
-                                                                className="edit-image" 
-                                                            />
-                                                        ) : (
-                                                            <img
-                                                                src={`${baseURL}/uploads/${user.employee?.company_logo}`} 
-                                                                alt=""
-                                                                className="edit-image" 
-                                                            />
+                                                      {/* Check if image preview exists */}
+                                                      {imagePreviews["company_logo"] ? (
+                                                          <img
+                                                              src={imagePreviews["company_logo"]}  // Show preview image if available
+                                                              alt="Preview"
+                                                              className="edit-image" 
+                                                          />
+                                                      ) : (
+                                                          // Show existing image from server if preview is not available
+                                                          <img
+                                                              src={`${baseURL}/uploads/${user.employee?.company_logo}`} 
+                                                              alt="Company Logo"
+                                                              className="edit-image" 
+                                                          />
                                                         )}
                                                     </div>
 
